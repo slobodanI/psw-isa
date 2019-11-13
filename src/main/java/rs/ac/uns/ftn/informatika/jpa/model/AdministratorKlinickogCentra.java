@@ -31,6 +31,8 @@ public class AdministratorKlinickogCentra {
 	@Column(nullable =  false)
 	private Boolean promenjenaLozinka;
 	
+	@Column(nullable = false)
+	private String uloga = "AdministratorKlinickogCentra";
 	
 	public AdministratorKlinickogCentra(Long id, String ime, String prezime, String username, String password,
 			String email, Boolean promenjenaLozinka) {

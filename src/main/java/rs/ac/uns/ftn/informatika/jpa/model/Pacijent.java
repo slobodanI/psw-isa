@@ -66,6 +66,9 @@ public class Pacijent {
 	@Column(nullable =  false)
 	private Boolean aktiviranNalog;
 	
+	@Column(nullable = false)
+	private String uloga = "Pacijent";
+	
 	public Pacijent() {
 		// TODO Auto-generated constructor stub
 	}
@@ -114,13 +117,13 @@ public class Pacijent {
 		this.prezime = prezime;
 	}
 
-//	public ZdravstveniKarton getZdravstveniKarton() {
-//		return zdravstveniKarton;
-//	}
-//
-//	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
-//		this.zdravstveniKarton = zdravstveniKarton;
-//	}
+	public ZdravstveniKarton getZdravstveniKarton() {
+		return zdravstveniKarton;
+	}
+
+	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
+		this.zdravstveniKarton = zdravstveniKarton;
+	}
 
 	public String getUsername() {
 		return username;

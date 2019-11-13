@@ -26,8 +26,8 @@ insert into exam (student_id, course_id, date, grade) values (1, 2, '2016-04-19'
 insert into exam (student_id, course_id, date, grade) values (2, 1, '2016-02-01', 10);
 insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19', 10);
 
-insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka ) values ('pera', 'peric', 'lep', 'lepsi', 'blabla', 'true'); 
-insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka ) values ('lepa', 'lukic', 'lepa123', 'lepsi', 'blabla', 'true');
+insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('pera', 'peric', 'lep', 'lepsi', 'blabla', 'true', 'AdministratorKlinickogCentra'); 
+insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('lepa', 'lukic', 'lepa123', 'lepsi', 'blabla', 'true', 'MedicinskaSestra');
 
 insert into lek (sifra, naziv) values ('sif1', 'naz1');
 insert into lek (sifra, naziv) values ('sif2', 'naz2');
@@ -37,12 +37,12 @@ insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena,
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
 
-insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka) values (1, 'ime1', 'prz1', 'us', 'asd', 'blabla', true );
-insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka) values (1, 'ime2', 'prz2', 'us2', 'asd', 'blabla', true );
+insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime1', 'prz1', 'us', 'asd', 'blabla', true, 'AdministratorKlinike' );
+insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime2', 'prz2', 'us2', 'asd', 'blabla', true, 'AdministratorKlinike' );
 
-insert into lekar (klinika_id, ime, prezime, ukupna_ocena, username, password, radni_kalendar, broj_ocena) values (1,'ime3','prezime3',60,'us3','pas3','aaa', 5);
+insert into lekar (klinika_id, ime, prezime, ukupna_ocena, username, password, radni_kalendar, broj_ocena, uloga) values (1,'ime3','prezime3',60,'us3','pas3','aaa', 5, 'Lekar');
 
-insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog) values ('ime', 'prezime', 'username1', 'pass', 'mail', 'adr', 'grad', 'drzava', '021', 123, true);
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('ime', 'prezime', 'username1', 'pass', 'mail', 'adr', 'grad', 'drzava', '021', 123, true, 'Pacijent');
 
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (1, 'A', '+2', 180, 80, 'polen, kucna prasina', 'dijabetes');
 
