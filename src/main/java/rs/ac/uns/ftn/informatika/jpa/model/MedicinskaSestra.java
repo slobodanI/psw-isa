@@ -32,6 +32,9 @@ public class MedicinskaSestra {
 	@Column(nullable = false)
 	private Boolean promenjenaLozinka;
 	
+	@Column(nullable = false)
+	private String uloga = "MedicinskaSestra";
+	
 	public MedicinskaSestra() {
 		// TODO Auto-generated constructor stub
 	}

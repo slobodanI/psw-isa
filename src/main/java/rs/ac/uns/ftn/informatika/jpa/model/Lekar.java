@@ -53,6 +53,8 @@ public class Lekar {
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Pregled> listaZakazanihPregleda = new HashSet<Pregled>();
 	
+	@Column(nullable = false)
+	private String uloga = "Lekar";
 	
 	public Lekar() {
 		// TODO Auto-generated constructor stub

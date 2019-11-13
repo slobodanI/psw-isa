@@ -37,6 +37,9 @@ public class AdministratorKlinike {
 	@Column(nullable =  false)
 	private Boolean promenjenaLozinka;
 
+	@Column(nullable = false)
+	private String uloga = "AdministratorKlinike";
+	
 	public AdministratorKlinike() {
 		// TODO Auto-generated constructor stub
 	}
