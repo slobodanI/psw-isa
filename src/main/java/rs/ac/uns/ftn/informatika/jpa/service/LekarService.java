@@ -21,12 +21,13 @@ public class LekarService {
 	public List<Lekar> findAll(){
 		return lekarRepository.findAll();
 	}
+  
 	public Lekar save(Lekar lekar) {
 		return lekarRepository.save(lekar);
 	}
+  
 	public void remove(Long id) {
 		lekarRepository.deleteById(id);
 	}
-	
-	
+
 }

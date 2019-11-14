@@ -155,6 +155,38 @@ public class Lekar {
 	public void setRadniKalendar(String radniKalendar) {
 		this.radniKalendar = radniKalendar;
 	}
+
+	public int getBrojOcena() {
+		return brojOcena;
+	}
+
+	public void setBrojOcena(int brojOcena) {
+		this.brojOcena = brojOcena;
+	}
+
+	public Double getUkupnaOcena() {
+		return ukupnaOcena;
+	}
+
+	public void setUkupnaOcena(Double ukupnaOcena) {
+		this.ukupnaOcena = ukupnaOcena;
+	}
+
+	public Set<Pregled> getListaZakazanihPregleda() {
+		return listaZakazanihPregleda;
+	}
+
+	public void setListaZakazanihPregleda(Set<Pregled> listaZakazanihPregleda) {
+		this.listaZakazanihPregleda = listaZakazanihPregleda;
+	}
+
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
 	
 	
 	
