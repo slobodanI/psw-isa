@@ -48,5 +48,11 @@ public class ControllerKlinika {
 		return "/proba.html";
 	}
 	
+	@RequestMapping(value = "/viewLekar",
+			produces = {MediaType.TEXT_HTML_VALUE},
+			method = RequestMethod.GET)
+	public String viewLekar() {
+		return "/profilLekara.html";
+	}
 	
 }

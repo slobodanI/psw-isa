@@ -15,9 +15,9 @@ $(document).ready(function(){
 		var drzava = $('input=[name="drzava"]').val();
 		var lbo = $('input=[name="lbo"]').val();
 	
-	
+		if(password == confirmPassword){
 		$.post({
-			url: 'rest/registration',
+			url: '/api/savePacijent',
 			data: JSON.stringify({username,password,confirmPassword,ime,prezime,email,brTelefona,adresa,grad,drzava,lbo}),
 			contentType: 'application/json',
 			alert("Uspešno ste se registrovali.");
@@ -25,9 +25,13 @@ $(document).ready(function(){
 			error: function(){
 				alert("Korisnik sa ovim username9=/lbo već postoji.");
 			}	
-			
+		}
+		else{
+			alert("Unete lozinke nisu iste");
+		}
 			
 		});
 	
+		
 	});
 });
