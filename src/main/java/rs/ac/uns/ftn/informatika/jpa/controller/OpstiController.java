@@ -16,7 +16,7 @@ import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
 
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "api")
 public class OpstiController {
 	
 	@Autowired
@@ -24,7 +24,11 @@ public class OpstiController {
 	
 	@PostMapping(value = "/savePacijent",consumes = "application/json")
 	public ResponseEntity<PacijentDTO> savePacijent(@RequestBody PacijentDTO pacijentDTO) {
-
+		
+		if(pacijentDTO.getPassword().length() < 6) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		Pacijent pacijent= new Pacijent();
 		pacijent.setIme(pacijentDTO.getIme());
 		pacijent.setPrezime(pacijentDTO.getPrezime());
