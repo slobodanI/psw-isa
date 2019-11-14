@@ -59,9 +59,3 @@ insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prez
 
 insert into obavljen_pregled (klinika_id,pacijent_id) values (1,1);
 
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 'Zahtev Mika Mikic', 'Zahtev id 1 - Mika Mikic', 'mika@gmail.com', '-', true);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 'Zahtev Zika Zikic', 'Zahtev id 2 - Zika Zikic', 'zika@gmail.com', '-', true);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (3, 'Zahtev Laza Lazic', 'Zahtev id 3 - Laza Lazic', 'laza@gmail.com', '-', false);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 'Zahtev Pera Peric', 'Zahtev id 4 - Pera Peric', 'pera@gmail.com', '-', false);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 'Zahtev Mile Milic', 'Zahtev id 5 - Mile Milic', 'mile@gmail.com', '-', false);
-

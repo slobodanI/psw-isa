@@ -1,0 +1,100 @@
+package rs.ac.uns.ftn.informatika.jpa.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Poruka {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(nullable =  false)
+	private String naslov;
+	
+	@Column(nullable =  false)
+	private String telo;
+	
+	@Column(nullable =  false)
+	private String email_posiljaoca;
+	
+	@Column(nullable =  false)
+	private String email_primaoca;
+	
+	@Column(nullable =  false)
+	private Boolean odgovoreno;
+	
+	public Poruka()
+	{
+		
+	}
+
+	public Poruka(Long id, String naslov, String telo, String email_posiljaoca, String email_primaoca, Boolean odgovoreno) {
+		super();
+		this.id = id;
+		this.naslov = naslov;
+		this.telo = telo;
+		this.email_posiljaoca = email_posiljaoca;
+		this.email_primaoca = email_primaoca;
+		this.odgovoreno = odgovoreno;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNaslov() {
+		return naslov;
+	}
+
+	public void setNaslov(String naslov) {
+		this.naslov = naslov;
+	}
+
+	public String getTelo() {
+		return telo;
+	}
+
+	public void setTelo(String telo) {
+		this.telo = telo;
+	}
+
+	public String getEmail_posiljaoca() {
+		return email_posiljaoca;
+	}
+
+	public void setEmail_posiljaoca(String email_posiljaoca) {
+		this.email_posiljaoca = email_posiljaoca;
+	}
+
+	public String getEmail_primaoca() {
+		return email_primaoca;
+	}
+
+	public void setEmail_primaoca(String email_primaoca) {
+		this.email_primaoca = email_primaoca;
+	}
+
+	public Boolean getOdgovoreno() {
+		return odgovoreno;
+	}
+
+	public void setOdgovoreno(Boolean odgovoreno) {
+		this.odgovoreno = odgovoreno;
+	}
+
+	@Override
+	public String toString() {
+		return "Poruka [id=" + id + ", naslov=" + naslov + ", telo=" + telo + ", email_posiljaoca=" + email_posiljaoca
+				+ ", email_primaoca=" + email_primaoca + ", odgovoreno=" + odgovoreno + "]";
+	}
+	
+}
