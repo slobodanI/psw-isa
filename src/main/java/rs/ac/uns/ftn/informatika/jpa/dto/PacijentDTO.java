@@ -18,7 +18,7 @@ public class PacijentDTO {
 	private String uloga = "Pacijent";
 	
 	public PacijentDTO(Pacijent pac) {
-		id = pac.getid();
+		id = pac.getId();
 		ime = pac.getIme();
 		prezime = pac.getPrezime();
 		username = pac.getUsername();

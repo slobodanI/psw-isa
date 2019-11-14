@@ -121,4 +121,12 @@ public class AdministratorKlinike {
 		this.promenjenaLozinka = promenjenaLozinka;
 	}
 
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+
 }

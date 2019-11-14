@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
 
-public interface AdminKCRepository extends JpaRepository<AdministratorKlinickogCentra, Long> {
+public interface AdministratorKlinickogCentraRepository extends JpaRepository<AdministratorKlinickogCentra, Long> {
 
 }
