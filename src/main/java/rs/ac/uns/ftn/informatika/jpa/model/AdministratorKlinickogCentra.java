@@ -107,6 +107,14 @@ public class AdministratorKlinickogCentra {
 		this.promenjenaLozinka = promenjenaLozinka;
 	}
 
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

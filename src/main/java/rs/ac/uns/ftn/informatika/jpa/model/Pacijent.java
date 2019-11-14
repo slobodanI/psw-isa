@@ -93,14 +93,14 @@ public class Pacijent {
 		this.aktiviranNalog = aktiviranNalog;
 	}
 
-	public Long getid() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setid(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getIme() {
 		return ime;
 	}
@@ -203,6 +203,30 @@ public class Pacijent {
 
 	public void setAktiviranNalog(Boolean aktiviranNalog) {
 		this.aktiviranNalog = aktiviranNalog;
+	}
+
+	public Set<Klinika> getKlinike() {
+		return klinike;
+	}
+
+	public void setKlinike(Set<Klinika> klinike) {
+		this.klinike = klinike;
+	}
+
+	public Set<Pregled> getZakazaniPregledi() {
+		return zakazaniPregledi;
+	}
+
+	public void setZakazaniPregledi(Set<Pregled> zakazaniPregledi) {
+		this.zakazaniPregledi = zakazaniPregledi;
+	}
+
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
 	}
 	
 	
