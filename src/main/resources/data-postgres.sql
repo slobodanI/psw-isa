@@ -26,7 +26,7 @@ insert into exam (student_id, course_id, date, grade) values (1, 2, '2016-04-19'
 insert into exam (student_id, course_id, date, grade) values (2, 1, '2016-02-01', 10);
 insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19', 10);
 
-insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('pera', 'peric', 'lep', 'lepsi', 'blabla', 'true', 'AdministratorKlinickogCentra'); 
+insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('Pera', 'Peric', 'adminKC', 'adminKC', 'admin@gmail.com', 'true', 'AdministratorKlinickogCentra'); 
 insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('lepa', 'lukic', 'lepa123', 'lepsi', 'blabla', 'true', 'MedicinskaSestra');
 
 insert into lek (sifra, naziv) values ('sif1', 'naz1');
