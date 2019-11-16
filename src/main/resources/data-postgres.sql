@@ -42,9 +42,17 @@ insert into administrator_klinike (klinika_id, ime, prezime, username, password,
 
 insert into lekar (klinika_id, ime, prezime, ukupna_ocena, username, password, radni_kalendar, broj_ocena, uloga) values (1,'ime3','prezime3',60,'us3','pas3','aaa', 5, 'Lekar');
 
-insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('ime', 'prezime', 'username1', 'pass', 'mail', 'adr', 'grad', 'drzava', '021', 123, true, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Zika', 'Zikic', 'username2', 'pass2', 'zika@gmail.com', 'adr2', 'grad', 'drzava', '021', 234, true, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Laza', 'Lazic', 'username3', 'pass3', 'laza@gmail.com', 'adr3', 'grad', 'drzava', '021', 345, false, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Pera', 'Peric', 'username4', 'pass4', 'pera@gmail.com', 'adr4', 'grad', 'drzava', '021', 456, false, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mile', 'Milic', 'username5', 'pass5', 'mile@gmail.com', 'adr5', 'grad', 'drzava', '021', 567, false, 'Pacijent');
 
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (1, 'A', '+2', 180, 80, 'polen, kucna prasina', 'dijabetes');
+insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (2, 'B', '+3', 156, 80, 'nema', 'nema');
+insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (3, 'O', '+1', 165, 80, 'polen', 'nema');
+insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (4, 'AB', '+1', 192, 80, 'lek1', 'nema');
+insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (5, 'A', '+2', 179, 80, 'nema', 'nema');
 
 insert into dijagnoza (sifra, naziv) values ('1','prvaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('2','drugaDijagnoza');
@@ -59,9 +67,9 @@ insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prez
 
 insert into obavljen_pregled (klinika_id,pacijent_id) values (1,1);
 
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 'Zahtev Mika Mikic', 'Zahtev id 1 - Mika Mikic', 'mika@gmail.com', '-', true);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 'Zahtev Zika Zikic', 'Zahtev id 2 - Zika Zikic', 'zika@gmail.com', '-', true);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (3, 'Zahtev Laza Lazic', 'Zahtev id 3 - Laza Lazic', 'laza@gmail.com', '-', false);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 'Zahtev Pera Peric', 'Zahtev id 4 - Pera Peric', 'pera@gmail.com', '-', false);
-insert into poruka (id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 'Zahtev Mile Milic', 'Zahtev id 5 - Mile Milic', 'mile@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 1, 'Zahtev Mika Mikic', 'Zahtev id 1 - Mika Mikic', 'mika@gmail.com', '-', true);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 2, 'Zahtev Zika Zikic', 'Zahtev id 2 - Zika Zikic', 'zika@gmail.com', '-', true);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (3, 3, 'Zahtev Laza Lazic', 'Zahtev id 3 - Laza Lazic', 'laza@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 4, 'Zahtev Pera Peric', 'Zahtev id 4 - Pera Peric', 'pera@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 5, 'Zahtev Mile Milic', 'Zahtev id 5 - Mile Milic', 'mile@gmail.com', '-', false);
 

@@ -14,6 +14,9 @@ public class Poruka {
 	private Long id;
 	
 	@Column(nullable =  false)
+	private Long pacijent_id;
+	
+	@Column(nullable =  false)
 	private String naslov;
 	
 	@Column(nullable =  false)
@@ -33,9 +36,10 @@ public class Poruka {
 		
 	}
 
-	public Poruka(Long id, String naslov, String telo, String email_posiljaoca, String email_primaoca, Boolean odgovoreno) {
+	public Poruka(Long id, Long pacijent_id, String naslov, String telo, String email_posiljaoca, String email_primaoca, Boolean odgovoreno) {
 		super();
 		this.id = id;
+		this.pacijent_id = pacijent_id;
 		this.naslov = naslov;
 		this.telo = telo;
 		this.email_posiljaoca = email_posiljaoca;
@@ -49,6 +53,14 @@ public class Poruka {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getPacijent_id() {
+		return pacijent_id;
+	}
+
+	public void setPacijent_id(Long pacijent_id) {
+		this.pacijent_id = pacijent_id;
 	}
 
 	public String getNaslov() {
@@ -93,8 +105,11 @@ public class Poruka {
 
 	@Override
 	public String toString() {
-		return "Poruka [id=" + id + ", naslov=" + naslov + ", telo=" + telo + ", email_posiljaoca=" + email_posiljaoca
-				+ ", email_primaoca=" + email_primaoca + ", odgovoreno=" + odgovoreno + "]";
+		return "Poruka [id=" + id + ", pacijent_id=" + pacijent_id + ", naslov=" + naslov + ", telo=" + telo
+				+ ", email_posiljaoca=" + email_posiljaoca + ", email_primaoca=" + email_primaoca + ", odgovoreno="
+				+ odgovoreno + "]";
 	}
+
+	
 	
 }
