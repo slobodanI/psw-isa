@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Profil Pacijenta</title>
+</head>
+<body>
+	
+	<h1>Moj profil</h1>
+	
+	<br>
+	<button id="btn-prikazForme">Prikaz forme za izmenu profila</button>
+	<div class="div-form-edit">				
+		<form id="form-EditPacijent">
+		<hr>
+		<p>Menjanje podataka:</p>
+		<table>
+			<tr><td>TBA</td><td><input type="text" name="name" required></td></tr>
+			<tr><td>TBA</td><td><input type="text" name="description" required></td></tr>
+			<tr><td><input type="submit" value="Izmeni"></td></tr>
+		</table>
+		</form>			
+	</div>
+	
+	<div id="div-podaci">
+		<hr>
+		<h3 id="pacUsername"></h3>
+		<ul>
+			<li id="pacIme" class="podaciUListi"></li>
+			<li id="pacPrezime" class="podaciUListi"></li>
+			<li id="pacEmail" class="podaciUListi"></li>
+			<li id="pacAdresa" class="podaciUListi"></li>
+			<li id="pacGrad" class="podaciUListi"></li>
+			<li id="pacDrzava" class="podaciUListi"></li>
+			<li id="pacBrojTel" class="podaciUListi"></li>
+			<li id="pacLbo" class="podaciUListi"></li>
+		</ul>
+	</div>
+	
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/PacijentProfil.js"></script>
+</body>
+</html>
