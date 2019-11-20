@@ -30,8 +30,6 @@ $(document).ready(function(){
 			alert("Unete lozinke nisu iste");
 		}
 			
-		});
-	
-		
+		});	
 	});
 });
