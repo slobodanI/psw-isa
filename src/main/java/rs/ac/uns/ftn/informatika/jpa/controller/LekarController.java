@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
 
@@ -119,5 +118,53 @@ public class LekarController {
 		
 	}
 	
+	@PostMapping(value="/pretragaLekara",consumes = "application/json")
+	public ResponseEntity<List<LekarDTO>> pretragaLekara(@RequestBody PretragaLekara pretragaLekara){
+		List<Lekar> lekari = lekarService.findAll();
+
+		List<LekarDTO> nadjeniLekari = new ArrayList<>();
+		for (Lekar l : lekari) {
+			boolean flag=true;
+			
+			if(!pretragaLekara.getIme().equals("")) {
+				if(!l.getIme().contains(pretragaLekara.getIme())) {
+					flag=false;
+					continue;
+				}
+				
+			}
+			if(!pretragaLekara.getPrezime().equals("")) {
+				if(!l.getPrezime().contains(pretragaLekara.getPrezime())) {
+					flag=false;
+					continue;
+				}
+				
+			}
+			Double pros=(l.getUkupnaOcena())/(l.getBrojOcena());
+			
+			if(pretragaLekara.getProsecnaOcenaOd()!=null) {
+				if(pros<pretragaLekara.getProsecnaOcenaOd()) {
+					flag=false;
+					continue;
+					
+				}
+			}
+			if(pretragaLekara.getProsecnaOcenaDo()!=null) {
+				if(pros>pretragaLekara.getProsecnaOcenaDo()) {
+					flag=false;
+					continue;
+					
+				}
+			}
+			String[] radnov=l.getRadnoVreme().split("-");
+
+			
+			
+			nadjeniLekari.add(new LekarDTO(l));
+		}
+		
+		return new ResponseEntity<>(nadjeniLekari, HttpStatus.OK);
+		
+	}
 	
 }
