@@ -43,13 +43,12 @@ insert into administrator_klinike (klinika_id, ime, prezime, username, password,
 insert into lekar (klinika_id, ime, prezime, ukupna_ocena, username, password, radni_kalendar, broj_ocena, uloga) values (1,'ime3','prezime3',60,'us3','pas3','aaa', 5, 'Lekar');
 
 
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'email@email.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Zika', 'Zikic', 'username2', 'pass2', 'zika@gmail.com', 'adr2', 'grad', 'drzava', '021', 234, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Laza', 'Lazic', 'username3', 'pass3', 'laza@gmail.com', 'adr3', 'grad', 'drzava', '021', 345, false, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Pera', 'Peric', 'username4', 'pass4', 'pera@gmail.com', 'adr4', 'grad', 'drzava', '021', 456, false, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mile', 'Milic', 'username5', 'pass5', 'mile@gmail.com', 'adr5', 'grad', 'drzava', '021', 567, false, 'Pacijent');
-insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'email@email.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
-
 
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (1, 'A', '+2', 180, 80, 'polen, kucna prasina', 'dijabetes');
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (2, 'B', '+3', 156, 80, 'nema', 'nema');

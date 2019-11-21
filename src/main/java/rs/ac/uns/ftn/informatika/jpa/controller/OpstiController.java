@@ -94,9 +94,11 @@ public class OpstiController {
 		for(Pacijent p : sviPacijenti) {
 			if(p.getUsername().equals(userInfo.getUsername())) {
 				if(p.getPassword().equals(userInfo.getPassword())) {
-					session.setAttribute("id", p.getId());
-					session.setAttribute("uloga", p.getUloga());
-					return new ResponseEntity<Void>(HttpStatus.OK);				
+					if(p.getAktiviranNalog().equals(true)) {
+						session.setAttribute("id", p.getId());
+						session.setAttribute("uloga", p.getUloga());
+						return new ResponseEntity<Void>(HttpStatus.OK);		
+					}
 				}
 			}
 		}
