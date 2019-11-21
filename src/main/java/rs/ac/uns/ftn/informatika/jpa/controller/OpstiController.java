@@ -25,6 +25,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
+import rs.ac.uns.ftn.informatika.jpa.model.Teacher;
 import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
 import rs.ac.uns.ftn.informatika.jpa.service.AministratorKlinickogCentraService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
@@ -173,6 +174,8 @@ public class OpstiController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	//metoda koja postavlja atribut aktiviranNalog na true
+	//aktivira nalog pacijenta
 	@PostMapping(value="/prihvatiPacijenta/{id}")
 	public ResponseEntity<PacijentDTO> updatePacijent(@PathVariable Long id) {
 
@@ -186,5 +189,19 @@ public class OpstiController {
 
 		pacijent = pacijentService.save(pacijent);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	//metoda koja uklanja pacijenta sa liste kad mu je zahtev za kreiranje naloga odbijen
+	@PostMapping(value="/ukloniPacijenta/{id}")
+	public ResponseEntity<PacijentDTO> ukloniPacijent(@PathVariable Long id) {
+
+		Pacijent pacijent = pacijentService.findOne(id);
+
+		if (pacijent != null) {
+			pacijentService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }

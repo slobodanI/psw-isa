@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.jpa.dto;
 
 import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
 
+//DTO za klasu poruka 
+//(poruka koja stize administratoru kad se kreira zahtev za kreiranje naloga pacijenta)
 public class PorukaDTO {
 
 	private Long id;

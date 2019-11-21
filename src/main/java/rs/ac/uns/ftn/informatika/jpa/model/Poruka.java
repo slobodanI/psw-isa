@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+//Model klase Poruka
+//(poruka koja stize administratoru kad se kreira zahtev za kreiranje naloga pacijenta)
 @Entity
 public class Poruka {
 

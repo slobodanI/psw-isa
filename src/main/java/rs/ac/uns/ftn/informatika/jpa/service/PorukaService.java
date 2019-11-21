@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
 import rs.ac.uns.ftn.informatika.jpa.repository.PorukaRepository;
 
+//servis za klasu Poruka
+//(poruka koja stize administratoru kad se kreira zahtev za kreiranje naloga pacijenta)
 @Service
 public class PorukaService {
 	

@@ -1,16 +1,4 @@
-$('#filterOdgovoreno').on('change', function(){
-
-    if(this.checked){
-        $('.searchable tr').hide();
-        $('.searchable tr').filter(function() {
-            return $(this).find('td').eq(5).text() !== "false"
-        }).show();
-    }else{
-        $('.searchable tr').show();
-    }            
-
-});
-
+//metoda koja kreira html tabele koja prikazuje listu poruka
 function RenderHtmlOnSuccess() {
     
     $.get({
@@ -19,13 +7,16 @@ function RenderHtmlOnSuccess() {
 		contentType: 'application/json',
 		success: function(poruke)
 		{	
+			//poruke - lista svih primljenih poruka
 			var data = poruke;
 			
+			//pocetak kreiranja html-a
 			var html = '<table id="tabelaZahteva" class="display" ><thead><tr><th>Id zahteva</th><th>Id pacijenta</th><th>Naslov</th><th>Telo</th><th>eMail</th><th>Odgovor</th></thead><tbody id="teloZahtevi">';
 			data.forEach((item)=>{
 				
 				if(item.odgovoreno==true)
 				{
+					  //poruke na koje je odgovoreno
 					  html+='<tr>';
 					  
 					  html+='<td>';
@@ -56,6 +47,8 @@ function RenderHtmlOnSuccess() {
 				}
 				else
 				{
+					  //poruke na koje nije odgovoreno
+					  //podaci u tabeli su strong
 					  html+='<tr>';
 					  
 					  html+='<td>';
@@ -98,13 +91,17 @@ function RenderHtmlOnSuccess() {
 			})
 		    html += '</tbody></table>';
 
+			//postavljanje tabele u div na html-u
 		    $(html).appendTo('#divTabela');
 
+		    //konvertovanje tabele u dataTable
 		    var table = $('#tabelaZahteva').dataTable({
 		        "pagingType": "full_numbers",
 		        select: false
 		    });
 		    
+		    //kad se klikne na dugme Odgovori u tabeli uzimaju se podaci iz reda
+		    //i salju se u odgovarajuca polja u formi za odgovaranje
 		    $('.odgovoriButton').on("click", function () {
 		    	 var data = table.api().row( $(this).parents('tr') ).data();
 		    	 id_poruke = data[0];
@@ -119,7 +116,9 @@ function RenderHtmlOnSuccess() {
 		    	 email_pacijenta = email_pacijenta.replace("</strong>", "");
 		    	 $('#emailPacijentaTxt').val(email_pacijenta);
 		         $('#idPacijentaTxt').val(id_pacijenta);
+		         //prikazuje se dijalog za odgovaranje na poruku
 		         showDialog();
+		         //fokusira se na kreiranu formu za odgovaranje
 		         $("#forma :input").focus();
 			});
 		    
@@ -135,11 +134,13 @@ function RenderHtmlOnSuccess() {
     
 }
 
+//funkcija za prikazivanje forme za odgovaranje na poruku
 function showDialog()
 {
 	$('#forma').show();
 }
 
+//funkcija koja u bazi obelezi da je na poruku odgovoreno
 function odgovoriNaPoruku(ind)
 {
 	$.post
@@ -157,6 +158,7 @@ function odgovoriNaPoruku(ind)
 	});
 }
 
+//funkcija koja u bazi obelezava da je pacijentov nalog aktiviran
 function dodajPacijenta(ind)
 {
 	$.post
@@ -174,23 +176,72 @@ function dodajPacijenta(ind)
 	});
 }
 
+//funkcija koja brise pacijenta iz baze ako mu je zahtev za kreiranje profila odbijen
+function ukloniPacijenta(ind)
+{
+	$.post
+	({
+		url:'api/ukloniPacijenta/'+ind,
+		contentType: 'application/json',
+		success: function()
+		{
+			
+		},
+		error()
+		{
+			alert('greska pri odgovoru');
+		}
+	});
+}
+
+function posaljiEmail()
+{
+	var id_pacijenta = $('#idPacijentaTxt').val();
+	var naslov = $('#naslovTxt').val();
+	var telo = $('#porukaTxt').val();
+	var mail = $('#emailPacijentaTxt').val();
+	
+
+	
+	$.post({
+		url: '/apiPoruke/posaljiEmail',
+		data: JSON.stringify({id_pacijenta,naslov,telo,mail}),
+		contentType: 'application/json',
+		success: function()
+		{
+			alert("Uspešno poslat email");
+		},
+		error: function(){
+			alert("Greska pri slanju emaila");
+		}	
+	});
+}
+
 $(document).ready(function() {
 	RenderHtmlOnSuccess();
 	
 	$('#forma').hide();
 	
+	//funkcija za odgovaranje na poruku
 	$("#posaljiMailBtn").click(function() 
 	{
 		if($("#selectOdgovorType").val()=="prihvati")
 		{
-			dodajPacijenta($('#idPacijentaTxt').val())
+			//ako je odgovor prihvaceno
+			dodajPacijenta($('#idPacijentaTxt').val());
 			odgovoriNaPoruku($('#idPoruke').val());
+			posaljiEmail();
 			alert('zahtev prihvacen');
 			location.reload();
 		}
 		else
 		{
+			//ako je odgovor Odbijeno
+			ukloniPacijenta($('#idPacijentaTxt').val());
+			odgovoriNaPoruku($('#idPoruke').val());
+			posaljiEmail();
 			alert('zahtev odbijen');
+			location.reload();
 		}
 	});
 });
