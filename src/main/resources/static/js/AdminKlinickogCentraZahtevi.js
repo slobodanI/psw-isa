@@ -116,6 +116,14 @@ function RenderHtmlOnSuccess() {
 		    	 email_pacijenta = email_pacijenta.replace("</strong>", "");
 		    	 $('#emailPacijentaTxt').val(email_pacijenta);
 		         $('#idPacijentaTxt').val(id_pacijenta);
+		         
+		         //standardna poruka za korisnika kome je zahtev prihvacen
+		         link = 'Poštovani, \n ovo je vaš \n';
+		         link += '<a href="http://localhost:8080/verify.html?id_pacijenta=' + id_pacijenta + '">link za verifikaciju</a>';
+		         link += '\n Srdačan pozdrav,\n Administrator kliničkog centra';
+		         
+		         $('#naslovTxt').val('Zahtev za registraciju prihvaćen');
+		         $('#porukaTxt').val(link);
 		         //prikazuje se dijalog za odgovaranje na poruku
 		         showDialog();
 		         //fokusira se na kreiranu formu za odgovaranje
@@ -194,11 +202,22 @@ function ukloniPacijenta(ind)
 	});
 }
 
+
+//funkcija za slanje email-a
 function posaljiEmail()
 {
 	var id_pacijenta = $('#idPacijentaTxt').val();
 	var naslov = $('#naslovTxt').val();
-	var telo = $('#porukaTxt').val();
+	
+	//email se salje kao html pa se newline zamejuje sa <br>
+	sadrzajHTML = $('#porukaTxt').val().replace(/\n/g,'<br>')
+	
+	//formatiraje
+	sadrzaj = '<p style="outline: 2px dashed blue;">';
+	sadrzaj += sadrzajHTML;
+	sadrzaj += '</p>';
+	
+	var telo = sadrzaj
 	var mail = $('#emailPacijentaTxt').val();
 	
 
@@ -209,17 +228,37 @@ function posaljiEmail()
 		contentType: 'application/json',
 		success: function()
 		{
-			alert("Uspešno poslat email");
+			//alert("Uspešno poslat email");
 		},
 		error: function(){
-			alert("Greska pri slanju emaila");
+			//alert("Greska pri slanju emaila");
 		}	
 	});
 }
 
+//onChange za select
+//menja se sadrzaj textbox-ova u zavisnosti od odarane opcije
+function selectOnChange()
+{
+	if($("#selectOdgovorType").val()=="prihvati")
+	{
+		//prihvaceno
+		 $('#porukaTxt').val(link);
+		 $('#naslovTxt').val('Zahtev za registraciju prihvaćen');
+	}
+	else
+	{
+		//odbijeno
+		 $('#porukaTxt').val('Razlog odbijanja zahteva:');
+		 $('#naslovTxt').val('Zahtev za registraciju odbijen');
+	}
+}
+
 $(document).ready(function() {
+	//renderovanje tabele sa porukama
 	RenderHtmlOnSuccess();
 	
+	//sakrivanje forme za odgovor na poruke
 	$('#forma').hide();
 	
 	//funkcija za odgovaranje na poruku
@@ -228,10 +267,10 @@ $(document).ready(function() {
 		if($("#selectOdgovorType").val()=="prihvati")
 		{
 			//ako je odgovor prihvaceno
-			dodajPacijenta($('#idPacijentaTxt').val());
+			//dodajPacijenta($('#idPacijentaTxt').val());
 			odgovoriNaPoruku($('#idPoruke').val());
 			posaljiEmail();
-			alert('zahtev prihvacen');
+			//alert('zahtev prihvacen');
 			location.reload();
 		}
 		else
@@ -240,7 +279,7 @@ $(document).ready(function() {
 			ukloniPacijenta($('#idPacijentaTxt').val());
 			odgovoriNaPoruku($('#idPoruke').val());
 			posaljiEmail();
-			alert('zahtev odbijen');
+			//alert('zahtev odbijen');
 			location.reload();
 		}
 	});

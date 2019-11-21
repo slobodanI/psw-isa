@@ -27,39 +27,31 @@ public class EmailService {
 	public void sendNotificaitionAsync(EmailDTO email) throws MailException, InterruptedException, MessagingException {
 
 		System.out.println("Slanje emaila...");
-		/*
-		SimpleMailMessage mail = new SimpleMailMessage();
-		mail.setTo("psa.isa.usr@gmail.com");
-		mail.setFrom(env.getProperty("spring.mail.username"));
-		mail.setSubject(email.getNaslov());
-		mail.setText(email.getTelo());
-		System.out.println("Pre slanja...");
-		javaMailSender.send(mail);
-		*/
 		
 		MimeMessage message=javaMailSender.createMimeMessage();
 	    MimeMessageHelper helper;
 	    helper=new MimeMessageHelper(message,true);
 	    helper.setTo("psa.isa.usr@gmail.com");
 	    helper.setFrom(env.getProperty("spring.mail.username"));
-	    helper.setSubject("nscck");
-	    helper.setText("dddd");
+	    helper.setSubject(email.getNaslov());
+	    helper.setText(email.getTelo(), true);
 	    javaMailSender.send(message);
 
 		System.out.println("Email poslat!");
 	}
 
-	public void sendNotificaitionSync(EmailDTO email) throws MailException, InterruptedException {
+	public void sendNotificaitionSync(EmailDTO email) throws MailException, InterruptedException, MessagingException {
 
 		System.out.println("Slanje emaila...");
-
-		SimpleMailMessage mail = new SimpleMailMessage();
-		mail.setTo("psa.isa.usr@gmail.com");
-		mail.setFrom(env.getProperty("spring.mail.username"));
-		mail.setSubject(email.getNaslov());
-		mail.setText(email.getTelo());
-		System.out.println("Pre slanja...");
-		javaMailSender.send(mail);
+		
+		MimeMessage message=javaMailSender.createMimeMessage();
+	    MimeMessageHelper helper;
+	    helper=new MimeMessageHelper(message,true);
+	    helper.setTo("psa.isa.usr@gmail.com");
+	    helper.setFrom(env.getProperty("spring.mail.username"));
+	    helper.setSubject(email.getNaslov());
+	    helper.setText(email.getTelo(), true);
+	    javaMailSender.send(message);
 
 		System.out.println("Email poslat!");
 	}
