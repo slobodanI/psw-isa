@@ -17,4 +17,14 @@ public class KlinikaService {
 	public List<Klinika> findAll(){
 		return klinikaRepo.findAll();
 	}
+	
+	public Klinika findOne(Long id) {
+		return klinikaRepo.findById(id).orElseGet(null);
+	}
+	public Klinika save(Klinika klinika) {
+		return klinikaRepo.save(klinika);
+	}
+	public void remove(Long id) {
+		klinikaRepo.deleteById(id);
+	}
 }

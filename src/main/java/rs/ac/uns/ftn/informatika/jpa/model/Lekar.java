@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,8 +43,11 @@ public class Lekar {
 	@Column(nullable =  false)
 	private String radniKalendar;
 	
+	@Column(nullable = true)
+	private String radnoVreme;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
 	
 	
@@ -60,17 +64,22 @@ public class Lekar {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Lekar(Long id, String ime, String prezime, Double ukupnaOcena, Collection<Pacijent> listaPacijenata,
-			Collection<Pregled> listaPregleda, String radniKalendar,Klinika klinika) {
+	public Lekar(Long id, String ime, String prezime,int brojOcena, Double ukupnaOcena, Collection<Pacijent> listaPacijenata,
+			Collection<Pregled> listaPregleda, String radniKalendar,Klinika klinika,String radnoVreme,String username,String password) {
 		super();
 		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
+		this.username=username;
+		this.password=password;
+		this.brojOcena=brojOcena;
 		this.ukupnaOcena = ukupnaOcena;
 //		this.listaPacijenata = listaPacijenata;
 //		this.listaPregleda = listaPregleda;
 		this.radniKalendar = radniKalendar;
-		this.klinika=klinika;
+//		this.klinika=klinika;
+		this.radnoVreme=radnoVreme;
+		this.uloga="Lekar";
 	}
 	
 	public String getUsername() {
@@ -122,14 +131,6 @@ public class Lekar {
 
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
-	}
-
-	public Double getukupnaOcena() {
-		return ukupnaOcena;
-	}
-
-	public void setukupnaOcena(Double ukupnaOcena) {
-		this.ukupnaOcena = ukupnaOcena;
 	}
 
 //	public Collection<Pacijent> getListaPacijenata() {
@@ -186,6 +187,14 @@ public class Lekar {
 
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
+	}
+
+	public String getRadnoVreme() {
+		return radnoVreme;
+	}
+
+	public void setRadnoVreme(String radnoVreme) {
+		this.radnoVreme = radnoVreme;
 	}
 	
 	
