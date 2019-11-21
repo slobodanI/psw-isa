@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.model.PretragaSale;
 import rs.ac.uns.ftn.informatika.jpa.model.Sala;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.SalaService;
@@ -103,5 +104,41 @@ public class SalaController {
 		return new ResponseEntity<>(new SalaDTO(sala), HttpStatus.OK);
 
 	}
+	
+	@PostMapping(value="/pretragaSala",consumes ="applpication/json")
+	public ResponseEntity<List<SalaDTO>> pretragaSala(@RequestBody PretragaSale pretragaSala){
+			List<Sala> sale = salaService.findAll();
+			
+			List<SalaDTO> nadjeneSale = new ArrayList<>();
+			for(Sala s : sale) {
+				boolean flag=true;
+				
+				if(!pretragaSala.getNaziv().equals("")) {
+					if(s.getNaziv().contains(pretragaSala.getNaziv())) {
+						flag=false;
+						continue;
+					}
+						
+				}
+				Double pom = (double) pretragaSala.getId();
+				Double sid=(double) pretragaSala.getId();
+				if(pom != null) {
+					if(sid!=pom) {
+						flag=false;
+						continue;
+						
+					}
+					
+				}
+				
+				if(flag==true) {
+				nadjeneSale.add(new SalaDTO(s));
+			}
+			}
+			return new ResponseEntity<>(nadjeneSale, HttpStatus.OK);
+		
+	}
+	
+	
 
 }

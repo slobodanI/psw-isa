@@ -16,7 +16,7 @@ function submitForme(){
 		var radnoVremeDo = $('input[name="radnoVremeDo"]').val();
 
 		$.post({
-			url: 'rest/pretragaLekara',
+			url: 'api/lekar/pretragaLekara',
 			data: JSON.stringify({ime, prezime,prosecnaOcenaOd,prosecnaOcenaDo,radnoVremeOd,radnoVremeDo}),
 			contentType: 'application/json',
 			success: function(lekari){

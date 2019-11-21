@@ -159,8 +159,9 @@ public class LekarController {
 			String[] radnov=l.getRadnoVreme().split("-");
 
 			
-			
+			if(flag==true) {
 			nadjeniLekari.add(new LekarDTO(l));
+		}
 		}
 		
 		return new ResponseEntity<>(nadjeniLekari, HttpStatus.OK);
