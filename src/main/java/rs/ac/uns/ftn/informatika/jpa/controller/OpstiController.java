@@ -10,18 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PorukaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
+import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
+import rs.ac.uns.ftn.informatika.jpa.model.Teacher;
 import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
 import rs.ac.uns.ftn.informatika.jpa.service.AministratorKlinickogCentraService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
@@ -168,5 +172,36 @@ public class OpstiController {
 		session.invalidate();
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	//metoda koja postavlja atribut aktiviranNalog na true
+	//aktivira nalog pacijenta
+	@PostMapping(value="/prihvatiPacijenta/{id}")
+	public ResponseEntity<PacijentDTO> updatePacijent(@PathVariable Long id) {
+
+		Pacijent pacijent = pacijentService.findOne(id);
+
+		if (pacijent == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		pacijent.setAktiviranNalog(true);
+
+		pacijent = pacijentService.save(pacijent);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	//metoda koja uklanja pacijenta sa liste kad mu je zahtev za kreiranje naloga odbijen
+	@PostMapping(value="/ukloniPacijenta/{id}")
+	public ResponseEntity<PacijentDTO> ukloniPacijent(@PathVariable Long id) {
+
+		Pacijent pacijent = pacijentService.findOne(id);
+
+		if (pacijent != null) {
+			pacijentService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }
