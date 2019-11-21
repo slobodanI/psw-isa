@@ -17,8 +17,8 @@ public class LekarDTO {
 	private String radnoVreme;
 	private String username;
 	private String password;
-	private String uloga;
-	private Long idKlinike;
+	private String uloga="Lekar";
+//	private Long idKlinike;
 	private String radniKalendar;
 //	private PacijentDTO pacijent;
 //	private PregledDTO pregled;
@@ -37,7 +37,7 @@ public class LekarDTO {
 		password = lekar.getPassword();
 		brojOcena = lekar.getBrojOcena();
 		uloga = "Lekar";
-		idKlinike = lekar.getKlinika().getId();
+//		idKlinike = lekar.getKlinika().getId();
 		radniKalendar = lekar.getRadniKalendar();
 		radnoVreme = lekar.getRadnoVreme();
 //		kl=lekar.getKlinika();
@@ -60,7 +60,7 @@ public class LekarDTO {
 		this.brojOcena = brojOcena;
 		this.uloga = "Lekar";
 		this.radniKalendar = radniKalendar;
-		this.idKlinike = idKlinike;
+	//	this.idKlinike = idKlinike;
 		// this.kl=kl;
 	}
 
@@ -160,12 +160,12 @@ public class LekarDTO {
 		this.radniKalendar = radniKalendar;
 	}
 
-	public Long getIdKlinike() {
-		return idKlinike;
-	}
-
-	public void setIdKlinike(Long idKlinike) {
-		this.idKlinike = idKlinike;
-	}
+//	public Long getIdKlinike() {
+//		return idKlinike;
+//	}
+//
+//	public void setIdKlinike(Long idKlinike) {
+//		this.idKlinike = idKlinike;
+//	}
 
 }

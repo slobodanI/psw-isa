@@ -22,7 +22,7 @@ public class Sala {
 	@Column(nullable =  false)
 	private String zauzetost;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
 	
 	public Sala() {
@@ -44,20 +44,28 @@ public class Sala {
 		this.id = id;
 	}
 
-	public String getnaziv() {
+	public String getNaziv() {
 		return naziv;
 	}
 
-	public void setnaziv(String naziv) {
+	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
 
-	public String getzauzetost() {
+	public String getZauzetost() {
 		return zauzetost;
 	}
 
-	public void setzauzetost(String zauzetost) {
+	public void setZauzetost(String zauzetost) {
 		this.zauzetost = zauzetost;
+	}
+
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
 	}
 	
 	

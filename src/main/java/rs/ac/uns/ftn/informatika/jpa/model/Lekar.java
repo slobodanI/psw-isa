@@ -47,7 +47,7 @@ public class Lekar {
 	private String radnoVreme;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
 	
 	

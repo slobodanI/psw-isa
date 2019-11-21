@@ -58,15 +58,15 @@ public class LekarController {
 
 	}
 	
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
-	public @ResponseBody void deleteLekar(@PathVariable Long id){
+	@DeleteMapping(value="/delete/{id}")
+	public ResponseEntity<Void> deleteLekar(@PathVariable Long id){
 		
 		Lekar lekar = lekarService.findOne(id);
 		if(lekar != null) {
 			lekarService.remove(id);
-		//	return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
-			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -95,7 +95,7 @@ public class LekarController {
 		if(lekarDTO.getPassword().length()<6) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		Klinika klinika = klinikaService.findOne(lekarDTO.getIdKlinike());
+		Klinika klinika = klinikaService.findOne(lekarDTO.getKlinika().getId());
 		Lekar lekar = new Lekar();
 		lekar.setIme(lekarDTO.getIme());
 		lekar.setPrezime(lekarDTO.getPrezime());
