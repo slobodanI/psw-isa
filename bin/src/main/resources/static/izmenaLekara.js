@@ -15,7 +15,7 @@ $(document).ready(function(){
 				alert("Greska pri izmeni podataka");
 			}	
 			
-			
+			s
 		});
 	
 	
