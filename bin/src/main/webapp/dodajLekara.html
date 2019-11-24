@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dodavanje lekara</title>
+</head>
+<body>
+
+	<form id="formaZaNovogLekara">
+		<table>
+			<tr><td>Ime</td><td><input type="text" name="ime" required></td></tr>
+			<tr><td>Prezime</td><td><input type="text" name="prezime" required></td></tr>
+			<tr><td>Korisničko ime </td><td><input type="text" name="username" required></td></tr>
+			<tr><td>Lozinka</td><td><input type="text" name="password" required></td></tr>
+			<tr><td>Potvrdi lozinku</td><td><input type="text" name="confirmPassword" required></td></tr>
+			<tr><td>Radno vreme</td><td><input type="text" name="radnoVreme" required></td></tr>
+			<tr><td><input type="submit" value="Register"></td></tr>
+		</table>
+
+	</form>
+
+	<hr>
+	<form id="obrisiLekara">
+		<table>
+			<tr><td>ID Lekara</td><td><input type="number" name="id" required></td></tr>
+			<tr><td><input type="submit" value="Obrisi"></td></tr>
+		</table>
+	</form>	
+
+
+	<script type="text/javascript" src="dodajLekara.js"></script>
+</body>
+</html>

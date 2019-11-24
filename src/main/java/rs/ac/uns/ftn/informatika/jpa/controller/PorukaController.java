@@ -42,10 +42,7 @@ public class PorukaController {
 
 		List<Poruka> svePoruke = porukaService.findAll();
 		
-		List<PorukaDTO> porukeDTO = new ArrayList<>();
-		for (Poruka p : svePoruke) {
-			porukeDTO.add(new PorukaDTO(p));
-		}
+		List<PorukaDTO> porukeDTO = porukaService.vratiSvePorukeDTO(svePoruke);
 		
 		return new ResponseEntity<>(porukeDTO, HttpStatus.OK);
 		
@@ -62,12 +59,14 @@ public class PorukaController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		poruka.setOdgovoreno(true);
+		poruka = porukaService.serviceSetOdgovoreno(poruka);
 
 		poruka = porukaService.save(poruka);
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	//Metoda za slanje eMail-a
 	@PostMapping(value="/posaljiEmail", consumes = "application/json")
 	public ResponseEntity<EmailDTO> updatePoruka(@RequestBody EmailDTO email)  
 	{
