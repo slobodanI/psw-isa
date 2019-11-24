@@ -25,7 +25,8 @@ public class MedicinskaSestraController
 
 		MedicinskaSestra sestra = medicinskaSestraService.findOne(id);
 
-		if (sestra == null) {
+		if (sestra == null) 
+		{
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new MedicinskaSestraDTO(sestra), HttpStatus.OK);

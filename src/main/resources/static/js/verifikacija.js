@@ -7,31 +7,32 @@ function dodajPacijenta(ind)
 		contentType: 'application/json',
 		success: function()
 		{
-			window.location.href = 'http://localhost:8080/uspeh.html';
-			//ako se jednom izvrsilo postavi executed na true da se ne izvrsava ponovo
-			localStorage.setItem("executed", "true");
+			//poruka za uspeh
+			myHTML = '<div id="verUspesno" class="card-deck mb-3 text-center"><div class="card mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">Verifikacija</h4></div><div class="card-body"><h1 class="card-title pricing-card-title">Verifikacija uspešna</h1><a href="index.html">Idi na logovanje</a></div></div></div>';
+			$("#content").append(myHTML);
 		},
 		error()
 		{
-			//ako se jednom izvrsilo postavi executed na true da se ne izvrsava ponovo
-			window.location.href = 'http://localhost:8080/neuspeh.html';
-			localStorage.setItem("executed", "true");
+			//poruka za neuspeh
+			myHTML = '<div id="verUspesno" class="card-deck mb-3 text-center"><div class="card mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">Verifikacija</h4></div><div class="card-body"><h1 class="card-title pricing-card-title">Verifikacija neuspešna</h1></div></div></div>';
+			$("#content").append(myHTML);
 		}
 	});
 }
 
 $(document).ready(function () {
 	
-	//da li se vec izvrsilo? ako jeste preskoci
-	if(localStorage.getItem("executed")==null)
-	{
-		//iscitaj id pacijenta iz linka
-		var url_string = window.location.href;
-		var url = new URL(url_string);
-		var id = url.searchParams.get("id_pacijenta");
-		
-		//dodaj pacijenta
-		dodajPacijenta(id);
-	}
+	//iscitaj id pacijenta iz linka
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var id = url.searchParams.get("info");
+	
+	//alert(id.toString('utf8'));
+	var decrypted = CryptoJS.AES.decrypt(id, "nesto");
+	  
+	//alert(decrypted.toString(CryptoJS.enc.Utf8));
+	
+	//dodaj pacijenta
+	dodajPacijenta(decrypted.toString(CryptoJS.enc.Utf8));
 	
 });

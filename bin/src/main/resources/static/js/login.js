@@ -47,7 +47,7 @@ function koJeUlogovan() {
 				} else if (user.uloga == "Lekar") {
 					window.location = "./LekarHome.html";
 				} else if (user.uloga == "MedicinskaSestra") {
-					window.location = "./MedicinskaSestra.html";
+					window.location = "./MedicinskaSestraHome.html";
 				} else {
 					console.log("NIKO NIJE ULOGOVAN");
 				}

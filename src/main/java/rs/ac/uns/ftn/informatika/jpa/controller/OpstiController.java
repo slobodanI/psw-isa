@@ -17,25 +17,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.PorukaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
-import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
-import rs.ac.uns.ftn.informatika.jpa.model.Teacher;
 import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
 import rs.ac.uns.ftn.informatika.jpa.service.AministratorKlinickogCentraService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
 import rs.ac.uns.ftn.informatika.jpa.service.MedicinskaSestraService;
+import rs.ac.uns.ftn.informatika.jpa.service.OpstiService;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
 
 
 @RestController
 @RequestMapping(value = "api")
 public class OpstiController {
+	
+	@Autowired
+	private OpstiService OpstiService;
 	
 	@Autowired
 	private PacijentService pacijentService;
@@ -187,9 +188,10 @@ public class OpstiController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		pacijent.setAktiviranNalog(true);
+		pacijent = OpstiService.serviceSetAktiviranNalog(pacijent);
 
 		pacijent = pacijentService.save(pacijent);
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -199,10 +201,14 @@ public class OpstiController {
 
 		Pacijent pacijent = pacijentService.findOne(id);
 
-		if (pacijent != null) {
+		if (pacijent != null) 
+		{
 			pacijentService.remove(id);
+			
 			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
+		} 
+		else 
+		{
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
