@@ -117,10 +117,15 @@ function RenderHtmlOnSuccess() {
 		    	 $('#emailPacijentaTxt').val(email_pacijenta);
 		         $('#idPacijentaTxt').val(id_pacijenta);
 		         
+		         //kriptovanje id-ja pacijenta za verifikacioni link
+		         kriptovano = CryptoJS.AES.encrypt(id_pacijenta, "nesto");
+		         
+		         
 		         //standardna poruka za korisnika kome je zahtev prihvacen
 		         link = 'Poštovani, \n ovo je vaš \n';
-		         link += '<a href="http://localhost:8080/verify.html?id_pacijenta=' + id_pacijenta + '">link za verifikaciju</a>';
+		         link += '<a href="http://localhost:8080/verify.html?info=' + encodeURIComponent(kriptovano) + '">link za verifikaciju</a>';
 		         link += '\n Srdačan pozdrav,\n Administrator kliničkog centra';
+		         //alert(id_pacijenta + ' ' + kriptovano);
 		         
 		         $('#naslovTxt').val('Zahtev za registraciju prihvaćen');
 		         $('#porukaTxt').val(link);
@@ -254,7 +259,29 @@ function selectOnChange()
 	}
 }
 
+function koJeUlogovan() 
+{
+	
+	$.get({
+		url : 'api/whoIsLoggedIn',
+		success : function(user) 
+		{
+
+			if(user.uloga != "AdministratorKlinickogCentra")
+			{
+				logout();
+			}
+		},
+		error : function()
+		{
+			alert('Greska pri dobavljanju informacija o ulogovanoj osobi');
+		}
+	});
+}
+
 $(document).ready(function() {
+	koJeUlogovan();
+	
 	//renderovanje tabele sa porukama
 	RenderHtmlOnSuccess();
 	

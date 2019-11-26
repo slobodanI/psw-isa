@@ -1,0 +1,87 @@
+{
+  "definitions": {
+	  "non-empty-string": {"type": "string", "minLength": 1, "pattern": "[^\\s]"},
+	  "pass": {"type": "string", "minLength": 6, "pattern": "[^\\s]"}},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "AdministratorKlinickogCentra",
+  "required": [
+		"id",
+	    "ime",
+	    "prezime",
+	    "username",
+	    "password",
+	    "email",
+	    "promenjenaLozinka",
+	    "uloga"
+	  ],
+  "additionalProperties": false,
+  "properties": {
+	  	"id": {
+	  		"$id": "#/properties/id",
+	        "type": "null",
+	        "title": "id",
+	        "description": "id"},
+	        
+	    "ime": {
+	        "$id": "#/properties/ime",
+	        "type": "string",
+	        "title": "ime",
+	        "description": "ime",
+	        "$ref": "#/definitions/non-empty-string"},
+  
+		"prezime": {
+		    "$id": "#/properties/prezime",
+		    "type": "string",
+		    "title": "prezime",
+		    "description": "prezime",
+		    "$ref": "#/definitions/non-empty-string"},
+		    
+		"username": {
+			"$id": "#/properties/username",
+			"type": "string",
+			"title": "username",
+			"description": "username",
+			"$ref": "#/definitions/non-empty-string"},
+			    
+		"password": {
+			"$id": "#/properties/password",
+			"type": "string",
+			"title": "password",
+			"description": "password",
+			"$ref": "#/definitions/pass"},
+			
+		"email": {
+			"$id": "#/properties/email",
+			"type": "string",
+			"title": "email",
+			"description": "email",
+			"$ref": "#/definitions/non-empty-string"},
+			
+		"promenjenaLozinka": {
+			"$id": "#/properties/promenjenaLozinka",
+			"type": "boolean",
+			"title": "promenjenaLozinka",
+			"description": "promenjenaLozinka",
+			"enum": [ false ]},
+			
+		"uloga": {
+			"$id": "#/properties/uloga",
+			"type": "string",
+			"title": "uloga",
+			"description": "uloga",
+			"enum": [ "AdministratorKlinickogCentra" ] }
+			
+			}
+}
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    

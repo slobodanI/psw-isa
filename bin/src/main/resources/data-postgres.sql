@@ -43,7 +43,7 @@ insert into administrator_klinike (klinika_id, ime, prezime, username, password,
 insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'ime3','prezime3',12,60,'us3','pas12345','aaa', '8-16', 'Lekar');
 
 
-insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'email@email.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
+insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'nenad@gmail.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Zika', 'Zikic', 'username2', 'pass2', 'zika@gmail.com', 'adr2', 'grad', 'drzava', '021', 234, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Laza', 'Lazic', 'username3', 'pass3', 'laza@gmail.com', 'adr3', 'grad', 'drzava', '021', 345, false, 'Pacijent');
@@ -69,9 +69,10 @@ insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prez
 
 insert into obavljen_pregled (klinika_id,pacijent_id) values (1,1);
 
-insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 1, 'Zahtev Mika Mikic', 'Zahtev id 1 - Mika Mikic', 'mika@gmail.com', '-', true);
-insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 2, 'Zahtev Zika Zikic', 'Zahtev id 2 - Zika Zikic', 'zika@gmail.com', '-', true);
-insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (3, 3, 'Zahtev Laza Lazic', 'Zahtev id 3 - Laza Lazic', 'laza@gmail.com', '-', false);
-insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 4, 'Zahtev Pera Peric', 'Zahtev id 4 - Pera Peric', 'pera@gmail.com', '-', false);
-insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 5, 'Zahtev Mile Milic', 'Zahtev id 5 - Mile Milic', 'mile@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 1, 'Zahtev Nenad Nenadovic', 'Zahtev id 1 - Nenad Nenadovic', 'nenad@gmail.com', '-', true);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 2, 'Zahtev Mika Mikic', 'Zahtev id 2 - Mika Mikic', 'mika@gmail.com', '-', true);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (3, 3, 'Zahtev Zika Zikic', 'Zahtev id 3 - Zika Zikic', 'zika@gmail.com', '-', true);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 4, 'Zahtev Laza Lazic', 'Zahtev id 4 - Laza Lazic', 'laza@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 5, 'Zahtev Pera Peric', 'Zahtev id 5 - Pera Peric', 'pera@gmail.com', '-', false);
+insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (6, 6, 'Zahtev Mile Milic', 'Zahtev id 6 - Mile Milic', 'mile@gmail.com', '-', false);
 
