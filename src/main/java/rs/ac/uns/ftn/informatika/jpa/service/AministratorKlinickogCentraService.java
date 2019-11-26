@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.AdministratorKlinickogCentraDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.AdministratorKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.repository.AdministratorKlinickogCentraRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class AministratorKlinickogCentraService {
 	
 	@Autowired
 	private JsonValidation jsonValidation;
+	
+	@Autowired
+	private AdministratorKlinikeService adminKservice;
 	
 	public AdministratorKlinickogCentra findOne(Long id) {
 		return administratorKlinickogCentraRepository.findById(id).orElseGet(null);
@@ -60,6 +65,10 @@ public class AministratorKlinickogCentraService {
 		administrator.setPromenjenaLozinka(admin.getPromenjenaLozinka());
 		administrator.setUloga(admin.getUloga());
 		
+		if(admin.getIme().isEmpty() || admin.getPrezime().isEmpty() || admin.getUsername().isEmpty() || admin.getEmail().isEmpty())
+		{
+			return null;
+		}
 		
 		
 		List<AdministratorKlinickogCentra> sviAdmini = this.findAll();
@@ -82,4 +91,5 @@ public class AministratorKlinickogCentraService {
 		
 		return administrator;
 	}
+	
 }
