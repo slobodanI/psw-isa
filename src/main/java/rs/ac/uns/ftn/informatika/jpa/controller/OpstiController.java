@@ -53,6 +53,11 @@ public class OpstiController {
 	@Autowired
 	private MedicinskaSestraService medicinskaSestraService;
 	
+	/*
+	 * prolazimo kroz svaku tabelu da bi proverili da li vec postoji prosledjeni username,
+	 * RETURN DTOpacijent ako ga upise,
+	 * RETURN BAD_REQUEST ako ga ne upise
+	 */
 	@PostMapping(value = "/savePacijent",consumes = "application/json")
 	public ResponseEntity<PacijentDTO> savePacijent(@RequestBody PacijentDTO pacijentDTO) {
 		
@@ -79,6 +84,34 @@ public class OpstiController {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);
 			}
 		}
+		
+		List<AdministratorKlinickogCentra> sviAKC = administratorKlinickogCentraService.findAll();
+		for(AdministratorKlinickogCentra akc : sviAKC) {
+			if(akc.getUsername().equals(pacijent.getUsername())) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
+		
+		List<AdministratorKlinike> sviAK = administratorKlinikeService.findAll();
+		for(AdministratorKlinike ak : sviAK) {
+			if(ak.getUsername().equals(pacijent.getUsername())) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
+		
+		List<Lekar> sviLekari = lekarService.findAll();
+		for(Lekar l : sviLekari) {
+			if(l.getUsername().equals(pacijent.getUsername())) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
+		
+		List<MedicinskaSestra> sveMS = medicinskaSestraService.findAll();
+		for(MedicinskaSestra ms : sveMS) {
+			if(ms.getUsername().equals(pacijent.getUsername())) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 				
 		pacijent = pacijentService.save(pacijent);
 		
@@ -86,6 +119,11 @@ public class OpstiController {
 		
 	}
 	
+	
+	/*
+	 * prolazi kroz svaku tabelu i trazi odgovarajuci username i password
+	 * vraca BAD REQUEST ako ne nadje 
+	 */	
 	@PostMapping(value = "/logIn",consumes = "application/json")
 	public ResponseEntity<Void> logIn(@RequestBody PacijentDTO userInfo, @Context HttpServletRequest request) {
 		
@@ -152,6 +190,9 @@ public class OpstiController {
 		
 	}
 	
+	/*
+	 * vraca id i ulogu trenutno ulogovanog korisnika
+	 */
 	@GetMapping(value = "/whoIsLoggedIn",produces = "application/json")
 	public UserDTO whoIsLoggedIn(@Context HttpServletRequest request) {
 		
