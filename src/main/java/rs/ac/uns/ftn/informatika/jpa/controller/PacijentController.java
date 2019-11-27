@@ -38,27 +38,12 @@ public class PacijentController {
 	@PutMapping(value = "/{id}", consumes = "application/json")
 	public ResponseEntity<PacijentDTO> updatePacijent(@PathVariable Long id, @RequestBody PacijentDTO pacijentDTO) {
 
-		Pacijent pacijent = pacijentService.findOne(id);
-		
-		if (pacijent == null) {
+		//Ako nema pacijentra sa trazen id-em ILI ako je nova lozinka prekratka
+		if(pacijentService.updatePacijent(id, pacijentDTO) == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		if(pacijentDTO.getPassword().length() < 6) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		pacijent.setIme(pacijentDTO.getIme());
-		pacijent.setPrezime(pacijentDTO.getPrezime());
-		pacijent.setUsername(pacijentDTO.getUsername());
-		pacijent.setPassword(pacijentDTO.getPassword());
-		pacijent.setAdresa(pacijentDTO.getAdresa());
-		pacijent.setGrad(pacijentDTO.getGrad());
-		pacijent.setDrzava(pacijentDTO.getDrzava());
-		pacijent.setBrojTel(pacijentDTO.getBrojTel());
-
-		pacijent = pacijentService.save(pacijent);
-		return new ResponseEntity<>(new PacijentDTO(pacijent), HttpStatus.OK);
+					
+		return new ResponseEntity<>(new PacijentDTO(pacijentService.updatePacijent(id, pacijentDTO)), HttpStatus.OK);
 	}
 	
 	
