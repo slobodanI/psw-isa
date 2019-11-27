@@ -169,6 +169,14 @@ public class Klinika {
 		this.lekari = lekari;
 	}
 
+	@Override
+	public String toString() {
+		return "Klinika [id=" + id + ", naziv=" + naziv + ", brojOcena=" + brojOcena + ", ukupnaOcena=" + ukupnaOcena
+				+ ", prihod=" + prihod + ", adresa=" + adresa + ", opis=" + opis + ", slobodniTerminiPregleda="
+				+ slobodniTerminiPregleda + ", pacijenti=" + pacijenti + ", administratoriKlinike="
+				+ administratoriKlinike + ", lekari=" + lekari + ", sale=" + sale + "]";
+	}
+
 //	public Collection<Lekar> getLekari() {
 //		return lekari;
 //	}
@@ -200,6 +208,9 @@ public class Klinika {
 //	public void setIzvestaj(IzvestajOPoslovanju izvestaj) {
 //		this.izvestaj = izvestaj;
 //	}
+	
+	
+	
 	
 
 }

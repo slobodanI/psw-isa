@@ -129,4 +129,11 @@ public class AdministratorKlinike {
 		this.uloga = uloga;
 	}
 
+	@Override
+	public String toString() {
+		return "AdministratorKlinike [id=" + id + ", ime=" + ime + ", prezime=" + prezime + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", klinika=" + klinika + ", promenjenaLozinka="
+				+ promenjenaLozinka + ", uloga=" + uloga + "]";
+	}
+	
 }
