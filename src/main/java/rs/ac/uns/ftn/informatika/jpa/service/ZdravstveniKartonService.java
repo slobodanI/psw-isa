@@ -36,4 +36,10 @@ public class ZdravstveniKartonService {
 		ZKRepository.deleteById(id);
 	}
 	
+	public ZdravstveniKarton pronadjiZKpoIDuPacijenta(Long idPacijenta) {
+		return ZKRepository.findOneByPacijentId(idPacijenta);
+	}
+	
+	
+	
 }

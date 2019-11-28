@@ -19,10 +19,10 @@ public class ZdravstveniKartonController {
 	@Autowired
 	private ZdravstveniKartonService ZKservice;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<ZdravstveniKartonDTO> getPacijent(@PathVariable Long id) {
+	@GetMapping(value = "/{idPacijenta}")
+	public ResponseEntity<ZdravstveniKartonDTO> getZdravstveniKarton(@PathVariable Long idPacijenta) {
 
-		ZdravstveniKarton zdravstveniKarton = ZKservice.findOne(id);
+		ZdravstveniKarton zdravstveniKarton = ZKservice.pronadjiZKpoIDuPacijenta(idPacijenta);
 
 		if (zdravstveniKarton == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
