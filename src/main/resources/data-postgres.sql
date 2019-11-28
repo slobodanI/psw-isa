@@ -66,6 +66,10 @@ insert into dijagnoza (sifra, naziv) values ('4','cetvrtaDijagnoza');
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000, 'obican',2);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000, 'obican',null);
 
+insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_vreme, cena) values (1, 1, 'info', '30-04-2019 12:00', 5000);
+
+insert into lekar_operacija (operacija_id, lekar_id) values (1, 1);
+
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif1', 'naz1', 123, 'imeP', 'prezP', false, 'medSes');
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif2', 'naz2', 123, 'imeP', 'prezP', false, 'medSes');
 

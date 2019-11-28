@@ -56,12 +56,20 @@ public class Pacijent {
 	@Column(nullable =  false, unique = true)
 	private Long lbo;
 	
+	//U KOJOJ SVE KLINICI JE BIO PACIJENT, TREBA STUDENTU 2
 	@ManyToMany
 	@JoinTable(name = "obavljenPregled", joinColumns = @JoinColumn(name = "klinika_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"))
 	private Set<Klinika> klinike =  new HashSet<Klinika>();
 	
 	@OneToMany(mappedBy = "pacijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Pregled> zakazaniPregledi = new HashSet<Pregled>();
+	
+//	@ManyToMany
+//	@JoinTable(name = "obavljeneOperacije", joinColumns = @JoinColumn(name = "klinika_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"))
+//	private Set<Operacija> obavljeneOperacije =  new HashSet<Operacija>();
+	
+	@OneToMany(mappedBy = "pacijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Operacija> zakazaneOperacije = new HashSet<Operacija>();
 	
 	@Column(nullable =  false)
 	private Boolean aktiviranNalog;
