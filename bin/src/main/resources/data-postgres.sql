@@ -32,7 +32,9 @@ insert into medicinska_sestra (ime, prezime, username, password, email, promenje
 insert into lek (sifra, naziv) values ('sif1', 'naz1');
 insert into lek (sifra, naziv) values ('sif2', 'naz2');
 
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('naz1', 'adr1', 'opis','slobodni', 5, 50,521000);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000);
 
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
