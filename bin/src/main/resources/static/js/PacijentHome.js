@@ -4,4 +4,8 @@ $(document).ready(function(){
 		window.location = "./PacijentProfil.html";
 	});
 	
+	$("#btn-zdravstveniKarton").click(function(event){
+		window.location = "./ZdravstveniKarton.html";
+	});
+	
 });
