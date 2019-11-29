@@ -60,10 +60,10 @@ insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tez
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (4, 'AB', '+1', 192, 80, 'lek1', 'nema');
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (5, 'A', '+2', 179, 80, 'nema', 'nema');
 
-insert into dijagnoza (sifra, naziv) values ('1','prvaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('2','drugaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('3','trecaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('4','cetvrtaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('556','prvaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('778','drugaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('632','trecaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('114','cetvrtaDijagnoza');
 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000, 'obican',2);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000, 'obican',null);

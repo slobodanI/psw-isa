@@ -29,8 +29,10 @@ insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19'
 insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('Pera', 'Peric', 'adminKC', 'adminKC', 'admin@gmail.com', 'true', 'AdministratorKlinickogCentra'); 
 insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('lepa', 'lukic', 'lepa123', 'lepsi', 'blabla', 'true', 'MedicinskaSestra');
 
-insert into lek (sifra, naziv) values ('sif1', 'naz1');
-insert into lek (sifra, naziv) values ('sif2', 'naz2');
+insert into lek (sifra, naziv) values ('05768', 'Lata');
+insert into lek (sifra, naziv) values ('07492', 'Bromazepam');
+insert into lek (sifra, naziv) values ('44769', 'Zylaxera');
+insert into lek (sifra, naziv) values ('00668', 'Onzapin');
 
 insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000);
 insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000);
@@ -65,6 +67,10 @@ insert into dijagnoza (sifra, naziv) values ('4','cetvrtaDijagnoza');
 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000, 'obican',2);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000, 'obican',null);
+
+insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_vreme, cena) values (1, 1, 'info', '30-04-2019 12:00', 5000);
+
+insert into lekar_operacija (operacija_id, lekar_id) values (1, 1);
 
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif1', 'naz1', 123, 'imeP', 'prezP', false, 'medSes');
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif2', 'naz2', 123, 'imeP', 'prezP', false, 'medSes');

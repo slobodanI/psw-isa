@@ -1,0 +1,39 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "Lek",
+  "required": [
+		"id",
+	    "sifra",
+	    "naziv"
+	  ],
+  "additionalProperties": false,
+  "properties": 
+  {
+	  	"id": {
+	  		"$id": "#/properties/id",
+	        "type": "null",
+	        "title": "id",
+	        "description": "id"
+	        },
+	        
+	    "sifra": {
+	        "$id": "#/properties/sifra",
+	        "type": "string",
+	        "title": "sifra",
+	        "description": "sifra"
+	        },
+  
+		"naziv": {
+		    "$id": "#/properties/naziv",
+		    "type": "string",
+		    "title": "naziv",
+		    "description": "naziv"
+		    }
+  }
+		   
+}
+		    
+	
