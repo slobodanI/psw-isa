@@ -71,7 +71,7 @@ public class LekarController {
 	}
 
 	@PutMapping(value = "/updateLekar", consumes = "application/json")
-	public ResponseEntity<LekarDTO> updateLekar(@RequestBody LekarDTO lekarDTO) {
+	public ResponseEntity<LekarDTO> updateLekar( @RequestBody LekarDTO lekarDTO) {
 
 		Lekar lekar = lekarService.findOne(lekarDTO.getId());
 

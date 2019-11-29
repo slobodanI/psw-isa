@@ -45,7 +45,7 @@ function koJeUlogovan() {
 				} else if (user.uloga == "AdministratorKlinike") {
 					window.location = "./AdministratorKlinikeHome.html";
 				} else if (user.uloga == "Lekar") {
-					window.location = "./LekarHome.html";
+					window.location = "./profilLekara.html";
 				} else if (user.uloga == "MedicinskaSestra") {
 					window.location = "./MedicinskaSestraHome.html";
 				} else {

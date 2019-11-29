@@ -105,7 +105,7 @@ public class SalaController {
 
 	}
 	
-	@PostMapping(value="/pretragaSala",consumes ="applpication/json")
+	@PostMapping(value="/pretragaSala",consumes ="application/json")
 	public ResponseEntity<List<SalaDTO>> pretragaSala(@RequestBody PretragaSale pretragaSala){
 			List<Sala> sale = salaService.findAll();
 			
@@ -114,22 +114,22 @@ public class SalaController {
 				boolean flag=true;
 				
 				if(!pretragaSala.getNaziv().equals("")) {
-					if(s.getNaziv().contains(pretragaSala.getNaziv())) {
+					if(!s.getNaziv().contains(pretragaSala.getNaziv())) {
 						flag=false;
 						continue;
 					}
 						
 				}
-				Double pom = (double) pretragaSala.getId();
-				Double sid=(double) pretragaSala.getId();
-				if(pom != null) {
-					if(sid!=pom) {
-						flag=false;
-						continue;
-						
-					}
-					
-				}
+//				Double pom = (double) pretragaSala.getId();
+//				Double sid=(double) pretragaSala.getId();
+//				if(pom != null) {
+//					if(sid!=pom) {
+//						flag=false;
+//						continue;
+//						
+//					}
+//					
+//				}
 				
 				if(flag==true) {
 				nadjeneSale.add(new SalaDTO(s));
