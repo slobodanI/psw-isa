@@ -34,9 +34,9 @@ insert into lek (sifra, naziv) values ('07492', 'Bromazepam');
 insert into lek (sifra, naziv) values ('44769', 'Zylaxera');
 insert into lek (sifra, naziv) values ('00668', 'Onzapin');
 
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000, 45.258013, 19.821040);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000, 45.256205, 19.827348);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000, 45.251833, 19.833976);
 
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);

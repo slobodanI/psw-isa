@@ -45,6 +45,12 @@ public class Klinika {
 	@Column(nullable = false)
 	private String slobodniTerminiPregleda;
 	
+	@Column(nullable = false)
+	private float latitude;
+	
+	@Column(nullable = false)
+	private float longitude;
+	
 	@ManyToMany(mappedBy = "klinike")
 	private Set<Pacijent> pacijenti =  new HashSet<Pacijent>();
 	
@@ -65,7 +71,7 @@ public class Klinika {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Klinika(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda,
+	public Klinika(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda, float latitude, float longitude,
 			Set<Lekar> lekari/*, HashMap<TipPregleda, Double> cenovnik,
 			IzvestajOPoslovanju izvestaj*/
 			, Set<Sala> sale) {
@@ -75,6 +81,8 @@ public class Klinika {
 		this.adresa = adresa;
 		this.opis = opis;
 		this.slobodniTerminiPregleda = slobodniTerminiPregleda;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.lekari = lekari;
 		this.sale = sale;
 //		this.cenovnik = cenovnik;
@@ -169,13 +177,32 @@ public class Klinika {
 		this.lekari = lekari;
 	}
 
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
 	@Override
 	public String toString() {
 		return "Klinika [id=" + id + ", naziv=" + naziv + ", brojOcena=" + brojOcena + ", ukupnaOcena=" + ukupnaOcena
 				+ ", prihod=" + prihod + ", adresa=" + adresa + ", opis=" + opis + ", slobodniTerminiPregleda="
-				+ slobodniTerminiPregleda + ", pacijenti=" + pacijenti + ", administratoriKlinike="
-				+ administratoriKlinike + ", lekari=" + lekari + ", sale=" + sale + "]";
+				+ slobodniTerminiPregleda + ", latitude=" + latitude + ", longitude=" + longitude + ", pacijenti="
+				+ pacijenti + ", administratoriKlinike=" + administratoriKlinike + ", lekari=" + lekari + ", sale="
+				+ sale + "]";
 	}
+
+	
 
 //	public Collection<Lekar> getLekari() {
 //		return lekari;
