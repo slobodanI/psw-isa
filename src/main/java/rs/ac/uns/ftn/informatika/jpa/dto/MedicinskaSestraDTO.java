@@ -13,6 +13,7 @@ public class MedicinskaSestraDTO {
 	private String email;
 	private Boolean promenjenaLozinka;
 	private String uloga = "MedicinskaSestra";
+	private KlinikaDTO klinika;
 	
 	public MedicinskaSestraDTO()
 	{
@@ -20,7 +21,7 @@ public class MedicinskaSestraDTO {
 	}
 
 	public MedicinskaSestraDTO(Long id, String ime, String prezime, String username, String password, String email,
-			Boolean promenjenaLozinka, String uloga) {
+			Boolean promenjenaLozinka, String uloga, KlinikaDTO klinika) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -30,11 +31,12 @@ public class MedicinskaSestraDTO {
 		this.email = email;
 		this.promenjenaLozinka = promenjenaLozinka;
 		this.uloga = uloga;
+		this.klinika = klinika;
 	}
 	
 	public MedicinskaSestraDTO(MedicinskaSestra sestra)
 	{
-		this(sestra.getId(), sestra.getIme(), sestra.getPrezime(), sestra.getUsername(), sestra.getPassword(), sestra.getEmail(), sestra.getPromenjenaLozinka(), sestra.getUloga());
+		this(sestra.getId(), sestra.getIme(), sestra.getPrezime(), sestra.getUsername(), sestra.getPassword(), sestra.getEmail(), sestra.getPromenjenaLozinka(), sestra.getUloga(), new KlinikaDTO(sestra.getKlinika()));
 	}
 
 	public Long getId() {
@@ -101,12 +103,22 @@ public class MedicinskaSestraDTO {
 		this.uloga = uloga;
 	}
 
+	public KlinikaDTO getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(KlinikaDTO klinika) {
+		this.klinika = klinika;
+	}
+
 	@Override
 	public String toString() {
 		return "MedicinskaSestraDTO [id=" + id + ", ime=" + ime + ", prezime=" + prezime + ", username=" + username
 				+ ", password=" + password + ", email=" + email + ", promenjenaLozinka=" + promenjenaLozinka
-				+ ", uloga=" + uloga + "]";
+				+ ", uloga=" + uloga + ", klinika=" + klinika + "]";
 	}
+
+	
 	
 	
 }

@@ -24,9 +24,10 @@ public class MedicinskaSestraController
 	public ResponseEntity<MedicinskaSestraDTO> getMedicinskaSestra(@PathVariable Long id) {
 
 		MedicinskaSestra sestra = medicinskaSestraService.findOne(id);
+		//System.out.println("############# ID: " + id + "#############");
 
 		if (sestra == null) 
-		{
+		{			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new MedicinskaSestraDTO(sestra), HttpStatus.OK);

@@ -62,6 +62,9 @@ public class Klinika {
 	private Set<Lekar> lekari = new HashSet<Lekar>();
 	
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<MedicinskaSestra> med_sestre = new HashSet<MedicinskaSestra>();
+	
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Sala> sale = new HashSet<Sala>();
 	
 //	private HashMap<TipPregleda,Double> cenovnik;
@@ -72,7 +75,7 @@ public class Klinika {
 	}
 
 	public Klinika(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda, float latitude, float longitude,
-			Set<Lekar> lekari/*, HashMap<TipPregleda, Double> cenovnik,
+			Set<Lekar> lekari, Set<MedicinskaSestra> med_sestre/*, HashMap<TipPregleda, Double> cenovnik,
 			IzvestajOPoslovanju izvestaj*/
 			, Set<Sala> sale) {
 		super();
@@ -84,6 +87,7 @@ public class Klinika {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.lekari = lekari;
+		this.med_sestre = med_sestre;
 		this.sale = sale;
 //		this.cenovnik = cenovnik;
 //		this.izvestaj = izvestaj;
@@ -198,9 +202,11 @@ public class Klinika {
 		return "Klinika [id=" + id + ", naziv=" + naziv + ", brojOcena=" + brojOcena + ", ukupnaOcena=" + ukupnaOcena
 				+ ", prihod=" + prihod + ", adresa=" + adresa + ", opis=" + opis + ", slobodniTerminiPregleda="
 				+ slobodniTerminiPregleda + ", latitude=" + latitude + ", longitude=" + longitude + ", pacijenti="
-				+ pacijenti + ", administratoriKlinike=" + administratoriKlinike + ", lekari=" + lekari + ", sale="
-				+ sale + "]";
+				+ pacijenti + ", administratoriKlinike=" + administratoriKlinike + ", lekari=" + lekari
+				+ ", med_sestre=" + med_sestre + ", sale=" + sale + "]";
 	}
+
+	
 
 	
 
