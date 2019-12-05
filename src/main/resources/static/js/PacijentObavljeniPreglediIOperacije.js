@@ -40,19 +40,11 @@ function ucitajPodatke(idPacijenta) {
 	$.get({
 		url : 'zdravstveniKarton/' + idPacijenta,
 		success : function(zk) {
-			$("#zkId").append("Id: " + zk.id);
-			$("#zkKrvnaGrupa").append("Krvna Grupa: " + zk.krvnaGrupa);
-			$("#zkDioptrija").append("Dioptrija: " + zk.dioptrija);
-			$("#zkVisina").append("Visina(cm): " + zk.visina);
-			$("#zkTezina").append("Tezina(kg): " + zk.tezina);
-			$("#zkAlergije").append("Alergije: " + zk.alergije);
-			$("#zkListaBolesti").append("Bolesti: " + zk.listaBolesti);
-			
 			izlistajListuObavljenihPregleda(zk.listaPregleda);
 			izlistajListuObavljenihOperacija(zk.listaOperacija);
 		},
 		error : function() {
-			alert("Neuspesno dobavljeni podacio iz zdravstvenog kartona");
+			alert("Neuspesno dobavljeni podaci iz zdravstvenog kartona");
 		}
 	});
 	
