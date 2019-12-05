@@ -2,19 +2,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dodavanje sale</title>
+<title>Prikaz sala klinike</title>
 </head>
 <body>
-
-	<form id="formaZaNovuSalu">
-		<table>
-			<tr><td>Naziv</td><td><input type="text" name="naziv" required></td></tr>
-			<tr><td><input type="submit" value="Dodaj"></td></tr>
-		</table>
-
-	</form>
-	<hr>
-	<p>BRISANJE SALE</p>
+	<b>Sale:</b>
+	<table border="1" id="tabela">
+		<thead>
+			<tr bgcolor="lightgrey">
+				<th>Naziv</th>
+				<th>Broj</th>
+				<th>Zauzetost</th>
+			</tr>
+		
+		</thead>
+	
+		<tbody>
+		</tbody>
+	</table>
+	
+<hr>
 	<form id="obrisiSalu">
 		<table>
 			<tr><td>ID Sale</td><td><input type="number" name="id" required></td></tr>
@@ -23,6 +29,9 @@
 	</form>	
 
 	<script src="js/jquery-3.4.1.min.js"></script>
-	<script type="text/javascript" src="js/dodajSalu.js"></script>
+	<script type="text/javascript" src="js/prikaziSale.js"></script>
+
+
+
 </body>
 </html>

@@ -28,10 +28,10 @@ public class Lekar {
 	@Column(nullable =  false)
 	private String prezime;
 	
-	@Column(nullable =  false)
+	@Column(nullable =  true)
 	private int brojOcena;
 	
-	@Column(nullable =  false)
+	@Column(nullable =  true)
 	private Double ukupnaOcena;
 	
 	@Column(nullable =  false, unique = true)
