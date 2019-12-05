@@ -34,9 +34,9 @@ insert into lek (sifra, naziv) values ('07492', 'Bromazepam');
 insert into lek (sifra, naziv) values ('44769', 'Zylaxera');
 insert into lek (sifra, naziv) values ('00668', 'Onzapin');
 
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000, 45.258013, 19.821040);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000, 45.256205, 19.827348);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000, 45.251833, 19.833976);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika1', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 50, 521000, 45.258013, 19.821040);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika2', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 47, 479000, 45.256205, 19.827348);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika3', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 45, 660000, 45.251833, 19.833976);
 
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
@@ -44,8 +44,10 @@ insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
 insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime1', 'prz1', 'us', 'asd', 'blabla', true, 'AdministratorKlinike' );
 insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime2', 'prz2', 'us2', 'asd', 'blabla', true, 'AdministratorKlinike' );
 
-insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'ime3','prezime3',12,60,'us3','pas12345','aaa', '8-16', 'Lekar');
-
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'lekar1','prezime1',12, 55,'us3','pas12345','aaa', '8-16', 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'lekar2','prezime2',12, 50,'lekar2','lekar2','aaa', '8-16', 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (2,'lekar3','prezime3',12, 60,'lekar3','lekar2','aaa', '8-16', 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (3,'lekar4','prezime4',12, 59,'lekar4','lekar2','aaa', '8-16', 'Lekar');
 
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'nenad@gmail.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
@@ -71,6 +73,8 @@ insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, 
 insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_vreme, cena) values (1, 1, 'info', '30-04-2019 12:00', 5000);
 
 insert into lekar_operacija (operacija_id, lekar_id) values (1, 1);
+insert into lekar_operacija (operacija_id, lekar_id) values (1, 2);
+insert into lekar_operacija (operacija_id, lekar_id) values (1, 3);
 
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif1', 'naz1', 123, 'imeP', 'prezP', false, 'medSes');
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif2', 'naz2', 123, 'imeP', 'prezP', false, 'medSes');

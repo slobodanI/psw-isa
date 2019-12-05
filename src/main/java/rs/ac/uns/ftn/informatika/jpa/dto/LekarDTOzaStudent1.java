@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
+import java.text.DecimalFormat;
+
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 
 public class LekarDTOzaStudent1 {
@@ -7,7 +9,10 @@ public class LekarDTOzaStudent1 {
 	private Long id;
 	private String ime;
 	private String prezime;
-	private Double ocena;
+	private String ocena;
+	
+	//da ocena ima samo dve vrednosti posle zareza
+	private DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	public LekarDTOzaStudent1() {
 		// TODO Auto-generated constructor stub
@@ -17,7 +22,7 @@ public class LekarDTOzaStudent1 {
 		id = lekar.getId();
 		ime = lekar.getIme();
 		prezime = lekar.getPrezime();
-		ocena = lekar.getUkupnaOcena() / lekar.getBrojOcena();
+		ocena = df2.format(lekar.getUkupnaOcena() / lekar.getBrojOcena());
 	}
 
 	public Long getId() {
@@ -44,11 +49,11 @@ public class LekarDTOzaStudent1 {
 		this.prezime = prezime;
 	}
 
-	public Double getOcena() {
+	public String getOcena() {
 		return ocena;
 	}
 
-	public void setOcena(Double ocena) {
+	public void setOcena(String ocena) {
 		this.ocena = ocena;
 	}
 	
