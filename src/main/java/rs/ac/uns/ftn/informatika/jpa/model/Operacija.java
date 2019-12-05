@@ -32,7 +32,7 @@ public class Operacija {
 	private int cena;
 	
 	@ManyToMany
-	@JoinTable(name = "lekarOperacija", joinColumns = @JoinColumn(name = "lekar_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operacija_id", referencedColumnName = "id"))
+	@JoinTable(name = "lekarOperacija", joinColumns = @JoinColumn(name = "operacija_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "lekar_id", referencedColumnName = "id"))
 	private Set<Lekar> lekari = new HashSet<Lekar>();
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

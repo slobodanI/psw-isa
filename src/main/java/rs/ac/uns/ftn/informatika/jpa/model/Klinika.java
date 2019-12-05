@@ -53,8 +53,7 @@ public class Klinika {
 	
 	@ManyToMany(mappedBy = "klinike")
 	private Set<Pacijent> pacijenti =  new HashSet<Pacijent>();
-	
-	
+		
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AdministratorKlinike> administratoriKlinike = new HashSet<AdministratorKlinike>();
 	
