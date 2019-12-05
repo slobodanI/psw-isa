@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
@@ -71,7 +72,7 @@ public class LekarController {
 	}
 
 	@PutMapping(value = "/updateLekar", consumes = "application/json")
-	public ResponseEntity<LekarDTO> updateLekar( @RequestBody LekarDTO lekarDTO) {
+	public ResponseEntity<UpdateLekarDTO> updateLekar( @RequestBody UpdateLekarDTO lekarDTO) {
 
 		Lekar lekar = lekarService.findOne(lekarDTO.getId());
 
@@ -84,7 +85,7 @@ public class LekarController {
 		lekar.setPassword(lekarDTO.getPassword());
 
 		lekar = lekarService.save(lekar);
-		return new ResponseEntity<>(new LekarDTO(lekar), HttpStatus.OK);
+		return new ResponseEntity<>(new UpdateLekarDTO(lekar), HttpStatus.OK);
 
 	}
 	
