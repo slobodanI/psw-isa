@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.informatika.jpa.dto;
 
 import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 
 
 public class PregledDTO {
@@ -16,7 +17,7 @@ public class PregledDTO {
 //	private Sala sala;
 	private LekarDTOzaStudent1 lekar;
 	private int popust;
-	private String tipPregleda;
+	private TipPregleda tipPregleda;
 	private int cena;
 	
 	public PregledDTO() {
@@ -91,11 +92,11 @@ public class PregledDTO {
 		this.popust = popust;
 	}
 
-	public String getTipPregleda() {
+	public TipPregleda getTipPregleda() {
 		return tipPregleda;
 	}
 
-	public void setTipPregleda(String tipPregleda) {
+	public void setTipPregleda(TipPregleda tipPregleda) {
 		this.tipPregleda = tipPregleda;
 	}
 

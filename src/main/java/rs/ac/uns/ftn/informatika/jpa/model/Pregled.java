@@ -47,8 +47,8 @@ public class Pregled {
 	@Column(nullable =  false)
 	private int popust;
 	
-	@Column(nullable =  false)
-	private String tipPregleda;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private TipPregleda tipPregleda;
 	
 	@Column(nullable =  false)
 	private int cena;
@@ -64,7 +64,7 @@ public class Pregled {
 	}
 	
 	public Pregled(Long id, String informacije, Dijagnoza dijagnoza, Set<Recept> recepti, String datumPregleda,
-			String satnica, Sala sala, Lekar lekar, int popust, String tipPregleda, int cena) {
+			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
@@ -151,11 +151,11 @@ public class Pregled {
 		this.popust = popust;
 	}
 
-	public String getTipPregleda() {
+	public TipPregleda getTipPregleda() {
 		return tipPregleda;
 	}
 
-	public void setTipPregleda(String tipPregleda) {
+	public void setTipPregleda(TipPregleda tipPregleda) {
 		this.tipPregleda = tipPregleda;
 	}
 
