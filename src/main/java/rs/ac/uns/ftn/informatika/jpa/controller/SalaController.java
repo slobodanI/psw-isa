@@ -28,8 +28,8 @@ public class SalaController {
 
 	@Autowired
 	private SalaService salaService;
+	
 	@Autowired
-
 	private KlinikaService klinikaService;
 
 	@GetMapping(value = "/sale")

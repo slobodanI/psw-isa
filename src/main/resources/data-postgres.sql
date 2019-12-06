@@ -26,6 +26,12 @@ insert into exam (student_id, course_id, date, grade) values (1, 2, '2016-04-19'
 insert into exam (student_id, course_id, date, grade) values (2, 1, '2016-02-01', 10);
 insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19', 10);
 
+
+
+insert into tip_pregleda (naziv) values ('Ocni pregled');
+insert into tip_pregleda (naziv) values ('Dermatoloski pregled');
+insert into tip_pregleda (naziv) values ('Stomatoloski pregled');
+
 insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('Pera', 'Peric', 'adminKC', 'adminKC', 'admin@gmail.com', 'true', 'AdministratorKlinickogCentra'); 
 
 insert into lek (sifra, naziv) values ('05768', 'Lata');
@@ -70,8 +76,8 @@ insert into dijagnoza (sifra, naziv) values ('778','drugaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('632','trecaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('114','cetvrtaDijagnoza');
 
-insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000, 'obican',2);
-insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000, 'obican',null);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000,1,2);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000,1,null);
 
 insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_vreme, cena) values (1, 1, 'info', '30-04-2019 12:00', 5000);
 
@@ -95,4 +101,7 @@ insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_prima
 insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (4, 4, 'Zahtev Laza Lazic', 'Zahtev id 4 - Laza Lazic', 'laza@gmail.com', '-', false);
 insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 5, 'Zahtev Pera Peric', 'Zahtev id 5 - Pera Peric', 'pera@gmail.com', '-', false);
 insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (6, 6, 'Zahtev Mile Milic', 'Zahtev id 6 - Mile Milic', 'mile@gmail.com', '-', false);
+
+
+
 
