@@ -8,4 +8,8 @@ $(document).ready(function(){
 		window.location = "./ZdravstveniKarton.html";
 	});
 	
+	$("#btn-listaPregledaIOperacija").click(function(event){
+		window.location = "./PacijentObavljeniPreglediIOperacije.html";
+	});
+	
 });

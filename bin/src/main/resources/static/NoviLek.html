@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+	<script src="js/datatables.min.js"></script>
+	<script src="js/NoviLek.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="../../../bootstrap.min.css">
+	<link rel="stylesheet" href="../../../datatables.min.css">
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="../../../select.dataTables.min.css">
+	<script src="js/logout.js" type="text/javascript"></script>
+	<meta charset="UTF-8">
+<title>NoviLek</title>
+</head>
+<body>
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    	<h5 class="my-0 mr-md-auto font-weight-normal">Administrator kliničkog centra</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="AdminKlinickogCentraHome.html">Profil</a>
+        <a class="p-2 text-dark" href="AdminKlinickogCentraZahtevi.html">Zahtevi</a>
+        <a class="p-2 text-dark" href="NoviAdmin.html">Novi admin</a>
+        <a class="p-2 text-dark" href="NoviLek.html">Novi lek</a>
+        <a class="p-2 text-dark" href="NovaDijagnoza.html">Nova dijagnoza</a>
+        <a class="p-2 text-dark" href="NovaKlinika.html">Nova klinika</a>
+        </nav>
+       <a class="btn btn-outline-primary" onclick="logout()">Izloguj se</a>
+	</div>
+	
+	<div id="divTabela">
+	
+	</div>
+	
+	<br/>
+	
+	<form id="noviLekForm">
+	
+		<div id="formaLek" class="card mb-4 box-shadow">
+		
+			<div class="card-header text-center">
+            	<h4 class="my-0 font-weight-normal">Novi lek</h4>
+        	</div>
+        
+        	<br/>
+	
+			<div class="form-group col-md-6">
+	    		<label>Šifra:</label>
+	    		<input id='sifraTxt' class="form-control" type="text" required>
+	    	</div>
+	    
+	    	<div class="form-group col-md-6">
+	    		<label>Naziv:</label>
+	    		<input id='nazivTxt' class="form-control" type="text" required>
+	    	</div>
+	    	
+	    	<br/>
+	    	
+	    	<input type="submit" id="kreirajLek" class="btn btn-lg btn-block btn-outline-primary" value="Kreiraj novi lek">
+	    	
+		</div>
+	
+	</form>
+	
+</body>
+</html>

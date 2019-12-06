@@ -34,9 +34,9 @@ insert into lek (sifra, naziv) values ('07492', 'Bromazepam');
 insert into lek (sifra, naziv) values ('44769', 'Zylaxera');
 insert into lek (sifra, naziv) values ('00668', 'Onzapin');
 
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000);
-insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika1', 'adr1', 'opis','slobodni', 5, 50,521000, 45.258013, 19.821040);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika2', 'adr1', 'opis','slobodni', 5, 50,479000, 45.256205, 19.827348);
+insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika3', 'adr1', 'opis','slobodni', 5, 50,660000, 45.251833, 19.833976);
 
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
@@ -60,10 +60,10 @@ insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tez
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (4, 'AB', '+1', 192, 80, 'lek1', 'nema');
 insert into zdravstveni_karton (pacijent_id, krvna_grupa, dioptrija, visina, tezina, alergije, lista_bolesti) values (5, 'A', '+2', 179, 80, 'nema', 'nema');
 
-insert into dijagnoza (sifra, naziv) values ('1','prvaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('2','drugaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('3','trecaDijagnoza');
-insert into dijagnoza (sifra, naziv) values ('4','cetvrtaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('556','prvaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('778','drugaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('632','trecaDijagnoza');
+insert into dijagnoza (sifra, naziv) values ('114','cetvrtaDijagnoza');
 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000, 'obican',2);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda, dijagnoza_id) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000, 'obican',null);

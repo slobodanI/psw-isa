@@ -27,7 +27,6 @@ insert into exam (student_id, course_id, date, grade) values (2, 1, '2016-02-01'
 insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19', 10);
 
 insert into administrator_klinickog_centra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('Pera', 'Peric', 'adminKC', 'adminKC', 'admin@gmail.com', 'true', 'AdministratorKlinickogCentra'); 
-insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga ) values ('lepa', 'lukic', 'lepa123', 'lepsi', 'blabla', 'true', 'MedicinskaSestra');
 
 insert into lek (sifra, naziv) values ('05768', 'Lata');
 insert into lek (sifra, naziv) values ('07492', 'Bromazepam');
@@ -37,6 +36,10 @@ insert into lek (sifra, naziv) values ('00668', 'Onzapin');
 insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika1', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 50, 521000, 45.258013, 19.821040);
 insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika2', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 47, 479000, 45.256205, 19.827348);
 insert into klinika (naziv, adresa, opis, slobodni_termini_pregleda, broj_ocena, ukupna_ocena,prihod, latitude, longitude) values ('klinika3', 'Novi Sad, Ulica 1', 'opis','slobodni', 10, 45, 660000, 45.251833, 19.833976);
+
+insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga, klinika_id ) values ('Mira', 'Miric', 'MiraMiric', 'mira123', 'mira@gmail.com', 'true', 'MedicinskaSestra', 1);
+insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga, klinika_id ) values ('Mara', 'Maric', 'MaraMaric', 'mara123', 'mara@gmail.com', 'true', 'MedicinskaSestra', 2);
+insert into medicinska_sestra (ime, prezime, username, password, email, promenjena_lozinka, uloga, klinika_id ) values ('Lepa', 'lukic', 'LepaLukic', 'lepa123', 'lepa@gmail.com', 'true', 'MedicinskaSestra', 3);
 
 insert into sala (naziv, zauzetost, klinika_id) values ('sala1', 'zauzeto', 1);
 insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
@@ -80,6 +83,11 @@ insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prez
 insert into recept (pregled_id, sifra_leka, naziv_leka, lbo, ime_pacijenta, prezime_pacijenta, overen, ime_medicinske_sestre) values (1, 'sif2', 'naz2', 123, 'imeP', 'prezP', false, 'medSes');
 
 insert into obavljen_pregled (klinika_id,pacijent_id) values (1,1);
+insert into obavljen_pregled (klinika_id,pacijent_id) values (2,2);
+insert into obavljen_pregled (klinika_id,pacijent_id) values (3,3);
+insert into obavljen_pregled (klinika_id,pacijent_id) values (4,1);
+insert into obavljen_pregled (klinika_id,pacijent_id) values (5,2);
+insert into obavljen_pregled (klinika_id,pacijent_id) values (6,3);
 
 insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (1, 1, 'Zahtev Nenad Nenadovic', 'Zahtev id 1 - Nenad Nenadovic', 'nenad@gmail.com', '-', true);
 insert into poruka (id, pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (2, 2, 'Zahtev Mika Mikic', 'Zahtev id 2 - Mika Mikic', 'mika@gmail.com', '-', true);

@@ -100,7 +100,7 @@ function izlistajListuObavljenihOperacija(operacije) {
 			ptag.append("Lekari: <br>");
 			var count = 1;
 			for(var l of o.lekari) {
-				ptag.append(" Lekar " + count + ": " + l.ime + " " + l.prezime + ", ocena: " + l.ocena + "<br>");
+				ptag.append("___Lekar " + count + ": " + l.ime + " " + l.prezime + ", ocena: " + l.ocena + "<br>");
 				count = count + 1;
 			}
 			

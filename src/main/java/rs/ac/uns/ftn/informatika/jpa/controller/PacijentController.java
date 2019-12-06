@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.StudentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
-import rs.ac.uns.ftn.informatika.jpa.model.Student;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
 
 @RestController
@@ -44,6 +44,16 @@ public class PacijentController {
 		}
 					
 		return new ResponseEntity<>(new PacijentDTO(pacijentService.updatePacijent(id, pacijentDTO)), HttpStatus.OK);
+	}
+	
+	//vraca pacijente klinike sa datim id-jem
+	@GetMapping(value = "vratiPacijente/{id}", consumes = "application/json")
+	public ResponseEntity<List<PacijentDTO>> vratiPacijenteKlinike(@PathVariable Long id) 
+	{
+		//System.out.println("###############-PRE-##############");
+		List<PacijentDTO> pacijentiKlinike = pacijentService.vratiSvePacijenteKlinike(id);
+		//System.out.println("###############-POSLE-##############");	
+		return new ResponseEntity<>(pacijentiKlinike, HttpStatus.OK);
 	}
 	
 	

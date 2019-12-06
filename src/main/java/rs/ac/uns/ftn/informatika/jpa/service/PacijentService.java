@@ -1,13 +1,14 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
 
@@ -56,5 +57,31 @@ public class PacijentService {
 		pacijent = save(pacijent);
 		
 		return pacijent;
+	}
+	
+	//vraca sve pacijente klinike sa zadatim ID-om
+	public List<PacijentDTO> vratiSvePacijenteKlinike(Long id) {
+		
+		List<Pacijent> lista = this.findAll();
+		
+		List<PacijentDTO> rezultat = new ArrayList<>();
+		
+		//idi kroz pacijente u tabeli...
+		for (Pacijent pac : lista) 
+		{
+			Set<Klinika> klinike = pac.getKlinike();
+			
+			//...pa kroz njihove klinike...
+			for (Klinika kl : klinike) 
+			{
+				//...i ako se id slaze sa id klinike dodaj u listu
+				if (kl.getId()==id) 
+				{
+					rezultat.add(new PacijentDTO(pac));
+				}
+			}
+		}
+		
+		return rezultat;
 	}
 }
