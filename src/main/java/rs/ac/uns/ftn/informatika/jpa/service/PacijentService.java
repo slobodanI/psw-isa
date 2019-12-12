@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOzaStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -119,6 +120,35 @@ public class PacijentService {
 		}
 		
 		return poseceneKlinike;
+		
+	}
+	
+	//vraca sve klinike u kojima je pacijent bio
+	public List<LekarDTOzaStudent1> getPoseceneLekare(Long idPacijenta) {
+		
+		Pacijent pacijent = this.findOne(idPacijenta);		
+		
+		List<LekarDTOzaStudent1> poseceniLekari = new ArrayList<LekarDTOzaStudent1>();
+		
+		for(Pregled p : pacijent.getZakazaniPregledi()) {// zakazani pregledi su zapravo svi pregledi
+			if(p.isObavljen()) {
+				LekarDTOzaStudent1 lekar = new LekarDTOzaStudent1(p.getLekar());
+				
+				//da nemam duplikata u listi
+				boolean flag = false;
+				for(LekarDTOzaStudent1 l : poseceniLekari) {
+					if(l.getId().equals(lekar.getId())) {
+						flag = true;
+					}
+				}
+				if(flag == false) {
+					poseceniLekari.add(lekar);
+				}
+				
+			}
+		}
+		
+		return poseceniLekari;
 		
 	}
 	
