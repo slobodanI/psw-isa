@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.repository.PregledRepository;
 
@@ -15,6 +16,9 @@ public class PregledService {
 		
 	@Autowired
 	private PregledRepository pregledRepository;
+	
+	@Autowired
+	private DijagnozaService dijagnozaService;
 	
 	public Pregled findOne(Long id) {
 		return pregledRepository.findById(id).orElseGet(null);
@@ -34,6 +38,16 @@ public class PregledService {
 
 	public void remove(Long id) {
 		pregledRepository.deleteById(id);
+	}
+
+	//metoda popunjava dijagnozu i informacije jednog pregleda
+	public void popuniPregled(ZavrsiPregledDTO preg) 
+	{
+		Pregled pregled = this.findOne(preg.getId_pregleda());
+		pregled.setInformacije(preg.getInfo());
+		pregled.setDijagnoza(dijagnozaService.findOne(preg.getId_dijagnoze()));
+		this.save(pregled);
+		
 	}
 	
 }

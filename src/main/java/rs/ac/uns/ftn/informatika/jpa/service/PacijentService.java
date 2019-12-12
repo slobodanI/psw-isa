@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,12 +92,12 @@ public class PacijentService {
 		return rezultat;
 	}
 	
-	//metoda vraca pacijente doktora sa nekim id-jem ali samo one koji cekaju na pregled
-	public List<PacijentDTO> vratiSvePacijenteDoktora(Long id) {
+	//metoda vraca pacijente doktora sa nekim id-jem ali samo one koji cekaju na pregled i id njihovog pregleda
+	public HashMap<Long, PacijentDTO> vratiSvePacijenteDoktora(Long id) {
 			
 		Lekar lek = lekarService.findOne(id);
 			
-		List<PacijentDTO> rezultat = new ArrayList<>();
+		HashMap<Long, PacijentDTO> mapa = new HashMap<Long, PacijentDTO>();
 			
 		//vrati zakazane preglede...
 		Set<Pregled> pregledi = lek.getListaZakazanihPregleda();
@@ -108,10 +110,10 @@ public class PacijentService {
 			{
 				//...pa dodaj pacijenta u rezultat
 				Pacijent pac = pregled.getPacijent();
-				rezultat.add(new PacijentDTO(pac));
+				mapa.put(pregled.getId(), new PacijentDTO(pac));
 			}
 		}
 			
-		return rezultat;
+		return mapa;
 	}
 }
