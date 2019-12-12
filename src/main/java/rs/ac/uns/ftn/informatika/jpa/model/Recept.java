@@ -34,8 +34,8 @@ public class Recept {
 	@Column(nullable =  false)
 	private Boolean overen;
 	
-	@Column
-	private String imeMedicinskeSestre;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private MedicinskaSestra medicinskaSestra;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pregled pregled;
@@ -45,7 +45,7 @@ public class Recept {
 	}
 
 	public Recept(Long id, String sifra_Leka, String nazivLeka, Long lbo, String imePacijenta, String prezimePacijenta,
-			Boolean overen, String imeMedicinskeSestre) {
+			Boolean overen, MedicinskaSestra medicinskasestra) {
 		super();
 		this.id = id;
 		this.sifraLeka = sifra_Leka;
@@ -54,7 +54,7 @@ public class Recept {
 		this.imePacijenta = imePacijenta;
 		this.prezimePacijenta = prezimePacijenta;
 		this.overen = overen;
-		this.imeMedicinskeSestre = imeMedicinskeSestre;
+		this.medicinskaSestra = medicinskasestra;
 	}
 
 	public Long getId() {
@@ -113,13 +113,23 @@ public class Recept {
 		this.overen = overen;
 	}
 
-	public String getImeMedicinskeSestre() {
-		return imeMedicinskeSestre;
+	public MedicinskaSestra getMedicinskaSestra() {
+		return medicinskaSestra;
 	}
 
-	public void setImeMedicinskeSestre(String imeMedicinskeSestre) {
-		this.imeMedicinskeSestre = imeMedicinskeSestre;
+	public void setMedicinskaSestra(MedicinskaSestra medicinskaSestra) {
+		this.medicinskaSestra = medicinskaSestra;
 	}
+
+	public Pregled getPregled() {
+		return pregled;
+	}
+
+	public void setPregled(Pregled pregled) {
+		this.pregled = pregled;
+	}
+
+	
 	
 	
 	

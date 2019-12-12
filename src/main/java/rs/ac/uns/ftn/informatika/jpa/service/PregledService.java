@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Lek;
+import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.model.Recept;
 import rs.ac.uns.ftn.informatika.jpa.repository.PregledRepository;
 
 @Service
@@ -16,6 +20,12 @@ public class PregledService {
 		
 	@Autowired
 	private PregledRepository pregledRepository;
+	
+	@Autowired
+	private LekService lekService;
+	
+	@Autowired
+	private ReceptService receptService;
 	
 	@Autowired
 	private DijagnozaService dijagnozaService;
@@ -46,7 +56,33 @@ public class PregledService {
 		Pregled pregled = this.findOne(preg.getId_pregleda());
 		pregled.setInformacije(preg.getInfo());
 		pregled.setDijagnoza(dijagnozaService.findOne(preg.getId_dijagnoze()));
+		pregled.setObavljen(true);
 		this.save(pregled);
+		ArrayList<Long> lista = preg.getId_leka_lista();
+		
+		for (Long id : lista) 
+		{
+			Lek lek = lekService.findOne(id);
+			Pacijent pac = pregled.getPacijent();
+			
+			String sifra = lek.getSifra();
+			String naziv = lek.getNaziv();
+			Long lbo = pac.getLbo();
+			String ime = pac.getIme();
+			String prezime = pac.getPrezime();
+			
+			Recept recept = new Recept();
+			recept.setSifra_Leka(sifra);
+			recept.setNazivLeka(naziv);
+			recept.setLbo(lbo);
+			recept.setImePacijenta(ime);
+			recept.setPrezimePacijenta(prezime);
+			recept.setOveren(false);
+			recept.setMedicinskaSestra(null);
+			recept.setPregled(pregled);
+			
+			receptService.save(recept);
+		}
 		
 	}
 	

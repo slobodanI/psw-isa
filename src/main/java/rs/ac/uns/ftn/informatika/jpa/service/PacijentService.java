@@ -166,7 +166,7 @@ public class PacijentService {
 		for (Pregled pregled : pregledi) 
 		{
 			//...ako dijagnoza jos nije doneta pregled nije obavljen...
-			if(pregled.getDijagnoza() == null)
+			if(pregled.isObavljen() == false)
 			{
 				//...pa dodaj pacijenta u rezultat
 				Pacijent pac = pregled.getPacijent();
