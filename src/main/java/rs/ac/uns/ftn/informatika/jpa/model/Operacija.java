@@ -41,6 +41,9 @@ public class Operacija {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ZdravstveniKarton zdravstveniKarton;
 	
+	@Column(nullable = false)
+	private boolean obavljen;
+	
 	public Operacija() {
 		// TODO Auto-generated constructor stub
 	}
@@ -111,6 +114,14 @@ public class Operacija {
 
 	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
 		this.zdravstveniKarton = zdravstveniKarton;
+	}
+
+	public boolean isObavljen() {
+		return obavljen;
+	}
+
+	public void setObavljen(boolean obavljen) {
+		this.obavljen = obavljen;
 	}
 	
 	

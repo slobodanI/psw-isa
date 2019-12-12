@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
@@ -54,6 +55,14 @@ public class PacijentController {
 		List<PacijentDTO> pacijentiKlinike = pacijentService.vratiSvePacijenteKlinike(id);
 		//System.out.println("###############-POSLE-##############");	
 		return new ResponseEntity<>(pacijentiKlinike, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "getPoseceneKlinike/{id}")
+	public ResponseEntity<List<KlinikaDTOzaStrudent1>> getVisitedKlinike(@PathVariable Long id) 
+	{
+		List<KlinikaDTOzaStrudent1> poseceneKlinike = pacijentService.getPoseceneKlinike(id);
+		
+		return new ResponseEntity<>(poseceneKlinike, HttpStatus.OK);
 	}
 	
 	

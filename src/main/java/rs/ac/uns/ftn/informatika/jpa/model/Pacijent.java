@@ -62,7 +62,7 @@ public class Pacijent {
 	private Set<Klinika> klinike =  new HashSet<Klinika>();
 	
 	@OneToMany(mappedBy = "pacijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Pregled> zakazaniPregledi = new HashSet<Pregled>();
+	private Set<Pregled> zakazaniPregledi = new HashSet<Pregled>(); // ovo su zapravo svi pregledi, i obavljeni i zakazani
 	
 //	@ManyToMany
 //	@JoinTable(name = "obavljeneOperacije", joinColumns = @JoinColumn(name = "klinika_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"))
