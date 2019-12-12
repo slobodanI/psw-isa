@@ -1,3 +1,5 @@
+var receptiMap;
+
 function koJeUlogovan() 
 {
 	
@@ -101,7 +103,12 @@ function RenderHtmlOnSuccess(id) {
 					$('#selectDijagnozaDiv').append(selectHtml);
 				 });
 				 
-			
+				 $('#selectLekoviDiv').html('');
+				 formirajSelectLekovi(function(selectHtml){
+					 $('#selectLekoviDiv').append(selectHtml);
+				 });
+				 
+				 receptiMap = new Map();
 
 		    	 $('#formaDiv').show();
 		    	 $("#forma :input").focus();
@@ -130,6 +137,34 @@ function RenderHtmlOnSuccess(id) {
     
 }
 
+function dodajRecept()
+{	
+	
+	if($('#lekoviType').val()>-1)
+	{
+		//alert("Lek odabran");
+		
+		receptiMap[$('#lekoviType :selected').val()] = $('#lekoviType :selected').text()
+		
+		$('#receptiStavkeDiv').html('');
+		
+		html = '';
+		
+		$.each(receptiMap, function(index,value){
+			
+			html += '<label>' + value + '</label></br>';
+			//alert(value);
+		})
+		//alert(html);
+		
+		$('#receptiStavkeDiv').append(html);
+	}
+	else
+	{
+		alert("Morate odabrati lek");
+	}
+}
+
 function formirajSelectDijagnoze(callback)
 {
 	$.get({
@@ -156,16 +191,49 @@ function formirajSelectDijagnoze(callback)
 	});
 }
 
+function formirajSelectLekovi(callback)
+{
+	$.get({
+		url : 'lek/getLekovi',
+		success : function(lekovi) 
+		{
+			selectHtml = '<select id="lekoviType" class="form-control" onchange="selectOnChange()" required><option value=-1>Odaberite lek</option>';
+			
+			lekovi.forEach((item)=>{
+				
+				selectHtml += '<option value=' + item.id + '>' + item.sifra + ' - ' + item.naziv + '</option>';
+				
+			});
+			
+			selectHtml += '</select>';
+			
+			//alert(selectHtml);
+			callback(selectHtml);
+		},
+		error : function()
+		{
+			alert('Greska pri dobavljanju informacija o lekovima');
+		}
+	});
+}
+
 function zavrsiPregled()
 {
 	var id_pregleda = $('#idPregledaTxt').val();
 	var info = $('#infoTxt').val();
 	var id_dijagnoze = $('#diagnozaType').val();
+	var id_leka_lista = [];
+	
+	
+	$.each( receptiMap, function(index,value){
+		id_leka_lista.push(index);
+	})
+	//alert(id_leka_lista);
 	
 	$.post
 		({
 			url: '/pregledi/zavrsiPregled',
-			data: JSON.stringify({id_pregleda,info,id_dijagnoze}),
+			data: JSON.stringify({id_pregleda,info,id_dijagnoze,id_leka_lista}),
 			contentType: 'application/json',
 			success: function()
 			{
