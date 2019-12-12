@@ -197,24 +197,5 @@ public class Pregled {
 		this.obavljen = obavljen;
 	}
 
-	public Pacijent getPacijent() {
-		return pacijent;
-	}
-
-	public void setPacijent(Pacijent pacijent) {
-		this.pacijent = pacijent;
-	}
-
-	public ZdravstveniKarton getZdravstveniKarton() {
-		return zdravstveniKarton;
-	}
-
-	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
-		this.zdravstveniKarton = zdravstveniKarton;
-	}
-	
-	
-	
-	
 	
 }
