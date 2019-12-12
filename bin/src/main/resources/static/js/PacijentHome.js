@@ -12,6 +12,10 @@ $(document).ready(function(){
 		window.location = "./PacijentObavljeniPreglediIOperacije.html";
 	});
 	
+	$("#btn-ocenjivanjeKlinika").click(function(event){
+		window.location = "./OcenjivanjeKlinika.html";
+	});
+	
 	prikaziKlinike();
 	
 });

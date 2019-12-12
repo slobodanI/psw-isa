@@ -1,5 +1,9 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 //klasa medicinska sestra
 @Entity
@@ -40,6 +45,9 @@ public class MedicinskaSestra {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
+	
+	@OneToMany(mappedBy = "medicinskaSestra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Recept> recepti = new HashSet<Recept>();
 	
 	public MedicinskaSestra() {
 		// TODO Auto-generated constructor stub
