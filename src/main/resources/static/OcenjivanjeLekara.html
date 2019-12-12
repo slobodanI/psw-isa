@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ocenjivanje lekara</title>
+</head>
+<body id="bodyID">
+	
+	<form id="form-ocenjivanje">
+		
+		<p>Odaberite lekara i zatim odaberite ocenu:</p>
+		<hr>
+		<table>
+			<tr><td>Lekar: </td><td><select id="select-lekar" required></select></td></tr>
+			<tr>
+				<td>Ocena: </td>
+				<td>
+					<select id="select-ocena" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</td>
+			</tr>	
+			<tr><td><input type="submit" value="Pošalji"></td></tr>
+		</table>
+	</form>
+	
+	
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/OcenjivanjeLekara.js"></script>
+</body>
+</html>

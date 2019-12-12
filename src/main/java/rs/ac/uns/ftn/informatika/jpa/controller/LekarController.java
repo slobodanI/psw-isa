@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -166,6 +168,19 @@ public class LekarController {
 		}
 		
 		return new ResponseEntity<>(nadjeniLekari, HttpStatus.OK);
+		
+	}
+	
+	@PutMapping(value = "/oceniLekara")
+	public ResponseEntity<Void> oceniLekara(@RequestBody OcenaLekaraDTO ocenaLekaraDTO) {
+				
+		if(lekarService.oceniLekara(ocenaLekaraDTO)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		
 	}
 	

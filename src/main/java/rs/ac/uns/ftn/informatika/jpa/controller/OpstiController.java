@@ -59,63 +59,67 @@ public class OpstiController {
 	 * RETURN BAD_REQUEST ako ga ne upise
 	 */
 	@PostMapping(value = "/savePacijent",consumes = "application/json")
-	public ResponseEntity<PacijentDTO> savePacijent(@RequestBody PacijentDTO pacijentDTO) {
+	public ResponseEntity<Void> savePacijent(@RequestBody PacijentDTO pacijentDTO) {
 		
-		if(pacijentDTO.getPassword().length() < 6) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		if(pacijentDTO.getPassword().length() < 6) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		Pacijent pacijent= new Pacijent();
+//		pacijent.setIme(pacijentDTO.getIme());
+//		pacijent.setPrezime(pacijentDTO.getPrezime());
+//		pacijent.setUsername(pacijentDTO.getUsername());
+//		pacijent.setPassword(pacijentDTO.getPassword());
+//		pacijent.setEmail(pacijentDTO.getEmail());
+//		pacijent.setAdresa(pacijentDTO.getAdresa());
+//		pacijent.setGrad(pacijentDTO.getGrad());
+//		pacijent.setDrzava(pacijentDTO.getDrzava());
+//		pacijent.setBrojTel(pacijentDTO.getBrojTel());
+//		pacijent.setLbo(pacijentDTO.getLbo());
+//		pacijent.setAktiviranNalog(false);
+//
+//		List<Pacijent> sviPacijenti = pacijentService.findAll();
+//		for(Pacijent p : sviPacijenti) {
+//			if(p.getUsername().equals(pacijent.getUsername()) || p.getLbo().equals(pacijent.getLbo())) {
+//				return new ResponseEntity<>(HttpStatus.CONFLICT);
+//			}
+//		}
+//		
+//		List<AdministratorKlinickogCentra> sviAKC = administratorKlinickogCentraService.findAll();
+//		for(AdministratorKlinickogCentra akc : sviAKC) {
+//			if(akc.getUsername().equals(pacijent.getUsername())) {
+//				return new ResponseEntity<>(HttpStatus.CONFLICT);
+//			}
+//		}
+//		
+//		List<AdministratorKlinike> sviAK = administratorKlinikeService.findAll();
+//		for(AdministratorKlinike ak : sviAK) {
+//			if(ak.getUsername().equals(pacijent.getUsername())) {
+//				return new ResponseEntity<>(HttpStatus.CONFLICT);
+//			}
+//		}
+//		
+//		List<Lekar> sviLekari = lekarService.findAll();
+//		for(Lekar l : sviLekari) {
+//			if(l.getUsername().equals(pacijent.getUsername())) {
+//				return new ResponseEntity<>(HttpStatus.CONFLICT);
+//			}
+//		}
+//		
+//		List<MedicinskaSestra> sveMS = medicinskaSestraService.findAll();
+//		for(MedicinskaSestra ms : sveMS) {
+//			if(ms.getUsername().equals(pacijent.getUsername())) {
+//				return new ResponseEntity<>(HttpStatus.CONFLICT);
+//			}
+//		}
+//				
+//		pacijent = pacijentService.save(pacijent);
+		
+		if(OpstiService.savePacijentRegistration(pacijentDTO)) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
 		
-		Pacijent pacijent= new Pacijent();
-		pacijent.setIme(pacijentDTO.getIme());
-		pacijent.setPrezime(pacijentDTO.getPrezime());
-		pacijent.setUsername(pacijentDTO.getUsername());
-		pacijent.setPassword(pacijentDTO.getPassword());
-		pacijent.setEmail(pacijentDTO.getEmail());
-		pacijent.setAdresa(pacijentDTO.getAdresa());
-		pacijent.setGrad(pacijentDTO.getGrad());
-		pacijent.setDrzava(pacijentDTO.getDrzava());
-		pacijent.setBrojTel(pacijentDTO.getBrojTel());
-		pacijent.setLbo(pacijentDTO.getLbo());
-		pacijent.setAktiviranNalog(false);
-
-		List<Pacijent> sviPacijenti = pacijentService.findAll();
-		for(Pacijent p : sviPacijenti) {
-			if(p.getUsername().equals(pacijent.getUsername()) || p.getLbo().equals(pacijent.getLbo())) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		}
-		
-		List<AdministratorKlinickogCentra> sviAKC = administratorKlinickogCentraService.findAll();
-		for(AdministratorKlinickogCentra akc : sviAKC) {
-			if(akc.getUsername().equals(pacijent.getUsername())) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		}
-		
-		List<AdministratorKlinike> sviAK = administratorKlinikeService.findAll();
-		for(AdministratorKlinike ak : sviAK) {
-			if(ak.getUsername().equals(pacijent.getUsername())) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		}
-		
-		List<Lekar> sviLekari = lekarService.findAll();
-		for(Lekar l : sviLekari) {
-			if(l.getUsername().equals(pacijent.getUsername())) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		}
-		
-		List<MedicinskaSestra> sveMS = medicinskaSestraService.findAll();
-		for(MedicinskaSestra ms : sveMS) {
-			if(ms.getUsername().equals(pacijent.getUsername())) {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		}
-				
-		pacijent = pacijentService.save(pacijent);
-		
-		return new ResponseEntity<>(new PacijentDTO(pacijent), HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		
 	}
 	
@@ -126,66 +130,70 @@ public class OpstiController {
 	 */	
 	@PostMapping(value = "/logIn",consumes = "application/json")
 	public ResponseEntity<Void> logIn(@RequestBody PacijentDTO userInfo, @Context HttpServletRequest request) {
-		
+			
 		HttpSession session = request.getSession();
 		
-		List<Pacijent> sviPacijenti = pacijentService.findAll();
-		for(Pacijent p : sviPacijenti) {
-			if(p.getUsername().equals(userInfo.getUsername())) {
-				if(p.getPassword().equals(userInfo.getPassword())) {
-					if(p.getAktiviranNalog().equals(true)) {
-						session.setAttribute("id", p.getId());
-						session.setAttribute("uloga", p.getUloga());
-						return new ResponseEntity<Void>(HttpStatus.OK);		
-					}
-				}
-			}
+		if(OpstiService.logIn(session, userInfo)) {
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		
-		List<AdministratorKlinickogCentra> sviAdministratoriKlinickogCentra = administratorKlinickogCentraService.findAll();
-		for(AdministratorKlinickogCentra akc : sviAdministratoriKlinickogCentra) {
-			if(akc.getUsername().equals(userInfo.getUsername())) {
-				if(akc.getPassword().equals(userInfo.getPassword())) {
-					session.setAttribute("id", akc.getId());
-					session.setAttribute("uloga", akc.getUloga());
-					return new ResponseEntity<Void>(HttpStatus.OK);
-				}
-			}
-		}
-		
-		List<AdministratorKlinike> sviAdministratoriKlinika = administratorKlinikeService.findAll();
-		for(AdministratorKlinike ak : sviAdministratoriKlinika) {
-			if(ak.getUsername().equals(userInfo.getUsername())) {
-				if(ak.getPassword().equals(userInfo.getPassword())) {
-					session.setAttribute("id", ak.getId());
-					session.setAttribute("uloga", ak.getUloga());
-					return new ResponseEntity<Void>(HttpStatus.OK);
-				}
-			}
-		}
-		
-		List<Lekar> sviLekari = lekarService.findAll();
-		for(Lekar l : sviLekari) {
-			if(l.getUsername().equals(userInfo.getUsername())) {
-				if(l.getPassword().equals(userInfo.getPassword())) {
-					session.setAttribute("id", l.getId());
-					session.setAttribute("uloga", l.getUloga());
-					return new ResponseEntity<Void>(HttpStatus.OK);
-				}
-			}
-		}
-		
-		List<MedicinskaSestra> sveMedicinskeSestre = medicinskaSestraService.findAll();
-		for(MedicinskaSestra ms : sveMedicinskeSestre) {
-			if(ms.getUsername().equals(userInfo.getUsername())) {
-				if(ms.getPassword().equals(userInfo.getPassword())) {
-					session.setAttribute("id", ms.getId());
-					session.setAttribute("uloga", ms.getUloga());
-					return new ResponseEntity<Void>(HttpStatus.OK);
-				}
-			}
-		}
-		
+//		List<Pacijent> sviPacijenti = pacijentService.findAll();
+//		for(Pacijent p : sviPacijenti) {
+//			if(p.getUsername().equals(userInfo.getUsername())) {
+//				if(p.getPassword().equals(userInfo.getPassword())) {
+//					if(p.getAktiviranNalog().equals(true)) {
+//						session.setAttribute("id", p.getId());
+//						session.setAttribute("uloga", p.getUloga());
+//						return new ResponseEntity<Void>(HttpStatus.OK);		
+//					}
+//				}
+//			}
+//		}
+//		
+//		List<AdministratorKlinickogCentra> sviAdministratoriKlinickogCentra = administratorKlinickogCentraService.findAll();
+//		for(AdministratorKlinickogCentra akc : sviAdministratoriKlinickogCentra) {
+//			if(akc.getUsername().equals(userInfo.getUsername())) {
+//				if(akc.getPassword().equals(userInfo.getPassword())) {
+//					session.setAttribute("id", akc.getId());
+//					session.setAttribute("uloga", akc.getUloga());
+//					return new ResponseEntity<Void>(HttpStatus.OK);
+//				}
+//			}
+//		}
+//		
+//		List<AdministratorKlinike> sviAdministratoriKlinika = administratorKlinikeService.findAll();
+//		for(AdministratorKlinike ak : sviAdministratoriKlinika) {
+//			if(ak.getUsername().equals(userInfo.getUsername())) {
+//				if(ak.getPassword().equals(userInfo.getPassword())) {
+//					session.setAttribute("id", ak.getId());
+//					session.setAttribute("uloga", ak.getUloga());
+//					return new ResponseEntity<Void>(HttpStatus.OK);
+//				}
+//			}
+//		}
+//		
+//		List<Lekar> sviLekari = lekarService.findAll();
+//		for(Lekar l : sviLekari) {
+//			if(l.getUsername().equals(userInfo.getUsername())) {
+//				if(l.getPassword().equals(userInfo.getPassword())) {
+//					session.setAttribute("id", l.getId());
+//					session.setAttribute("uloga", l.getUloga());
+//					return new ResponseEntity<Void>(HttpStatus.OK);
+//				}
+//			}
+//		}
+//		
+//		List<MedicinskaSestra> sveMedicinskeSestre = medicinskaSestraService.findAll();
+//		for(MedicinskaSestra ms : sveMedicinskeSestre) {
+//			if(ms.getUsername().equals(userInfo.getUsername())) {
+//				if(ms.getPassword().equals(userInfo.getPassword())) {
+//					session.setAttribute("id", ms.getId());
+//					session.setAttribute("uloga", ms.getUloga());
+//					return new ResponseEntity<Void>(HttpStatus.OK);
+//				}
+//			}
+//		}
+//		
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		
 	}

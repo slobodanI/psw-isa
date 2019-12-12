@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.repository.LekarRepository;
 
@@ -29,5 +31,23 @@ public class LekarService {
 	public void remove(Long id) {
 		lekarRepository.deleteById(id);
 	}
-
+	
+	//ocenjivanje lekara
+	public Boolean oceniLekara(OcenaLekaraDTO ocenaLekaraDTO) {
+		
+//		System.out.println("ID LEKARA: " + ocenaLekaraDTO.getIdLekara());
+//		System.out.println("OCENA: " + ocenaLekaraDTO.getOcena());
+		
+		Lekar lekar = findOne(ocenaLekaraDTO.getIdLekara());
+		if(lekar == null) {
+			return false;
+		}
+		
+		lekar.setUkupnaOcena(lekar.getUkupnaOcena() + ocenaLekaraDTO.getOcena());
+		lekar.setBrojOcena(lekar.getBrojOcena() + 1);
+		save(lekar);
+		
+		return true;
+	}
+	
 }

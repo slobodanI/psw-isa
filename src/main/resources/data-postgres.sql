@@ -78,6 +78,7 @@ insert into dijagnoza (sifra, naziv) values ('632','trecaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('114','cetvrtaDijagnoza');
 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id, obavljen) values (1, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000,1,2, true);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id, obavljen) values (2, 1, 1, 'info', '30-04-2019','13:40-14:10', 10, 1000,1,2, true);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id, obavljen) values (1, 1, 1, 'info', '30-05-2019','13:00-13:30', 0, 1000,1,2, true);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id, obavljen) values (1, 1, 1, '', '30-06-2019','13:00-13:30', 0, 1000,1,null, false);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda, satnica, popust, cena, tip_pregleda_id, dijagnoza_id, obavljen) values (1, 1, 1, 'info 1', '30-04-2019','13:40-14:10', 10, 1000,1,2, true);
