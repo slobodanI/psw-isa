@@ -9,17 +9,17 @@ function submitForme(){
 		event.preventDefault();
 		
 		var naziv = $('input[name="naziv"]').val();
-		var brojSale = $('input[name="brojSale"]').val();
+		var id = $('input[name="brojSale"]').val();
 
 		$.post({
-			url: 'api/sala/pretragaSala',
-			data: JSON.stringify({naziv, brojSale}),
-			contentType: 'application/json',
+			url:'api/sala/pretragaSala',
+			data:JSON.stringify({naziv, id}),
+			contentType:'application/json',
 			success: function(sale){
 				$(".listaSala").empty();
 				if(sale != undefined){
 					for(var s of sale){
-						$(".listaSala").append('<li class="sale"> Sala: '+s.naziv +",broj sale: "+ s.brojSale+'</li>');
+						$(".listaSala").append('<li class="sale"> Sala: '+s.naziv +",broj sale: "+ s.id+'</li>');
 					
 					}
 				}
@@ -30,3 +30,4 @@ function submitForme(){
 		});
 		
 	});
+}

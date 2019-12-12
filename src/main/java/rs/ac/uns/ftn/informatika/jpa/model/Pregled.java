@@ -134,9 +134,27 @@ public class Pregled {
 //	public void setSala(Sala sala) {
 //		this.sala = sala;
 //	}
+	
+	
 
 	public Lekar getLekar() {
 		return lekar;
+	}
+
+	public Pacijent getPacijent() {
+		return pacijent;
+	}
+
+	public void setPacijent(Pacijent pacijent) {
+		this.pacijent = pacijent;
+	}
+
+	public ZdravstveniKarton getZdravstveniKarton() {
+		return zdravstveniKarton;
+	}
+
+	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
+		this.zdravstveniKarton = zdravstveniKarton;
 	}
 
 	public void setLekar(Lekar lekar) {

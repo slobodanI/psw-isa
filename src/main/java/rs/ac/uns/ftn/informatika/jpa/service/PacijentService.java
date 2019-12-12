@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
 
 @Service
@@ -17,6 +21,9 @@ public class PacijentService {
 	
 	@Autowired
 	private PacijentRepository pacijentRepository;
+	
+	@Autowired
+	private LekarService lekarService;
 	
 	public Pacijent findOne(Long id) {
 		return pacijentRepository.findById(id).orElseGet(null);
@@ -83,5 +90,30 @@ public class PacijentService {
 		}
 		
 		return rezultat;
+	}
+	
+	//metoda vraca pacijente doktora sa nekim id-jem ali samo one koji cekaju na pregled i id njihovog pregleda
+	public HashMap<Long, PacijentDTO> vratiSvePacijenteDoktora(Long id) {
+			
+		Lekar lek = lekarService.findOne(id);
+			
+		HashMap<Long, PacijentDTO> mapa = new HashMap<Long, PacijentDTO>();
+			
+		//vrati zakazane preglede...
+		Set<Pregled> pregledi = lek.getListaZakazanihPregleda();
+			
+		//...idi kroz njih...
+		for (Pregled pregled : pregledi) 
+		{
+			//...ako dijagnoza jos nije doneta pregled nije obavljen...
+			if(pregled.getDijagnoza() == null)
+			{
+				//...pa dodaj pacijenta u rezultat
+				Pacijent pac = pregled.getPacijent();
+				mapa.put(pregled.getId(), new PacijentDTO(pac));
+			}
+		}
+			
+		return mapa;
 	}
 }
