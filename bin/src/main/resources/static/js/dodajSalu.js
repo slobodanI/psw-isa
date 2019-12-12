@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	$("#registracionaForma").submit(function(event){
+	$("#formaZaNovuSalu").submit(function(event){
 		event.preventDefault();
 		
 		var naziv = $('input[name="naziv"]').val();
@@ -17,7 +17,7 @@ $(document).ready(function(){
 			error: function(){
 				alert("Greska pri dodavanju sale");
 			}	
-		}
+		});
 		
 
 			
@@ -41,11 +41,10 @@ $(document).ready(function(){
 				error: function(){
 					alert("Greska pri dodavanju sale");
 				}	
-			}
+			});
 			
 
 				
 			});
 			
 	});
-});

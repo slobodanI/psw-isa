@@ -61,6 +61,11 @@ function koJeUlogovan()
 		url : 'api/whoIsLoggedIn',
 		success : function(user) 
 		{
+			if(user.uloga != "MedicinskaSestra")
+			{
+				logout();
+			}
+			
 			dobaviPodatkeOSestri(user.id);
 		},
 		error : function()
