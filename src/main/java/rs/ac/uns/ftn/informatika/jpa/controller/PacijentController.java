@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,21 @@ public class PacijentController {
 		List<KlinikaDTOzaStrudent1> poseceneKlinike = pacijentService.getPoseceneKlinike(id);
 		
 		return new ResponseEntity<>(poseceneKlinike, HttpStatus.OK);
+	}
+	//vraca pacijente klinike sa datim id-jem lekara ciji pregled jos nije obavljen
+	@GetMapping(value = "vratiSvePacijenteLekara/{id}", consumes = "application/json")
+	public ResponseEntity<HashMap<Long, PacijentDTO>> vratiPacijenteLekara(@PathVariable Long id) 
+	{
+		//System.out.println("###############-PRE-##############");
+		HashMap<Long, PacijentDTO> pacijentiLekara = pacijentService.vratiSvePacijenteDoktora(id);
+			
+		if (pacijentiLekara.isEmpty()) 
+		{
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+			
+		//System.out.println("###############-POSLE-##############");	
+		return new ResponseEntity<>(pacijentiLekara, HttpStatus.OK);
 	}
 	
 	
