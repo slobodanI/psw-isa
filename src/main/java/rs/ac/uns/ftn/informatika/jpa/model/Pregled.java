@@ -59,12 +59,15 @@ public class Pregled {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ZdravstveniKarton zdravstveniKarton;
 	
+	@Column(nullable = false)
+	private boolean obavljen;
+	
 	public Pregled() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Pregled(Long id, String informacije, Dijagnoza dijagnoza, Set<Recept> recepti, String datumPregleda,
-			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena) {
+			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena, boolean obavljen) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
@@ -77,6 +80,7 @@ public class Pregled {
 		this.popust = popust;
 		this.tipPregleda = tipPregleda;
 		this.cena = cena;
+		this.obavljen = obavljen;
 	}
 
 	public Long getId() {
@@ -184,9 +188,14 @@ public class Pregled {
 	public void setCena(int cena) {
 		this.cena = cena;
 	}
-	
-	
-	
-	
+
+	public boolean isObavljen() {
+		return obavljen;
+	}
+
+	public void setObavljen(boolean obavljen) {
+		this.obavljen = obavljen;
+	}
+
 	
 }

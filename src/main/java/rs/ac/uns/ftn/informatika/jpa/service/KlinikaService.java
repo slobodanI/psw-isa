@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.repository.KlinikaRepository;
 
@@ -57,4 +58,22 @@ public class KlinikaService {
 		
 		return "Uspešno registrovana klinika";
 	}
+	
+	//ocenjivanje klinike
+	public Boolean oceniKliniku(OcenaKlinikeDTO ocenaKlinikeDTO) {
+		
+//		System.out.println("ID KLINIKE: " + ocenaKlinikeDTO.getIdKlinike());
+//		System.out.println("OCENA KLINIKE: " + ocenaKlinikeDTO.getOcena());
+		Klinika klinika = findOne(ocenaKlinikeDTO.getIdKlinike());
+		if(klinika == null) {
+			return false;
+		}
+		
+		klinika.setUkupnaOcena(klinika.getUkupnaOcena() + ocenaKlinikeDTO.getOcena());
+		klinika.setBrojOcena(klinika.getBrojOcena() + 1);
+		save(klinika);
+		
+		return true;
+	}
+	
 }

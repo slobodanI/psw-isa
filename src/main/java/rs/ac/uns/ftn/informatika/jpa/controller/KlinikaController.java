@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 
@@ -63,5 +65,19 @@ public class KlinikaController {
 
 		return new ResponseEntity<>(new KlinikaDTOzaStrudent1(klinika), HttpStatus.OK);
 	}
+	
+	@PutMapping(value = "/oceniKliniku")
+	public ResponseEntity<Void> oceniKliniku(@RequestBody OcenaKlinikeDTO ocenaKlinikeDTO) {
+				
+		if(klinikaService.oceniKliniku(ocenaKlinikeDTO)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		
+	}
+	
 	
 }

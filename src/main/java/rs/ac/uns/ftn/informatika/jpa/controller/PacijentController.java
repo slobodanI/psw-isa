@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
@@ -57,6 +58,13 @@ public class PacijentController {
 		return new ResponseEntity<>(pacijentiKlinike, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "getPoseceneKlinike/{id}")
+	public ResponseEntity<List<KlinikaDTOzaStrudent1>> getVisitedKlinike(@PathVariable Long id) 
+	{
+		List<KlinikaDTOzaStrudent1> poseceneKlinike = pacijentService.getPoseceneKlinike(id);
+		
+		return new ResponseEntity<>(poseceneKlinike, HttpStatus.OK);
+	}
 	//vraca pacijente klinike sa datim id-jem lekara ciji pregled jos nije obavljen
 	@GetMapping(value = "vratiSvePacijenteLekara/{id}", consumes = "application/json")
 	public ResponseEntity<HashMap<Long, PacijentDTO>> vratiPacijenteLekara(@PathVariable Long id) 

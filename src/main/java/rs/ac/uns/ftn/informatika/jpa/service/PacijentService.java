@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -90,6 +91,35 @@ public class PacijentService {
 		}
 		
 		return rezultat;
+	}
+	
+	//vraca sve klinike u kojima je pacijent bio
+	public List<KlinikaDTOzaStrudent1> getPoseceneKlinike(Long idPacijenta) {
+		
+		Pacijent pacijent = this.findOne(idPacijenta);		
+		
+		List<KlinikaDTOzaStrudent1> poseceneKlinike = new ArrayList<KlinikaDTOzaStrudent1>();
+		
+		for(Pregled p : pacijent.getZakazaniPregledi()) {// zakazani pregledi su zapravo svi pregledi
+			if(p.isObavljen()) {
+				KlinikaDTOzaStrudent1 klinika = new KlinikaDTOzaStrudent1(p.getLekar().getKlinika());
+				
+				//da nemam duplikata u listi
+				boolean flag = false;
+				for(KlinikaDTOzaStrudent1 k : poseceneKlinike) {
+					if(k.getId().equals(klinika.getId())) {
+						flag = true;
+					}
+				}
+				if(flag == false) {
+					poseceneKlinike.add(klinika);
+				}
+				
+			}
+		}
+		
+		return poseceneKlinike;
+		
 	}
 	
 	//metoda vraca pacijente doktora sa nekim id-jem ali samo one koji cekaju na pregled i id njihovog pregleda
