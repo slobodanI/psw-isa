@@ -94,6 +94,35 @@ public class PacijentService {
 		return rezultat;
 	}
 	
+	//vraca sve pacijente klinike sa zadatim ID-om lekara
+	public List<PacijentDTO> vratiSvePacijenteLekara(Long id) {
+		Lekar lekar=lekarService.findOne(id);
+		Klinika klinika=lekar.getKlinika();
+		List<Pacijent> lista = this.findAll();
+		
+		List<PacijentDTO> rezultat = new ArrayList<>();
+		
+		//idi kroz pacijente u tabeli...
+		for (Pacijent pac : lista) 
+		{
+			Set<Klinika> klinike = pac.getKlinike();
+			
+			//...pa kroz njihove klinike...
+			for (Klinika kl : klinike) 
+			{
+				//...i ako se id slaze sa id klinike dodaj u listu
+				if (kl.getId()==klinika.getId()) 
+				{
+					rezultat.add(new PacijentDTO(pac));
+				}
+			}
+		}
+		
+		return rezultat;
+	}
+	
+	
+	
 	//vraca sve klinike u kojima je pacijent bio
 	public List<KlinikaDTOzaStrudent1> getPoseceneKlinike(Long idPacijenta) {
 		
@@ -176,4 +205,9 @@ public class PacijentService {
 			
 		return mapa;
 	}
+	
+	
+	
+	
+	
 }
