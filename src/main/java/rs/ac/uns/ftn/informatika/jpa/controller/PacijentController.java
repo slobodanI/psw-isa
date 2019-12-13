@@ -58,6 +58,15 @@ public class PacijentController {
 		//System.out.println("###############-POSLE-##############");	
 		return new ResponseEntity<>(pacijentiKlinike, HttpStatus.OK);
 	}
+	//vraca pacijente klinike pomocu lekara sa datim id-jem
+	@GetMapping(value = "vratiPacijenteLekaraKlinike/{id}", consumes = "application/json")
+	public ResponseEntity<List<PacijentDTO>> vratiPacijenteLekaraKl(@PathVariable Long id) 
+	{
+		//System.out.println("###############-PRE-##############");
+		List<PacijentDTO> pacijentiKlinike = pacijentService.vratiSvePacijenteLekara(id);
+		//System.out.println("###############-POSLE-##############");	
+		return new ResponseEntity<>(pacijentiKlinike, HttpStatus.OK);
+	}
 	
 	//vraca sve klinike u kojema je pacijent bio
 	@GetMapping(value = "getPoseceneKlinike/{id}")

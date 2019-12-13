@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
+import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
 
 @RestController
 @RequestMapping(value = "/api/lekar")
@@ -34,6 +36,9 @@ public class LekarController {
 	
 	@Autowired
 	private KlinikaService klinikaService;
+	
+	@Autowired
+	private PacijentService pacijentService;
 
 	@GetMapping(value = "/lekari")
 	public ResponseEntity<List<LekarDTO>> getLekari() {
@@ -183,5 +188,19 @@ public class LekarController {
 		
 		
 	}
+	
+//	@GetMapping(value = "getPacijenteKlinike/{id}")
+//	public ResponseEntity<List<PacijentDTO>> getPacijenteKlinike(@PathVariable Long id){
+//		
+//		List<Pacijent> pacijenti=pacijentService.findAll();
+//		List<PacijentDTO> pacijentiDTO=new ArrayList();
+//		Lekar lekar = lekarService.findOne(id);
+//		for(Pacijent p : pacijenti) {
+//			if p.getkl
+//			
+//		}
+//	}
+//	
+	
 	
 }

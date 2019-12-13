@@ -1,3 +1,7 @@
+var params = new URL(location.href).searchParams;
+var pacijent=params.get('pacijenti');
+
+
 $(document).ready(function(){
 
 	$(".div-form-edit").hide();		
@@ -23,6 +27,7 @@ function koJeUlogovan() {
 				} else if (user.uloga == "AdministratorKlinike") {
 //					window.location = "./AdministratorKlinikeHome.html";
 				} else if (user.uloga == "Lekar") {
+					dobaviPodatkeOPacijentu(pacijent);
 //					window.location = "./LekarHome.html";
 				} else if (user.uloga == "MedicinskaSestra") {
 //					window.location = "./MedicinskaSestra.html";
