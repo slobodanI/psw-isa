@@ -8,8 +8,12 @@ $(document).ready(function(){
 	$("#btn-zdravstveniKarton").click(function(){
 		dobaviPodatkeOPacijentu(pacijent);
 		window.location="./ZdravstveniKarton.html?pacijenti="+pacijent;
-		
 	});
+	$("#btn-zapocniPregled").click(function(){
+		window.location="./LekarObaviPregled.html";
+	});
+	
+	
 	$(".div-form-edit").hide();		
 	$("#btn-prikazForme").click(function() {
 		$(".div-form-edit").toggle();		
