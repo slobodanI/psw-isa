@@ -1,6 +1,7 @@
 //ovo ce student 2 da koristi
 var params = new URL(location.href).searchParams;
-var oglasName = params.get("oglas"); 
+var oglasName = params.get("oglas");
+var pacijent=params.get("pacijenti");
 
 $(document).ready(function(){
 	
@@ -20,6 +21,7 @@ function koJeUlogovan() {
 				} else if (user.uloga == "AdministratorKlinike") {
 
 				} else if (user.uloga == "Lekar") {
+					ucitajPodatke(pacijent);
 
 				} else if (user.uloga == "MedicinskaSestra") {
 
