@@ -16,6 +16,10 @@ $(document).ready(function(){
 		window.location = "./OcenjivanjeKlinika.html";
 	});
 	
+	$("#btn-ocenjivanjeLekara").click(function(event){
+		window.location = "./OcenjivanjeLekara.html";
+	});
+	
 	prikaziKlinike();
 	
 });
