@@ -1,5 +1,7 @@
+//mapa lekova koje treba poslati u bazu
 var receptiMap;
 
+//proveri ko je ulogovan
 function koJeUlogovan() 
 {
 	
@@ -12,6 +14,7 @@ function koJeUlogovan()
 				logout();
 			}
 			
+			//renderuj tabelu pacijenata
 			RenderHtmlOnSuccess(user.id);
 			$('#formaDiv').hide();
 		},
@@ -97,19 +100,23 @@ function RenderHtmlOnSuccess(id) {
 		    	 prezime_pacijenta = data[4];
 		    	 $('#prezimePacijentaTxt').val(prezime_pacijenta);
 
+		    	 //kreiranje select taga sa dijagnozama
 				 $('#selectDijagnozaDiv').html('');
 				 formirajSelectDijagnoze(function(selectHtml){
 					//alert(selectHtml);
 					$('#selectDijagnozaDiv').append(selectHtml);
 				 });
 				 
+				 //kreiranje select taga sa lekovima
 				 $('#selectLekoviDiv').html('');
 				 formirajSelectLekovi(function(selectHtml){
 					 $('#selectLekoviDiv').append(selectHtml);
 				 });
 				 
+				 //kreiranje mape sa lekovima
 				 receptiMap = new Map();
 
+				 //prikazi i fokusiraj na formu za pregled
 		    	 $('#formaDiv').show();
 		    	 $("#forma :input").focus();
 		         
@@ -120,6 +127,7 @@ function RenderHtmlOnSuccess(id) {
 		},
 		error: function()
 		{
+			//ako nema pacijenata prikazi praznu tabelu
 			alert('Nema pacijenata');
 			var html = '<table id="tabelaPacijenata" class="display" ><thead><tr><th>Id pregleda</th><th>Id pacijenta</th><th>LBO pacijenta</th><th>Ime</th><th>Prezime</th><th>Pregledaj</th></thead><tbody id="teloZahtevi">';
 			html += '</tbody></table>';
@@ -137,13 +145,15 @@ function RenderHtmlOnSuccess(id) {
     
 }
 
+//funkcija za dodavanje recepata na listu
 function dodajRecept()
 {	
-	
+	//ako je lek selektovan
 	if($('#lekoviType').val()>-1)
 	{
 		//alert("Lek odabran");
 		
+		//postavi selektovani lek u listu
 		receptiMap[$('#lekoviType :selected').val()] = $('#lekoviType :selected').text()
 		
 		$('#receptiStavkeDiv').html('');
@@ -157,21 +167,25 @@ function dodajRecept()
 		})
 		//alert(html);
 		
+		//prikazi listu lekova
 		$('#receptiStavkeDiv').append(html);
 	}
 	else
 	{
+		//ako lek nije odabran
 		alert("Morate odabrati lek");
 	}
 }
 
+//funkcija za formiranje select taga za dijagnoze
 function formirajSelectDijagnoze(callback)
 {
 	$.get({
 		url : 'dijagnoza/getDijagnoza',
 		success : function(dijagnoze) 
 		{
-			selectHtml = '<select id="diagnozaType" class="form-control" onchange="selectOnChange()" required><option value=-1>Odaberite dijagnozu</option>';
+			//formiranje select html taga
+			selectHtml = '<select id="diagnozaType" class="form-control" required><option value=-1>Odaberite dijagnozu</option>';
 			
 			dijagnoze.forEach((item)=>{
 				
@@ -191,13 +205,15 @@ function formirajSelectDijagnoze(callback)
 	});
 }
 
+//funkcija za formiranje select taga za lekove
 function formirajSelectLekovi(callback)
 {
 	$.get({
 		url : 'lek/getLekovi',
 		success : function(lekovi) 
 		{
-			selectHtml = '<select id="lekoviType" class="form-control" onchange="selectOnChange()" required><option value=-1>Odaberite lek</option>';
+			//formiranje select html taga
+			selectHtml = '<select id="lekoviType" class="form-control" required><option value=-1>Odaberite lek</option>';
 			
 			lekovi.forEach((item)=>{
 				
@@ -217,6 +233,7 @@ function formirajSelectLekovi(callback)
 	});
 }
 
+//funkcija koja se poziva kad lekar zavrsi pregled
 function zavrsiPregled()
 {
 	var id_pregleda = $('#idPregledaTxt').val();
@@ -224,7 +241,7 @@ function zavrsiPregled()
 	var id_dijagnoze = $('#diagnozaType').val();
 	var id_leka_lista = [];
 	
-	
+	//iscitaj kljuceve lekova iz mape lekova i stavi u niz
 	$.each( receptiMap, function(index,value){
 		id_leka_lista.push(index);
 	})
