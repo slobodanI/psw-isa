@@ -36,6 +36,9 @@ public class PregledService {
 	@Autowired
 	private DijagnozaService dijagnozaService;
 	
+	@Autowired
+	private PacijentService pacijentService;
+	
 	public Pregled findOne(Long id) {
 		return pregledRepository.findById(id).orElseGet(null);
 	}
@@ -131,4 +134,26 @@ public class PregledService {
 		return predefinisatiPregledi;
 	}
 	
+	
+	public Boolean zakaziPredefPregled(Long pregledID, Long pacijentID) {
+		
+		Pacijent pacijent = pacijentService.findOne(pacijentID);
+		Pregled pregled = findOne(pregledID);
+		
+		//ako postoje u bazi
+		if(pacijent == null || pregled == null) {
+			return false;
+		}
+		
+		//poslat je ID od pregleda koji nije predefinisan
+		if(pregled.getPacijent() != null) {
+			return false;
+		}
+		
+		pregled.setPacijent(pacijent);
+		pregled.setZdravstveniKarton(pacijent.getZdravstveniKarton());
+		save(pregled);
+		
+		return true;
+	}
 }

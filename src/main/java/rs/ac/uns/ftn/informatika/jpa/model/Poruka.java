@@ -38,9 +38,8 @@ public class Poruka {
 		
 	}
 
-	public Poruka(Long id, Long pacijent_id, String naslov, String telo, String email_posiljaoca, String email_primaoca, Boolean odgovoreno) {
+	public Poruka(Long pacijent_id, String naslov, String telo, String email_posiljaoca, String email_primaoca, Boolean odgovoreno) {
 		super();
-		this.id = id;
 		this.pacijent_id = pacijent_id;
 		this.naslov = naslov;
 		this.telo = telo;

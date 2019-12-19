@@ -83,7 +83,7 @@ function dobaviPredefinisanePreglede(klinikaID) {
 					ptag.append("Popust: " + pregled.popust + "<br>");
 					
 					var btn = $('<button>Zakaži</button>');
-//					btn.click(zakaziPregled(pregled.id));
+					btn.click(zakaziPregled(pregled.id));
 					ptag.append(btn).append("<br>");
 					
 					li.append(ptag);
@@ -98,10 +98,18 @@ function dobaviPredefinisanePreglede(klinikaID) {
 	});
 }
 
-//function zakaziPregled(pregledID) {
-//	return function() {
-//		$.ajax({
-//			url:
-//		});
-//	}
-//}
+function zakaziPregled(pregledID) {
+	return function() {
+		$.ajax({
+			url: 'pregledi/zakaziPredefPregled/' + pregledID + '/pacijent/' + pacijentID,
+			type: 'PUT',
+			success: function(pacijent){
+				alert("Uspesno ste zakazali pregled");
+				window.location = "./KlinikaProfil.html?klinikaID=" + klinikaID;
+			},
+			error: function(){
+				alert("Neuspesno ste zakazali pregled");
+			}
+		});
+	}
+}
