@@ -205,6 +205,30 @@ public class Klinika {
 				+ ", med_sestre=" + med_sestre + ", sale=" + sale + "]";
 	}
 
+	public Set<Pacijent> getPacijenti() {
+		return pacijenti;
+	}
+
+	public void setPacijenti(Set<Pacijent> pacijenti) {
+		this.pacijenti = pacijenti;
+	}
+
+	public Set<MedicinskaSestra> getMed_sestre() {
+		return med_sestre;
+	}
+
+	public void setMed_sestre(Set<MedicinskaSestra> med_sestre) {
+		this.med_sestre = med_sestre;
+	}
+
+	public Set<Sala> getSale() {
+		return sale;
+	}
+
+	public void setSale(Set<Sala> sale) {
+		this.sale = sale;
+	}
+
 	
 
 	

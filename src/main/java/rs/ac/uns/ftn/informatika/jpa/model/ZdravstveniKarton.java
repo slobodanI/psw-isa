@@ -139,6 +139,16 @@ public class ZdravstveniKarton {
 	public void setListaOperacija(Set<Operacija> listaOperacija) {
 		this.listaOperacija = listaOperacija;
 	}
+
+
+	public Pacijent getPacijent() {
+		return pacijent;
+	}
+
+
+	public void setPacijent(Pacijent pacijent) {
+		this.pacijent = pacijent;
+	}
 	
 	
 	
