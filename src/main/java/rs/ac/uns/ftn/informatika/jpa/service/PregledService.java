@@ -7,8 +7,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Lek;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
@@ -34,6 +38,12 @@ public class PregledService {
 	
 	@Autowired
 	private DijagnozaService dijagnozaService;
+	
+	@Autowired
+	private PacijentService pacijentService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public Pregled findOne(Long id) {
 		return pregledRepository.findById(id).orElseGet(null);
@@ -113,4 +123,55 @@ public class PregledService {
 		*/
 	}
 	
+	public List<PregledDTOStudent1> getPredefinisanePreglede(Long klinikaID) {
+		
+		List<Pregled> sviPregledi = findAll();
+		
+		List<PregledDTOStudent1> predefinisatiPregledi = new ArrayList<PregledDTOStudent1>();
+		for(Pregled pregled : sviPregledi) {
+			if(pregled.getSala().getKlinika().getId().equals(klinikaID)){ // pregled u toj klinici
+				if(pregled.getPacijent() == null) { // ovo znaci da je predefinisan pregled
+					PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
+					predefinisatiPregledi.add(predefPregledDTO);
+				}
+			}
+		}
+		
+		return predefinisatiPregledi;
+	}
+	
+	
+	public Boolean zakaziPredefPregled(Long pregledID, Long pacijentID) {
+		
+		Pacijent pacijent = pacijentService.findOne(pacijentID);
+		Pregled pregled = findOne(pregledID);
+		
+		//ako postoje u bazi
+		if(pacijent == null || pregled == null) {
+			return false;
+		}
+		
+		//poslat je ID od pregleda koji nije predefinisan
+		if(pregled.getPacijent() != null) {
+			return false;
+		}
+		
+		pregled.setPacijent(pacijent);
+		pregled.setZdravstveniKarton(pacijent.getZdravstveniKarton());
+		save(pregled);
+		
+		EmailDTO emailDTO = new EmailDTO(pacijent.getId().intValue(), "Uspesno zakazan pregled", "Uspesno ste zakazali pregled preko profila klinike", "");
+
+		try 
+		{
+			emailService.sendNotificaitionAsync(emailDTO);
+		}
+		catch( Exception e )
+		{
+//			logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+		}
+		
+		return true;
+	}
 }
