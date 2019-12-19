@@ -49,6 +49,9 @@ public class MedicinskaSestra {
 	@OneToMany(mappedBy = "medicinskaSestra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Recept> recepti = new HashSet<Recept>();
 	
+	@OneToMany(mappedBy = "medSestra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Odsustvo> listaOdsutstava = new HashSet<Odsustvo>();
+	
 	public MedicinskaSestra() {
 		// TODO Auto-generated constructor stub
 	}
@@ -136,6 +139,14 @@ public class MedicinskaSestra {
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
+	}
+
+	public Set<Odsustvo> getListaOdsutstava() {
+		return listaOdsutstava;
+	}
+
+	public void setListaOdsutstava(Set<Odsustvo> listaOdsutstava) {
+		this.listaOdsutstava = listaOdsutstava;
 	}
 
 	@Override

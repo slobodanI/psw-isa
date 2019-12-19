@@ -1,5 +1,19 @@
-$(document).ready(function(){
+var params = new URL(location.href).searchParams;
+var pacijent=params.get('pacijenti');
 
+
+$(document).ready(function(){
+	
+	$(".zdravstveniKarton").hide();
+	$("#btn-zdravstveniKarton").click(function(){
+		dobaviPodatkeOPacijentu(pacijent);
+		window.location="./ZdravstveniKarton.html?pacijenti="+pacijent;
+	});
+	$("#btn-zapocniPregled").click(function(){
+		window.location="./LekarObaviPregled.html";
+	});
+	
+	
 	$(".div-form-edit").hide();		
 	$("#btn-prikazForme").click(function() {
 		$(".div-form-edit").toggle();		
@@ -23,6 +37,9 @@ function koJeUlogovan() {
 				} else if (user.uloga == "AdministratorKlinike") {
 //					window.location = "./AdministratorKlinikeHome.html";
 				} else if (user.uloga == "Lekar") {
+					dobaviPodatkeOPacijentu(pacijent);
+					$(".pac").hide();
+					getLekare(user.id,pacijent)
 //					window.location = "./LekarHome.html";
 				} else if (user.uloga == "MedicinskaSestra") {
 //					window.location = "./MedicinskaSestra.html";
@@ -120,4 +137,22 @@ function izmenaPodataka() {
 		}
 			
 		});
+}
+
+function getLekare(idLekara,idPacijenta) {
+	$.get({
+		url: 'pacijent/getPoseceneLekare/' + idPacijenta,
+		success: function(lekari) {
+			if(lekari != undefined) {
+				for(var l of lekari){
+					if(l.id==idLekara){
+						$(".zdravstveniKarton").show();
+					}
+				}
+			}
+		},
+		error: function(jqXhr, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+	});
 }
