@@ -71,6 +71,24 @@ public class OdsustvoService
 			{
 				return "Datum pocetka ne moze biti pre datuma kraja";
 			}
+			
+			//uzimamo sva odsustva medicinske sestre
+			Set<Odsustvo> odsustva = ms.getListaOdsutstava();
+			
+			//idemo kroz sva odsustva
+			for (Odsustvo odsustvo : odsustva) {
+				LocalDateTime p2 = odsustvo.getPocetak();
+				LocalDateTime k2 = odsustvo.getKraj();
+				//gledamo da li postoji preklapanje
+				Boolean overlap = datePocetak.isBefore(k2) && p2.isBefore(dateKraj);
+				
+				//ako postoji vrati poruku
+				if(overlap)
+				{
+					return "Ne sme biti preklapanja izmedju odsustava. Proverite vaš kalendar";
+				}
+			}
+			
 		} 
 		catch (Exception e) 
 		{

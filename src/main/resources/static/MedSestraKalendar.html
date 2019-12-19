@@ -20,7 +20,9 @@
 <script src="js/MedSestraKalendar.js" type="text/javascript"></script>
 
 <script>
-
+  //script u head elementu jer u posebnom fajlu fullcallendar ne radi
+  
+  //kreiranje kalendara
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -34,13 +36,60 @@
       defaultDate: new Date(),
       navLinks: true, // can click day/week names to navigate views
       businessHours: true, // display business hours
-      editable: true,
+      editable: false,
       events: [
        
       ]
     });
 
     calendar.render();
+    
+    //proveri ko je ulogovan
+    $.get({
+		url : 'api/whoIsLoggedIn',
+		success : function(user) 
+		{
+			if(user.uloga != "MedicinskaSestra")
+			{
+				logout();
+			}
+			
+			//vrati odsustva ulogovane osobe
+			$.get({
+				url : 'medicinska_sestra/getMSOdsustva/' + user.id,
+				success : function(odsustva) 
+				{
+					odsustva.forEach((item)=>{
+						var i;
+						if(item.tip == 'odsustvo')
+						{
+							i = 'Odsustvo';
+						}
+						else
+						{
+							i = 'Godišnji odmor';
+						}
+						calendar.addEvent({
+			                id: item.id,
+							title: i,
+			                start: item.pocetak,
+			                end: item.kraj,
+			                allDay: true
+						})
+					})
+				},
+				error : function()
+				{
+					alert('Greska pri dobavljanju informacija o odsustvima medicinske sestre');
+				}
+			});
+		},
+		error : function()
+		{
+			alert('Greska pri dobavljanju informacija o ulogovanoj osobi');
+		}
+	});
+    
   });
 
 </script>
@@ -77,6 +126,8 @@
     </div>
     
     <div id='calendar'></div>
+    
+    <input type="hidden" id="idMs"></input>
     
 </body>
 </html>
