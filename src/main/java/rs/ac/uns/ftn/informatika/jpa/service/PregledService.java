@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Lek;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
@@ -111,6 +112,23 @@ public class PregledService {
 			System.out.println("##" + pregled2.getId().toString() + "-" + pregled2.getDijagnoza().getNaziv() + "##");
 		}
 		*/
+	}
+	
+	public List<PregledDTOStudent1> getPredefinisanePreglede(Long klinikaID) {
+		
+		List<Pregled> sviPregledi = findAll();
+		
+		List<PregledDTOStudent1> predefinisatiPregledi = new ArrayList<PregledDTOStudent1>();
+		for(Pregled pregled : sviPregledi) {
+			if(pregled.getSala().getKlinika().getId().equals(klinikaID)){ // pregled u toj klinici
+				if(pregled.getPacijent() == null) { // ovo znaci da je predefinisan pregled
+					PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
+					predefinisatiPregledi.add(predefPregledDTO);
+				}
+			}
+		}
+		
+		return predefinisatiPregledi;
 	}
 	
 }

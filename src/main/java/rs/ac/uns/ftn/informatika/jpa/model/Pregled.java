@@ -38,8 +38,8 @@ public class Pregled {
 	@Column(nullable =  false)
 	private String satnica;
 	
-//	@Column(nullable =  false)
-//	private Sala sala;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Sala sala;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Lekar lekar;
@@ -47,7 +47,7 @@ public class Pregled {
 	@Column(nullable =  false)
 	private int popust;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/) // ne treba cascade..
 	private TipPregleda tipPregleda;
 	
 	@Column(nullable =  false)
@@ -131,13 +131,13 @@ public class Pregled {
 		this.satnica = satnica;
 	}
 
-//	public Sala getSala() {
-//		return sala;
-//	}
-//
-//	public void setSala(Sala sala) {
-//		this.sala = sala;
-//	}
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
 	
 	
 
