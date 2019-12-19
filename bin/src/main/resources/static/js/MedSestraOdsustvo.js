@@ -57,11 +57,10 @@ function kreirajOdsustvo()
 	var pocetak = split[2]+'-'+split[1]+'-'+split[0];
 	
 	var k = $("#datepickerDo").datepicker("getDate");
-	k.setDate(k.getDate() + 2);
+	k.setDate(k.getDate() + 1);
 	var k2 = new Date(k).toISOString().split("T")[0];
 	var split = k2.split("-");
 	var kraj = split[2]+'-'+split[1]+'-'+split[0];
-	
 
 	var tip = $('#selectTipOdsustva :selected').val();
 	
@@ -75,7 +74,7 @@ function kreirajOdsustvo()
 		contentType: 'application/json',
 		success: function(poruka)
 		{
-			//alert(kraj);
+			
 			alert(poruka);
 
 		},

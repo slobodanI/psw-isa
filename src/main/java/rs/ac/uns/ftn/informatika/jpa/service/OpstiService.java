@@ -1,21 +1,24 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.mapping.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
+import rs.ac.uns.ftn.informatika.jpa.model.Operacija;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
-
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 
 @Service
 public class OpstiService {
@@ -38,10 +41,22 @@ public class OpstiService {
 	@Autowired
 	private MedicinskaSestraService medicinskaSestraService;
 	
-	//postavljanje pacijentovog atributa AktiviranNalog na true
+	//postavljanje pacijentovog atributa AktiviranNalog na true i dodaje zdravstveni karton
 	public Pacijent serviceSetAktiviranNalog(Pacijent pacijent)
 	{
 		pacijent.setAktiviranNalog(true);
+		ZdravstveniKarton zk = new ZdravstveniKarton();
+		zk.setKrvnaGrupa("TBA");
+		zk.setDioptrija("TBA");
+		zk.setTezina(0d);
+		zk.setVisina(0d);
+		zk.setAlergije("TBA");
+		zk.setListaBolesti("TBA");
+		zk.setPacijent(pacijent);
+		zk.setListaPregleda(new HashSet<Pregled>());
+		zk.setListaOperacija(new HashSet<Operacija>());
+		pacijent.setZdravstveniKarton(zk);
+		
 		return pacijent;
 	}
 	
