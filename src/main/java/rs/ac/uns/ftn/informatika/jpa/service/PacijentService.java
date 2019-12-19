@@ -43,6 +43,10 @@ public class PacijentService {
 		pacijentRepository.deleteById(id);
 	}
 	
+	public Pacijent findOneByUsername(String username) {
+		return pacijentRepository.findOneByUsername(username);
+	}
+	
 	public Pacijent updatePacijent(Long id, PacijentDTO pacijentDTO) {
 		
 		Pacijent pacijent = findOne(id);		

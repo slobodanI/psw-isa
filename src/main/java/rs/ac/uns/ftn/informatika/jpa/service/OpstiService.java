@@ -16,6 +16,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
 import rs.ac.uns.ftn.informatika.jpa.model.Operacija;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
+import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 
@@ -24,6 +25,9 @@ public class OpstiService {
 	
 	@Autowired
 	private PacijentService pacijentService;
+	
+	@Autowired
+	private PorukaService porukaService;
 	
 	@Autowired
 	private AministratorKlinickogCentraService administratorKlinickogCentraService;
@@ -111,6 +115,13 @@ public class OpstiService {
 		}
 				
 		pacijent = pacijentService.save(pacijent);
+		
+//		System.out.println("######################### PACIJENT ID:" + pacijent.getId());
+		
+		Poruka poruka = new Poruka(pacijent.getId(), "Zahtev " + pacijent.getIme() + " " + pacijent.getPrezime(), "Zahtev od " + pacijent.getIme() + " " + pacijent.getPrezime(),
+									"mailSaKogaSaljemoSve@gmail.com", pacijent.getEmail(), false);
+		porukaService.save(poruka);
+		
 		return true;
 	}
 	

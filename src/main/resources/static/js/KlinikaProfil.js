@@ -15,6 +15,8 @@ function koJeUlogovan() {
 //				ostavicu ovake jer ne znam ko sve treba da gleda ovu stranicu
 				if (user.uloga == "Pacijent") {
 					popuniPodatke(klinikaID);
+					dobaviPredefinisanePreglede(klinikaID);
+					pacijentID = user.id;
 				} else if (user.uloga == "AdministratorKlinickogCentra") {
 					
 				} else if (user.uloga == "AdministratorKlinike") {
@@ -62,4 +64,52 @@ function popuniPodatke(klinikaID) {
 			alert("NEuspešno dobavljeni podaci o klinici");
 		}
 	});
+}
+
+function dobaviPredefinisanePreglede(klinikaID) {
+	$.get({
+		url: 'pregledi/predefPregledi/' + klinikaID,
+		success: function(pregledi) {
+			if(pregledi.length != 0){
+				for(var pregled of pregledi) {
+					var li = $("<li> </li>");
+					var ptag = $("<p> </p>");
+					
+					ptag.append("Datum i vreme: " + pregled.datumPregleda + " " + pregled.satnica + "<br>"); // OVO CE SE MENJATI, BICE SAMO JEDNO POLJE a ne i datum i vreme
+					ptag.append("Sala: " + pregled.sala + "<br>");
+					ptag.append("Lekar: " + pregled.lekar + "<br>");
+					ptag.append("Tip pregleda: " + pregled.tipPregleda + "<br>");
+					ptag.append("Originalna cena: " + pregled.cena + "<br>");
+					ptag.append("Popust: " + pregled.popust + "<br>");
+					
+					var btn = $('<button>Zakaži</button>');
+					btn.click(zakaziPregled(pregled.id));
+					ptag.append(btn).append("<br>");
+					
+					li.append(ptag);
+					
+					$("#ul-listaPregleda").append(li).append("<hr>");
+				}				
+			}
+			else {
+				$("#h4-predefPregledi").append(" NEMA IH");
+			}
+		}
+	});
+}
+
+function zakaziPregled(pregledID) {
+	return function() {
+		$.ajax({
+			url: 'pregledi/zakaziPredefPregled/' + pregledID + '/pacijent/' + pacijentID,
+			type: 'PUT',
+			success: function(pacijent){
+				alert("Uspesno ste zakazali pregled");
+				window.location = "./KlinikaProfil.html?klinikaID=" + klinikaID;
+			},
+			error: function(){
+				alert("Neuspesno ste zakazali pregled");
+			}
+		});
+	}
 }
