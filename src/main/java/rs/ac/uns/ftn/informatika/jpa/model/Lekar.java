@@ -54,7 +54,7 @@ public class Lekar {
 //	@Column(nullable =  false)
 //	private Collection<Pacijent> listaPacijenata;
 	
-	@OneToMany(mappedBy = "lekar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "lekar", fetch = FetchType.LAZY)
 	private Set<Pregled> listaZakazanihPregleda = new HashSet<Pregled>();
 	
 	@Column(nullable = false)
