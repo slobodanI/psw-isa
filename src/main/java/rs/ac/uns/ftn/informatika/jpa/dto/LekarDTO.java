@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;

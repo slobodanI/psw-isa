@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	koJeUlogovan();
+	
 	$("#formaZaNovogLekara").submit(function(event){
 		event.preventDefault();
 		
@@ -13,18 +15,20 @@ $(document).ready(function(){
 		var radniKalendar = "radniKalendar";
 		var brojOcena=0;
 		var ukupnaOcena=0;
+		var idKlinike=1;
 		if(password == confirmPassword){
 		$.post({
-			url: '/api/saveLekar',
-			data: JSON.stringify({username,password,confirmPassword,ime,prezime,radnoVreme,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena}),
+			url: '/api/lekar/saveLekar',
+			data: JSON.stringify({username,password,ime,prezime,radnoVreme,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena}),
 			contentType: 'application/json',
 			success: function(){
 			alert("Uspešno ste dodali lekara.");
+			window.location = "./AdministratorKlinikeHome.html"
 			},
 			error: function(){
 				alert("Korisnik sa ovim username već postoji.");
 			}	
-		}
+		});
 		}
 		else{
 			alert("Unete lozinke nisu iste");
@@ -48,6 +52,8 @@ function koJeUlogovan(){
 				} else if (user.uloga == "AdministratorKlinike") {
 //					window.location = "./AdministratorKlinikeHome.html";
 					idUsera=user.id;
+					dobaviPodatkeOAdminu(idUsera);
+
 				} else if (user.uloga == "Lekar") {
 //					window.location = "./LekarHome.html";
 				} else if (user.uloga == "MedicinskaSestra") {
@@ -65,3 +71,14 @@ function koJeUlogovan(){
 	
 	
 }
+
+function dobaviPodatkeOAdminu(id){
+	$.get({
+		url: 'adminK/' + idUsera,
+		success: function(admin){
+			var idKlinike=admin.idKlinike;
+		}
+		
+	});
+}
+

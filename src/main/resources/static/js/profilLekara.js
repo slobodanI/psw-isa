@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	koJeUlogovan();
+	$("#logout").click(function() {
+		logOut();
+	});
 
 	
 });
@@ -11,7 +14,8 @@ function dobaviPodatke(id){
 		contentType : 'application/json',
 		success : function(lekar){
 			if(lekar != undefined){
-				var oc=lekar.ukupnaOcena/lekar.brojOcena
+				var oc=lekar.ukupnaOcena/lekar.brojOcena;
+				oc=oc.toFixed(2);
 				$("#ime").append("     "+ lekar.ime);
 				$("#prezime").append("     "+ lekar.prezime);
 				$("#ocena").append("     "+ oc);
@@ -55,5 +59,18 @@ function koJeUlogovan() {
 			}
 
 		}
+	});
+}
+function logOut() {
+	$.post({
+		url : 'api/logOut',
+		success : function() {
+			//alert("Uspešno ste se odjavili");
+			window.location = "./index.html";
+		},
+		error : function(jqXhr, textStatus, errorMessage) {
+			console.log("Error: ", errorMessage);
+		}
+
 	});
 }

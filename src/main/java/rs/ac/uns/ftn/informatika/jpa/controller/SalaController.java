@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.DodajSaluDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaSale;
@@ -86,9 +87,9 @@ public class SalaController {
 	}
 
 	@PostMapping(value = "/addSalu", consumes = "application/json")
-	public ResponseEntity<SalaDTO> addSalu(@RequestBody SalaDTO salaDTO) {
+	public ResponseEntity<SalaDTO> addSalu(@RequestBody DodajSaluDTO salaDTO) {
 
-		Klinika klinika = klinikaService.findOne(salaDTO.getKlinika().getId());
+		Klinika klinika = klinikaService.findOne(salaDTO.getIdKlinike());
 		Sala sala = new Sala();
 		sala.setNaziv(salaDTO.getNaziv());
 		sala.setZauzetost(salaDTO.getZauzetost());

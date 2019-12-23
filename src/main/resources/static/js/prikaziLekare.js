@@ -56,10 +56,17 @@ function addLekar(l){
 	let tdIme=$('<td>'+l.ime+'</td>');
 	let tdPrezime=$('<td>'+l.prezime+'</td>');
 	let tdId=$('<td>'+l.id+'</td>')
+	tr.append(tdIme).append(tdPrezime);
 	var oc=l.ukupnaOcena/l.brojOcena;
+	if(isNaN(oc)){
+		let tdProsecnaOcena = $('<td>Nije ocenjen</td>');
+		tr.append(tdProsecnaOcena);
+	}
+	else{
 	let tdProsecnaOcena = $('<td>'+oc+'</td>');
-
-	tr.append(tdIme).append(tdPrezime).append(tdProsecnaOcena).append(tdId);
+	tr.append(tdProsecnaOcena);
+	}
+	tr.append(tdId);
 	$('#tabela tbody').append(tr);
 
 	

@@ -15,6 +15,7 @@ public class AdministratorKlinikeDTO
 	private KlinikaDTO klinika;
 	private Boolean promenjenaLozinka;
 	private String uloga = "AdministratorKlinike";
+	private Long idKlinike;
 	
 	public AdministratorKlinikeDTO()
 	{
@@ -22,7 +23,7 @@ public class AdministratorKlinikeDTO
 	}
 	
 	public AdministratorKlinikeDTO(Long id, String ime, String prezime, String username, String password, String email,
-			KlinikaDTO klinika, Boolean promenjenaLozinka, String uloga) {
+			KlinikaDTO klinika, Boolean promenjenaLozinka, String uloga,Long idKlinike) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -33,11 +34,12 @@ public class AdministratorKlinikeDTO
 		this.klinika = klinika;
 		this.promenjenaLozinka = promenjenaLozinka;
 		this.uloga = uloga;
+		this.idKlinike=idKlinike;
 	}
 	
 	public AdministratorKlinikeDTO(AdministratorKlinike admin)
 	{
-		this(admin.getId(), admin.getIme(), admin.getPrezime(), admin.getUsername(), admin.getPassword(), admin.getEmail(), new KlinikaDTO(admin.getKlinika()) ,admin.getPromenjenaLozinka(), admin.getUloga());
+		this(admin.getId(), admin.getIme(), admin.getPrezime(), admin.getUsername(), admin.getPassword(), admin.getEmail(), new KlinikaDTO(admin.getKlinika()) ,admin.getPromenjenaLozinka(), admin.getUloga(),admin.getKlinika().getId());
 	}
 
 	public Long getId() {
@@ -110,6 +112,15 @@ public class AdministratorKlinikeDTO
 
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
+	}
+	
+
+	public Long getIdKlinike() {
+		return idKlinike;
+	}
+
+	public void setIdKlinike(Long idKlinike) {
+		this.idKlinike = idKlinike;
 	}
 
 	@Override

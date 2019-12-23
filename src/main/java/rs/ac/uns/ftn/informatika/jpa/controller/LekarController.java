@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.DodavanjeLekaraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
-import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
@@ -61,6 +60,7 @@ public class LekarController {
 		if (lekar == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 		return new ResponseEntity<>(new LekarDTO(lekar), HttpStatus.OK);
 
 	}
@@ -97,12 +97,12 @@ public class LekarController {
 	}
 	
 	@PostMapping(value="/saveLekar",consumes = "application/json")
-	public ResponseEntity<LekarDTO> saveLekar(@RequestBody LekarDTO lekarDTO){
+	public ResponseEntity<LekarDTO> saveLekar(@RequestBody DodavanjeLekaraDTO lekarDTO){
 		
 		if(lekarDTO.getPassword().length()<6) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		Klinika klinika = klinikaService.findOne(lekarDTO.getKlinika().getId());
+		Klinika klinika = klinikaService.findOne(lekarDTO.getIdKlinike());
 		Lekar lekar = new Lekar();
 		lekar.setIme(lekarDTO.getIme());
 		lekar.setPrezime(lekarDTO.getPrezime());
