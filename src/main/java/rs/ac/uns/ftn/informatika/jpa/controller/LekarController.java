@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.DodavanjeLekaraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
@@ -110,7 +111,9 @@ public class LekarController {
 		lekar.setBrojOcena(lekarDTO.getBrojOcena());
 		lekar.setUsername(lekarDTO.getUsername());
 		lekar.setPassword(lekarDTO.getPassword());
-		lekar.setRadnoVreme(lekarDTO.getRadnoVreme());
+//		lekar.setRadnoVreme(lekarDTO.getRadnoVreme());
+		lekar.setRadnoVremeOd(lekarDTO.getRadnoVremeOd());
+		lekar.setRadnoVremeDo(lekarDTO.getRadnoVremeDo());
 		lekar.setRadniKalendar(lekarDTO.getRadniKalendar());
 		lekar.setUloga(lekarDTO.getUloga());
 		lekar.setKlinika(klinika);
@@ -164,7 +167,7 @@ public class LekarController {
 					
 				}
 			}
-			String[] radnov=l.getRadnoVreme().split("-");
+
 
 			
 			if(flag==true) {
@@ -188,6 +191,18 @@ public class LekarController {
 		
 		
 	}
+	
+	@GetMapping(value = "/getLekarOdsustva/{id}", produces = "application/json")
+	public ResponseEntity<List<LekarOdsustvoDTO>> getLekarOdsustvo(@PathVariable Long id) {
+		
+	
+		List<LekarOdsustvoDTO> ods = lekarService.getOdsustva(id);
+		
+		
+		return new ResponseEntity<>(ods, HttpStatus.OK);
+	}
+	
+	
 	
 //	@GetMapping(value = "getPacijenteKlinike/{id}")
 //	public ResponseEntity<List<PacijentDTO>> getPacijenteKlinike(@PathVariable Long id){

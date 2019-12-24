@@ -43,10 +43,21 @@ public class Lekar {
 	@Column(nullable =  false)
 	private String radniKalendar;
 	
-	@Column(nullable = true)
-	private String radnoVreme;
+//	@Column(nullable = true)
+//	private String radnoVreme;
 	
+	@Column(nullable = false)
+	private int radnoVremeOd;
+
+	@Column(nullable = false)
+	private int radnoVremeDo;	
 	
+	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	private Set<LekarOdsustvo> listaOdsustava = new HashSet<LekarOdsustvo>();
+	
+	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>();
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
 	
@@ -65,7 +76,7 @@ public class Lekar {
 	}
 
 	public Lekar(Long id, String ime, String prezime,int brojOcena, Double ukupnaOcena, Collection<Pacijent> listaPacijenata,
-			Collection<Pregled> listaPregleda, String radniKalendar,Klinika klinika,String radnoVreme,String username,String password) {
+			Collection<Pregled> listaPregleda, String radniKalendar,Klinika klinika,int radnoVremeOd,int radnoVremeDo,String username,String password) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -78,7 +89,10 @@ public class Lekar {
 //		this.listaPregleda = listaPregleda;
 		this.radniKalendar = radniKalendar;
 //		this.klinika=klinika;
-		this.radnoVreme=radnoVreme;
+//		this.radnoVreme=radnoVreme;
+		this.radnoVremeOd=radnoVremeOd;
+		this.radnoVremeDo=radnoVremeDo;
+		
 		this.uloga="Lekar";
 	}
 	
@@ -189,12 +203,44 @@ public class Lekar {
 		this.uloga = uloga;
 	}
 
-	public String getRadnoVreme() {
-		return radnoVreme;
+//	public String getRadnoVreme() {
+//		return radnoVreme;
+//	}
+//
+//	public void setRadnoVreme(String radnoVreme) {
+//		this.radnoVreme = radnoVreme;
+//	}
+
+	public int getRadnoVremeOd() {
+		return radnoVremeOd;
 	}
 
-	public void setRadnoVreme(String radnoVreme) {
-		this.radnoVreme = radnoVreme;
+	public void setRadnoVremeOd(int radnoVremeOd) {
+		this.radnoVremeOd = radnoVremeOd;
+	}
+
+	public int getRadnoVremeDo() {
+		return radnoVremeDo;
+	}
+
+	public void setRadnoVremeDo(int radnoVremeDo) {
+		this.radnoVremeDo = radnoVremeDo;
+	}
+
+	public Set<LekarOdsustvo> getListaOdsustava() {
+		return listaOdsustava;
+	}
+
+	public void setListaOdsustava(Set<LekarOdsustvo> listaOdsustava) {
+		this.listaOdsustava = listaOdsustava;
+	}
+
+	public Set<ZauzetostLekara> getListaZauzetostiLekara() {
+		return listaZauzetostiLekara;
+	}
+
+	public void setListaZauzetostiLekara(Set<ZauzetostLekara> listaZauzetostiLekara) {
+		this.listaZauzetostiLekara = listaZauzetostiLekara;
 	}
 	
 	

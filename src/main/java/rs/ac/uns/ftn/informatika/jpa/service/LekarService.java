@@ -1,13 +1,16 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
-import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.dto.OdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.LekarOdsustvo;
 import rs.ac.uns.ftn.informatika.jpa.repository.LekarRepository;
 
 @Service
@@ -49,5 +52,16 @@ public class LekarService {
 		
 		return true;
 	}
+	
+	public List<LekarOdsustvoDTO> getOdsustva(Long id){
+		Lekar lekar = this.findOne(id);
+		List<LekarOdsustvoDTO> odsustva = new ArrayList<LekarOdsustvoDTO>();
+		
+		for(LekarOdsustvo o : lekar.getListaOdsustava()) {
+			odsustva.add(new LekarOdsustvoDTO(o));
+		}
+		return odsustva;
+	}
+	
 	
 }

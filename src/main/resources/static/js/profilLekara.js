@@ -20,7 +20,7 @@ function dobaviPodatke(id){
 				$("#prezime").append("     "+ lekar.prezime);
 				$("#ocena").append("     "+ oc);
 				$("#klinika").append("     "+ lekar.klinika.naziv);
-				$("#radnoVreme").append("     "+lekar.radnoVreme)
+				$("#radnoVreme").append("     "+lekar.radnoVremeOd).append(":").append(lekar.radnoVremeDo)
 			}
 			else{
 				console.log("Nema tog lekara");

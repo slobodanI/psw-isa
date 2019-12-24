@@ -53,10 +53,10 @@ insert into sala (naziv, zauzetost, klinika_id) values ('sala2', 'zauzeto', 1);
 insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime1', 'prz1', 'us', 'asd', 'blabla', true, 'AdministratorKlinike' );
 insert into administrator_klinike (klinika_id, ime, prezime, username, password, email, promenjena_lozinka, uloga) values (1, 'ime2', 'prz2', 'us2', 'asd', 'blabla', true, 'AdministratorKlinike' );
 
-insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'lekar1','prezime1',12, 55,'us3','pas12345','aaa', '8-16', 'Lekar');
-insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (1,'lekar2','prezime2',12, 50,'lekar2','lekar2','aaa', '8-16', 'Lekar');
-insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (2,'lekar3','prezime3',12, 60,'lekar3','lekar2','aaa', '8-16', 'Lekar');
-insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme, uloga) values (3,'lekar4','prezime4',12, 59,'lekar4','lekar2','aaa', '8-16', 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (1,'lekar1','prezime1',12, 55,'us3','pas12345','aaa',8,16, 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (1,'lekar2','prezime2',12, 50,'lekar2','lekar2','aaa',9,17, 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (2,'lekar3','prezime3',12, 60,'lekar3','lekar2','aaa',13,18, 'Lekar');
+insert into lekar (klinika_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (3,'lekar4','prezime4',12, 59,'lekar4','lekar2','aaa',8,16, 'Lekar');
 
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'nenad@gmail.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
@@ -117,6 +117,11 @@ insert into poruka (pacijent_id, naslov, telo, email_posiljaoca, email_primaoca,
 insert into poruka (pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (5, 'Zahtev Pera Peric', 'Zahtev id 5 - Pera Peric', 'pera@gmail.com', '-', false);
 insert into poruka (pacijent_id, naslov, telo, email_posiljaoca, email_primaoca, odgovoreno) values (6, 'Zahtev Mile Milic', 'Zahtev id 6 - Mile Milic', 'mile@gmail.com', '-', false);
 
+insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('05-13-2019','05-20-2019',true,1,1);
+insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('05-28-2019','05-30-2019',true,1,2);
+insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('03-13-2019','04-20-2019',true,1,3);
 
-
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('05-20-2019 12:00','05-20-2019 13:00',1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('08-23-2019 12:00','08-23-2019 13:00',3);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('05-20-2019 09:00','05-20-2019 10:00',4);
 
