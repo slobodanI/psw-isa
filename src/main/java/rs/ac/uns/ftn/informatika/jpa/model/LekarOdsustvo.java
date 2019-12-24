@@ -11,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Odsustvo 
-{
+public class LekarOdsustvo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,23 +29,20 @@ public class Odsustvo
 	Boolean odobreno;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private MedicinskaSestra medSestra;
+	private Lekar lekar;
 	
-
-	
-	public Odsustvo()
-	{
+	public LekarOdsustvo() {
 		
 	}
-
-	public Odsustvo(Long id, LocalDateTime pocetak, LocalDateTime kraj, TipOdsustva tip, Boolean odobreno, MedicinskaSestra medSestra) {
+	
+	public LekarOdsustvo(Long id, LocalDateTime pocetak, LocalDateTime kraj, TipOdsustva tip, Boolean odobreno, Lekar lekar) {
 		super();
 		this.id = id;
 		this.pocetak = pocetak;
 		this.kraj = kraj;
 		this.tip = tip;
 		this.odobreno = odobreno;
-		this.medSestra = medSestra;
+		this.lekar = lekar;
 	}
 
 	public Long getId() {
@@ -81,14 +77,6 @@ public class Odsustvo
 		this.tip = tip;
 	}
 
-	public MedicinskaSestra getMedSestra() {
-		return medSestra;
-	}
-
-	public void setMedSestra(MedicinskaSestra medSestra) {
-		this.medSestra = medSestra;
-	}
-
 	public Boolean getOdobreno() {
 		return odobreno;
 	}
@@ -97,13 +85,13 @@ public class Odsustvo
 		this.odobreno = odobreno;
 	}
 
-	@Override
-	public String toString() {
-		return "Odsustvo [id=" + id + ", pocetak=" + pocetak + ", kraj=" + kraj + ", tip=" + tip + ", odobreno="
-				+ odobreno + ", medSestra=" + medSestra + "]";
+	public Lekar getLekar() {
+		return lekar;
 	}
 
+	public void setLekar(Lekar lekar) {
+		this.lekar = lekar;
+	}
 	
-	
-	
+
 }

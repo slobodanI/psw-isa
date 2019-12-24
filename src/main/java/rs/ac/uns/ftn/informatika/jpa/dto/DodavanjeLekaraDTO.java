@@ -15,12 +15,14 @@ public class DodavanjeLekaraDTO {
 	private int brojOcena;
 //	private KlinikaDTO klinika;
 //	private Klinika kl;
-	private String radnoVreme;
+//	private String radnoVreme;
 	private String username;
 	private String password;
 	private String uloga="Lekar";
 	private Long idKlinike;
 	private String radniKalendar;
+	private int radnoVremeOd;
+	private int radnoVremeDo;
 //	private PacijentDTO pacijent;
 //	private PregledDTO pregled;
 
@@ -40,7 +42,9 @@ public class DodavanjeLekaraDTO {
 		uloga = "Lekar";
 //		idKlinike = lekar.getKlinika().getId();
 		radniKalendar = lekar.getRadniKalendar();
-		radnoVreme = lekar.getRadnoVreme();
+		radnoVremeOd=lekar.getRadnoVremeOd();
+		radnoVremeDo=lekar.getRadnoVremeDo();
+//		radnoVreme = lekar.getRadnoVreme();
 //		kl=lekar.getKlinika();
 //		pacijent=new PacijentDTO(lekar.getPacijent());
 //		pregled=new PregledDTO(lekar.getPregled());
@@ -48,14 +52,16 @@ public class DodavanjeLekaraDTO {
 	}
 
 	public DodavanjeLekaraDTO(String ime, String prezime, Double ukupnaOcena, int brojOcena,
-			String radnoVreme, String username, String password, Long idKlinike, String radniKalendar,String uloga) {
+			int radnoVremeOd,int radnoVremeDo, String username, String password, Long idKlinike, String radniKalendar,String uloga) {
 		super();
 	//	this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.ukupnaOcena = ukupnaOcena;
 //		this.klinika = klinika;
-		this.radnoVreme = radnoVreme;
+//		this.radnoVreme = radnoVreme;
+		this.radnoVremeOd=radnoVremeOd;
+		this.radnoVremeDo=radnoVremeDo;
 		this.username = username;
 		this.password = password;
 		this.brojOcena = brojOcena;
@@ -103,13 +109,13 @@ public class DodavanjeLekaraDTO {
 //		this.klinika = klinika;
 //	}
 
-	public String getRadnoVreme() {
-		return radnoVreme;
-	}
-
-	public void setRadnoVreme(String radnoVreme) {
-		this.radnoVreme = radnoVreme;
-	}
+//	public String getRadnoVreme() {
+//		return radnoVreme;
+//	}
+//
+//	public void setRadnoVreme(String radnoVreme) {
+//		this.radnoVreme = radnoVreme;
+//	}
 
 	public String getUsername() {
 		return username;
@@ -174,5 +180,26 @@ public class DodavanjeLekaraDTO {
 	public void setIdKlinike(Long idKlinike) {
 		this.idKlinike = idKlinike;
 	}
+
+	public int getRadnoVremeOd() {
+		return radnoVremeOd;
+	}
+
+	public void setRadnoVremeOd(int radnoVremeOd) {
+		this.radnoVremeOd = radnoVremeOd;
+	}
+
+	public int getRadnoVremeDo() {
+		return radnoVremeDo;
+	}
+
+	public void setRadnoVremeDo(int radnoVremeDo) {
+		this.radnoVremeDo = radnoVremeDo;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+	
 
 }

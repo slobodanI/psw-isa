@@ -16,6 +16,7 @@ public class OdsustvoDTO
 	
 	private Long medSestraId;
 	
+	
 	public OdsustvoDTO()
 	{
 		
@@ -77,15 +78,13 @@ public class OdsustvoDTO
 	public void setMedSestraId(Long medSestraId) {
 		this.medSestraId = medSestraId;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "OdsustvoDTO [id=" + id + ", pocetak=" + pocetak + ", kraj=" + kraj + ", tip=" + tip + ", medSestraId="
 				+ medSestraId + "]";
 	}
-
-	
-	
 	
 	
 }

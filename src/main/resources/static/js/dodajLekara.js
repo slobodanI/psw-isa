@@ -10,7 +10,8 @@ $(document).ready(function(){
 		var confirmPassword = $('input[name="confirmPassword"]').val();
 		var ime = $('input[name="ime"]').val();
 		var prezime = $('input[name="prezime"]').val();
-		var radnoVreme = $('input[name="radnoVreme"]').val();
+		var radnoVremeOd = $('input[name="radnoVremeOd"]').val();
+		var radnoVremeDo = $('input[name="radnoVremeDo"]').val();
 		var uloga = "Lekar";
 		var radniKalendar = "radniKalendar";
 		var brojOcena=0;
@@ -19,7 +20,7 @@ $(document).ready(function(){
 		if(password == confirmPassword){
 		$.post({
 			url: '/api/lekar/saveLekar',
-			data: JSON.stringify({username,password,ime,prezime,radnoVreme,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena}),
+			data: JSON.stringify({username,password,ime,prezime,radnoVremeOd,radnoVremeDo,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena}),
 			contentType: 'application/json',
 			success: function(){
 			alert("Uspešno ste dodali lekara.");
