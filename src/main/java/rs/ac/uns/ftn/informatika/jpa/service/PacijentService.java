@@ -198,12 +198,16 @@ public class PacijentService {
 		//...idi kroz njih...
 		for (Pregled pregled : pregledi) 
 		{
-			//...ako dijagnoza jos nije doneta pregled nije obavljen...
-			if(pregled.isObavljen() == false)
+			if(pregled.getPacijent()!=null)
 			{
-				//...pa dodaj pacijenta u rezultat
-				Pacijent pac = pregled.getPacijent();
-				mapa.put(pregled.getId(), new PacijentDTO(pac));
+				
+				//...ako dijagnoza jos nije doneta pregled nije obavljen...
+				if(pregled.isObavljen() == false)
+				{
+					//...pa dodaj pacijenta u rezultat
+					Pacijent pac = pregled.getPacijent();
+					mapa.put(pregled.getId(), new PacijentDTO(pac));
+				}
 			}
 		}
 			

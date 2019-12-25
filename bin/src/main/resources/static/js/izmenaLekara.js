@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	koJeUlogovan();
 	$("#izmenaPodataka").submit(function(event){
-		
+		event.preventDefault();
 		
 	
 		var ime = $('input[name="ime"]').val();
@@ -20,6 +20,7 @@ $(document).ready(function(){
 					contentType: 'application/json',
 					success: function(){
 					alert("Uspešno ste izmenili podatke.");
+					window.location = "./profilLekara.html"
 					},
 				
 					error: function(){

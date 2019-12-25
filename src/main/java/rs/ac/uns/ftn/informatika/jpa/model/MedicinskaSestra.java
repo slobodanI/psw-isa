@@ -149,6 +149,16 @@ public class MedicinskaSestra {
 		this.listaOdsutstava = listaOdsutstava;
 	}
 
+	
+	
+	public Set<Recept> getRecepti() {
+		return recepti;
+	}
+
+	public void setRecepti(Set<Recept> recepti) {
+		this.recepti = recepti;
+	}
+
 	@Override
 	public String toString() {
 		return "MedicinskaSestra [id=" + id + ", ime=" + ime + ", prezime=" + prezime + ", username=" + username
