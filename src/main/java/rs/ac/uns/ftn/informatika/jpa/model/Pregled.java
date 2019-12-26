@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -195,6 +197,17 @@ public class Pregled {
 
 	public void setObavljen(boolean obavljen) {
 		this.obavljen = obavljen;
+	}
+	
+	public List<Recept> receptiToList()
+	{
+		List<Recept> rez = new ArrayList<Recept>();
+		
+		for (Recept r : this.recepti) {
+			rez.add(r);
+		}
+		
+		return rez;
 	}
 
 	

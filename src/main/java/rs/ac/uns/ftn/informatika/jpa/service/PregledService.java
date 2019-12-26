@@ -7,17 +7,21 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 import rs.ac.uns.ftn.informatika.jpa.model.Lek;
+import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.Recept;
+import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 import rs.ac.uns.ftn.informatika.jpa.repository.PregledRepository;
 
@@ -44,6 +48,12 @@ public class PregledService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private LekarService lekarService;
+	
+	@Autowired
+	private TipPregledaService tipService;
 	
 	public Pregled findOne(Long id) {
 		return pregledRepository.findById(id).orElseGet(null);
@@ -173,5 +183,53 @@ public class PregledService {
 		}
 		
 		return true;
+	}
+
+	//metoda vraca obavljene preglede doktora sa datim ID-jem
+	public List<StariPregledDTO> vratiStarePreglede(Long lekarID) 
+	{
+		Lekar lekar = lekarService.findOne(lekarID);
+		Set<Pregled> pregledi = lekar.getListaZakazanihPregleda();
+		
+		List<StariPregledDTO> rezultat = new ArrayList<StariPregledDTO>();
+		
+		for (Pregled p : pregledi) 
+		{
+			if(p.isObavljen()==true)
+			{
+				rezultat.add(new StariPregledDTO(p));
+			}
+		}
+		
+		return rezultat;
+	}
+	
+	//vraca pregled koji ce biti menjan
+	public PromenaPregledaDTO vratiPregled(Long id) 
+	{
+		Pregled preg = this.findOne(id);
+		PromenaPregledaDTO promena = new PromenaPregledaDTO(preg);
+		
+		return promena;
+	}
+	
+	
+	//promena pregleda
+	public String promeniPregled(PromenaPregledaDTO promena) 
+	{
+		if(promena.getInformacije().isEmpty())
+		{
+			return "Morate uneti informacije";
+		}
+		
+		Pregled pregled = this.findOne(promena.getId());
+		pregled.setInformacije(promena.getInformacije());
+		Dijagnoza dij = dijagnozaService.findOne(promena.getDijagnozaId());
+		pregled.setDijagnoza(dij);
+		TipPregleda tip = tipService.findOne(promena.getTipId());
+		pregled.setTipPregleda(tip);
+		this.save(pregled);
+		
+		return "Stari pregled uspešno promenjen";
 	}
 }
