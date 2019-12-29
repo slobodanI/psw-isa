@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 
@@ -51,5 +54,33 @@ public class PregledController
 		}
 		
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	//metoda vraca obavljene preglede doktora sa datim ID-jem
+	@GetMapping(value = "/vratiStarePreglede/{lekarID}")
+	public ResponseEntity<List<StariPregledDTO>> dobaviStarePreglede(@PathVariable Long lekarID){
+		
+		List<StariPregledDTO> pregledi = pregledSevice.vratiStarePreglede(lekarID);
+		
+		return new ResponseEntity<>(pregledi, HttpStatus.OK);
+	}
+	
+	//vraca pregled koji ce biti menjan
+	@GetMapping(value = "/vratiPregled/{id}")
+	public ResponseEntity<PromenaPregledaDTO> vratiPregled(@PathVariable Long id)
+	{
+			
+		PromenaPregledaDTO pregled = pregledSevice.vratiPregled(id);
+			
+		return new ResponseEntity<>(pregled, HttpStatus.OK);
+	}
+	
+	//menjanje pregleda
+	@PostMapping(value = "/promeniPregled")
+	public ResponseEntity<String> promeniPregled(@RequestBody PromenaPregledaDTO promena)
+	{
+		String poruka = pregledSevice.promeniPregled(promena);
+		
+		return new ResponseEntity<>(poruka, HttpStatus.OK);
 	}
 }

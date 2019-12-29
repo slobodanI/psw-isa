@@ -303,7 +303,7 @@ $(document).ready(function() {
 		else
 		{
 			//ako je odgovor Odbijeno
-			ukloniPacijenta($('#idPacijentaTxt').val());
+			//ukloniPacijenta($('#idPacijentaTxt').val());
 			odgovoriNaPoruku($('#idPoruke').val());
 			posaljiEmail();
 			//alert('zahtev odbijen');
