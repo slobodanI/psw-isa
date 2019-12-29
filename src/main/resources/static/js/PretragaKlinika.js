@@ -43,15 +43,25 @@ function popuniTipovePregleda() {
 	});
 }
 
+function odaberiKliniku(idKLinike, datum, tipPregleda) {
+	
+	return function() {
+		window.location = "./PretragaLekara.html?klinikaID=" + idKLinike + "&datum=" + datum + "&tipPregleda=" + tipPregleda;
+	}
+	
+} 
+
+
 function submitFormeZaPretragu() {
 	$("#form-searchKlinike").submit(function(event) {
 		event.preventDefault();
 
 		//
 		var datum = $('input[name="datumPregleda"]').val();	// preuzima datum kao YYYY-MM-DD
+		datum = datum + "T00:00";
 		var tipPregleda =  $('#select-tipPregleda :selected').val();
 		
-		$.post({ 
+		$.post({
 			url: 'klinika/pretraziKlinike',
 			data: JSON.stringify({datum, tipPregleda}),
 			contentType: 'application/json',
@@ -71,16 +81,36 @@ function submitFormeZaPretragu() {
 					var tbody = $("<tbody id='teloTabele'> </tbody>");
 					
 					for(var k of klinike){ // id klinike cu ubaciti u click na button
-						tbody.append('<tr><td>' + html+=k.naziv; + '</td><td>' + k.ocena + '</td><td>' + k.adresa + '</td><td>' + k.cena + '</td><td>');
-						  
+						//tbody.append('<tr><td>' + k.naziv + '</td><td>' + k.ocena + '</td><td>' + k.adresa + '</td><td>' + k.cena + '</td>');
+						var tr = $("<tr> </tr>")
+						var tdNaziv = $("<td> </td>");
+						tdNaziv.append(k.naziv);
+						var tdOcena = $("<td> </td>");
+						tdOcena.append(k.ocena);
+						var tdAdresa = $("<td> </td>");
+						tdAdresa.append(k.adresa);
+						var tdCena = $("<td> </td>");
+						tdCena.append(k.cena);
+						var tdOdaberi = $("<td> </td>");
 						var btn = $('<button>Odaberi</button>');
 						btn.click(odaberiKliniku(k.id, datum, tipPregleda));
+						tdOdaberi.append(btn);
 						
-						tbody.append(btn).append("</td></tr>");
+						tr.append(tdNaziv).append(tdOcena).append(tdAdresa).append(tdCena).append(tdOdaberi);
+						tbody.append(tr);
+//						var atag = $("<a>Odaberi</a>");
+//						atag.click(odaberiKliniku(k.id, datum, tipPregleda));
+						
+//						var td = $("<td> </td>"); OVO RADI
+//						td.append("Odaberi");
+//						td.click(odaberiKliniku(k.id, datum, tipPregleda));
+						
+//						tbody.append(td).append("</tr>");
 					}
 					
 					tableUDivu.append(thead).append(tbody);
-										
+					$("#divTabela").append(tableUDivu);
+					
 					var table = $('#tabelaKlinika').dataTable({
 				        "pagingType": "full_numbers",
 				        select: false
@@ -91,16 +121,9 @@ function submitFormeZaPretragu() {
             	console.log(errorThrown);
             }
 		});
-}
-	
+	});
 }
 
-function odaberiKliniku(idKLinike, datum, tipPregleda) {
-	
-	return function() {
-		window.location = "./PretragaLekara.html?klinikaID=" + id + "&datum=" + datum + "&tipPregleda=" + tipPregleda;
-	}
-	
-} 
+
 
 

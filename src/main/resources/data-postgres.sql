@@ -125,3 +125,7 @@ insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-05-20 12:00','
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-08-23 12:00','2019-08-23 13:00',3);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-05-20 09:00','2019-05-20 10:00',4);
 
+insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('2019-12-13','2019-12-31',true,1,1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-12-30 12:00','2019-08-23 13:00',4);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-12-30 13:00','2019-08-23 14:00',4);
+

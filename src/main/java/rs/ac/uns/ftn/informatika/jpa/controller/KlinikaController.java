@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStudent1PRETRAGA;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PretragaKlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 
@@ -79,5 +81,28 @@ public class KlinikaController {
 		
 	}
 	
+	/*
+	 * Pretrazivanje klinika na osnovu: TIPA PREGLEDA i DATUMA
+	 * */
+	@PostMapping(value = "/pretraziKlinike")
+	public ResponseEntity<List<KlinikaDTOzaStudent1PRETRAGA>> pretragaKlinika(@RequestBody PretragaKlinikaDTO pretragaKlinikaDTO){
+		
+		System.out.println("***DATUM: " + pretragaKlinikaDTO.getDatum() );
+		System.out.println("***TIP PREGLEDA: " + pretragaKlinikaDTO.getTipPregleda());
+		List<Klinika> klinike = klinikaService.pretraziKlinike(pretragaKlinikaDTO.getDatum(), pretragaKlinikaDTO.getTipPregleda());
+		if(klinike == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		// convert clinics to DTOs
+		List<KlinikaDTOzaStudent1PRETRAGA> klinikeDTO = new ArrayList<>();
+		for (Klinika k : klinike) {
+			System.out.println("NAZIV KLINIKE: " + k.getNaziv());
+			System.out.println("ID KLINIKE: " + k.getId());
+			klinikeDTO.add(new KlinikaDTOzaStudent1PRETRAGA(k));
+		}
+		
+		return new ResponseEntity<>(klinikeDTO, HttpStatus.OK);
+	}
 	
 }
