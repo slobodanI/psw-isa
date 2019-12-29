@@ -61,6 +61,8 @@ public class Lekar {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private TipPregleda tipPregleda;
 	
 //	@Column(nullable =  false)
 //	private Collection<Pacijent> listaPacijenata;
@@ -241,6 +243,14 @@ public class Lekar {
 
 	public void setListaZauzetostiLekara(Set<ZauzetostLekara> listaZauzetostiLekara) {
 		this.listaZauzetostiLekara = listaZauzetostiLekara;
+	}
+
+	public TipPregleda getTipPregleda() {
+		return tipPregleda;
+	}
+
+	public void setTipPregleda(TipPregleda tipPregleda) {
+		this.tipPregleda = tipPregleda;
 	}
 	
 	
