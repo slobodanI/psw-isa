@@ -69,7 +69,7 @@ function submitFormeZaPretragu() {
 				$("#divTabela").empty();
 				if(klinike != undefined){
 					//dodati izgled tabele
-					$("divTabela").empty();
+//					$("divTabela").empty();
 					
 					var tableUDivu = $("<table id='tabelaKlinika' class='display'> </table>");// ili mozda primer $("div").addClass("important");
 					
@@ -118,7 +118,9 @@ function submitFormeZaPretragu() {
 				}
 			},
             error: function(jqXhr, textStatus, errorThrown) {
-            	console.log(errorThrown);
+            	console.log(errorThrown); // ako je unet datum pre danasnjeg
+            	$("#divTabela").empty();
+            	alert("Izabrani datum mora biti najranije sutra.");
             }
 		});
 	});

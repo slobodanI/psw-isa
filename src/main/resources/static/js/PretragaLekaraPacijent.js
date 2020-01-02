@@ -44,7 +44,7 @@ function popuniTabeluLekara() {
 						
 						lekariSVI = lekari; // globalna promenljiva, sa njom cu vrsiti pretragu
 						//a za sad ucitam sve lekare
-						$("divTabela").empty();
+//						$("divTabela").empty();
 						
 						var tableUDivu = $("<table id='tabelaKlinika' class='display'> </table>");// ili mozda primer $("div").addClass("important"); / moze i ovako kako sam napisao
 						
@@ -173,7 +173,7 @@ function submitFormeZaPretragu() {
 function iscrtajTabeluLekara(lekari) {
 	$("#divTabela").empty();
 	if(lekari != undefined){
-		$("divTabela").empty();
+//		$("divTabela").empty();
 		
 		var tableUDivu = $("<table id='tabelaKlinika' class='display'> </table>");
 		

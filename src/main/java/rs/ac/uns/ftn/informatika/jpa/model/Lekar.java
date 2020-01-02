@@ -56,7 +56,7 @@ public class Lekar {
 	private Set<LekarOdsustvo> listaOdsustava = new HashSet<LekarOdsustvo>();
 	
 	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
-	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>();
+	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>(); // ovo se ne koristi koliko ja znam STUDENT 1
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
