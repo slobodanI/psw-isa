@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStudent1PRETRAGA;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOStudent1PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
@@ -99,13 +100,13 @@ public class KlinikaService {
 		
 		return true;
 	}
-	
+	//vraca listu klinika koje imaju lekare koji imaju slobodan termin za uneti datum, i sposobni su za taj tip pregleda
 	public List<Klinika> pretraziKlinike(LocalDateTime datum, Long idTipaPregleda) {
 		
 		//ovo ce trebati za testiranje
 		LocalDateTime sada = LocalDateTime.now();
 		
-		System.out.println("SADA JE: " + sada.toString());
+//		System.out.println("SADA JE: " + sada.toString());
 		
 		if(datum != null) {
 			if(datum.isBefore(sada)) {
@@ -115,9 +116,14 @@ public class KlinikaService {
 			return null;
 		}
 		
-		if(idTipaPregleda == null || idTipaPregleda == 0) {
+		if(idTipaPregleda != null) {
+			if(idTipaPregleda <= 0) {
+				return null;
+			}
+		} else {
 			return null;
 		}
+		
 		// ovo ide u return
 		List<Klinika> listaKlinikaKojeMiOdgovaraju = new ArrayList<Klinika>();
 		
@@ -156,7 +162,7 @@ public class KlinikaService {
 				
 				// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
 				for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
-					System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+//					System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
 					if(moguciTermini.contains(zauzetost.getPocetak())) {
 						moguciTermini.remove(zauzetost.getPocetak());
 					}
@@ -165,13 +171,243 @@ public class KlinikaService {
 				// ako postoji makar jedan slobodan termin za taj dan
 				if(moguciTermini.size() > 0) {
 					listaKlinikaKojeMiOdgovaraju.add(k);
+					break;// da nema duplikata medju klinikama, iskocim iz for petlje koja prolazi kroz lekare
 				}
 				
-				System.out.println(moguciTermini);
+//				System.out.println(moguciTermini);
 			}
 		}
 		
 		return listaKlinikaKojeMiOdgovaraju;		
+	}
+	
+	
+	public List<LekarDTOStudent1PretragaLekara> pretraziLekareUKlinici(Long klinikaID, LocalDateTime datum, Long tipPregledaID){
+		
+		//ovo ce trebati za testiranje
+		LocalDateTime sada = LocalDateTime.now();
+		
+		if(datum != null) {
+			if(datum.isBefore(sada)) {
+				return null;
+			}			
+		} else {
+			return null;
+		}
+		
+		if(tipPregledaID != null) {
+			if(tipPregledaID <= 0) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		
+		if(klinikaID != null) {
+			if(klinikaID <= 0) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		
+		// ovo ide u return
+		List<LekarDTOStudent1PretragaLekara> listaLekaraKojiMiOdgovaraju = new ArrayList<LekarDTOStudent1PretragaLekara>();
+		
+		//trazim kliniku sa id: klinikaID
+		List<Klinika> sveKlinike = findAll();
+		for(Klinika k : sveKlinike) {
+			
+			if(k.getId() == klinikaID) {
+				//prolazim kroz sve lekare klinike
+				for(Lekar lekar : k.getLekari()) {
+					
+					boolean flagZaOdsustva = false;
+					
+					// prvo proverim tip pregleda
+					if(!lekar.getTipPregleda().getId().equals(tipPregledaID)) {
+						continue; // predji na sledeceng lekara
+					}
+					
+					// treba proci kroz sva odsustva
+					for(LekarOdsustvo odsustvo : lekar.getListaOdsustava()) {
+						if(datum.isAfter(odsustvo.getPocetak()) && datum.isBefore(odsustvo.getKraj())) {
+							flagZaOdsustva = true;
+						}
+					}
+					
+					//datum se nalazu u terminu nekog odsustva
+					if(flagZaOdsustva == true) { 
+						continue; // predji na sledeceg lekara
+					}
+					
+					// kreiram listu svih mogucih slobodnih termina koje lekar moze imati u toku dana
+					ArrayList<LocalDateTime> moguciTermini = new ArrayList<LocalDateTime>();
+					
+					for(int i = lekar.getRadnoVremeOd(); i <= lekar.getRadnoVremeDo() - 1; i++) {
+						LocalDateTime termin = datum.withHour(i);
+						moguciTermini.add(termin);
+					}
+					
+					// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
+					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+						if(moguciTermini.contains(zauzetost.getPocetak())) {
+							moguciTermini.remove(zauzetost.getPocetak());
+						}
+					}
+					
+					// ako postoji makar jedan slobodan termin za taj dan
+					if(moguciTermini.size() > 0) {
+						LekarDTOStudent1PretragaLekara lekarDTO = new LekarDTOStudent1PretragaLekara(lekar);
+						lekarDTO.setMoguciTermini(moguciTermini);
+						listaLekaraKojiMiOdgovaraju.add(lekarDTO);
+						
+					}
+					
+//					System.out.println(moguciTermini);
+				}
+			}
+			
+		}
+		//ako je nekako poslat pogresan id klinike...
+		if(listaLekaraKojiMiOdgovaraju.size() == 0) {
+			return null;
+		}
+		
+		return listaLekaraKojiMiOdgovaraju;
+		
+	}
+	
+public List<LekarDTOStudent1PretragaLekara> pretraziLekareUKliniciPrekoKlinike(Long klinikaID, LocalDateTime datum, Long tipPregledaID, String imeLekara, String prezimeLekara, Double ocenaVecaOd){
+		
+		//ovo ce trebati za testiranje
+		LocalDateTime sada = LocalDateTime.now();
+		
+		if(datum != null) {
+			if(datum.isBefore(sada)) {
+				return null;
+			}			
+		} else {
+			return null;
+		}
+		
+		if(tipPregledaID != null) {
+			if(tipPregledaID <= 0) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		
+		if(klinikaID != null) {
+			if(klinikaID <= 0) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+		
+		//ova polja nisu obavezna na za pretragu, pa zato mogu biti prazni stringovi
+		if(imeLekara == null) {
+			return null;
+		}
+		
+		if(prezimeLekara == null) {
+			return null;
+		}
+		
+		if(ocenaVecaOd == null) {
+			return null;
+		}
+		
+		// ovo ide u return
+		List<LekarDTOStudent1PretragaLekara> listaLekaraKojiMiOdgovaraju = new ArrayList<LekarDTOStudent1PretragaLekara>();
+		
+		//trazim kliniku sa id: klinikaID
+		List<Klinika> sveKlinike = findAll();
+		for(Klinika k : sveKlinike) {
+			
+			if(k.getId() == klinikaID) {
+				//prolazim kroz sve lekare klinike
+				for(Lekar lekar : k.getLekari()) {
+					
+					boolean flagZaOdsustva = false;
+					
+					// prvo proverim tip pregleda
+					if(!lekar.getTipPregleda().getId().equals(tipPregledaID)) {
+						continue; // predji na sledeceng lekara
+					}
+					
+					//************OVO JE DODATNO, U ODNOSU NA PROSLU FUNKCIJU**********
+					
+					//provera imena
+					if(imeLekara != "") {
+						if(!lekar.getIme().contains(imeLekara)) {
+							continue;
+						}
+					}
+					
+					//provera prezimena
+					if(prezimeLekara != "") {
+						if(!lekar.getPrezime().contains(prezimeLekara)) {
+							continue;
+						}
+					}
+					
+					//provera prosecne ocene
+					//vec sam proverio da li je null
+					double prosecnaOcenaLekara = lekar.getUkupnaOcena() / lekar.getBrojOcena();
+					if(prosecnaOcenaLekara < ocenaVecaOd) {
+						continue;
+					}
+					
+					//*****************************************************************
+					
+					// treba proci kroz sva odsustva
+					for(LekarOdsustvo odsustvo : lekar.getListaOdsustava()) {
+						if(datum.isAfter(odsustvo.getPocetak()) && datum.isBefore(odsustvo.getKraj())) {
+							flagZaOdsustva = true;
+						}
+					}
+					
+					//datum se nalazu u terminu nekog odsustva
+					if(flagZaOdsustva == true) { 
+						continue; // predji na sledeceg lekara
+					}
+					
+					// kreiram listu svih mogucih slobodnih termina koje lekar moze imati u toku dana
+					ArrayList<LocalDateTime> moguciTermini = new ArrayList<LocalDateTime>();
+					
+					for(int i = lekar.getRadnoVremeOd(); i <= lekar.getRadnoVremeDo() - 1; i++) {
+						LocalDateTime termin = datum.withHour(i);
+						moguciTermini.add(termin);
+					}
+					
+					// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
+					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+						if(moguciTermini.contains(zauzetost.getPocetak())) {
+							moguciTermini.remove(zauzetost.getPocetak());
+						}
+					}
+					
+					// ako postoji makar jedan slobodan termin za taj dan
+					if(moguciTermini.size() > 0) {
+						LekarDTOStudent1PretragaLekara lekarDTO = new LekarDTOStudent1PretragaLekara(lekar);
+						lekarDTO.setMoguciTermini(moguciTermini);
+						listaLekaraKojiMiOdgovaraju.add(lekarDTO);
+						
+					}
+					
+//					System.out.println(moguciTermini);
+				}
+			}
+			
+		}
+		
+		return listaLekaraKojiMiOdgovaraju;
+		
 	}
 	
 }

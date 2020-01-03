@@ -57,6 +57,7 @@ insert into lekar (klinika_id,tip_pregleda_id, ime, prezime,broj_ocena, ukupna_o
 insert into lekar (klinika_id,tip_pregleda_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (1, 2,'lekar2','prezime2',12, 50,'lekar2','lekar2','aaa',9,17, 'Lekar');
 insert into lekar (klinika_id,tip_pregleda_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (2, 3,'lekar3','prezime3',12, 60,'lekar3','lekar2','aaa',13,18, 'Lekar');
 insert into lekar (klinika_id,tip_pregleda_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (3, 1,'lekar4','prezime4',12, 59,'lekar4','lekar2','aaa',8,16, 'Lekar');
+insert into lekar (klinika_id,tip_pregleda_id, ime, prezime,broj_ocena, ukupna_ocena, username, password, radni_kalendar, radno_vreme_od,radno_vreme_do, uloga) values (1, 1,'lekar5','prezime5',12, 55,'us5','pas12345','aaa',8,16, 'Lekar');
 
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Nenad', 'Nenadovic', 'pacijent', 'pacijent', 'nenad@gmail.com', 'adresa 39', 'Novi Sad', 'Srbija', '0641111111', 1234567890123, true, 'Pacijent');
 insert into pacijent (ime, prezime, username, password, email, adresa, grad, drzava, broj_tel, lbo, aktiviran_nalog, uloga) values ('Mika', 'Mikic', 'username1', 'pass1', 'mika@gmail.com', 'adr1', 'grad', 'drzava', '021', 123, true, 'Pacijent');
@@ -124,6 +125,8 @@ insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('2019-03
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-05-20 12:00','2019-05-20 13:00',1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-08-23 12:00','2019-08-23 13:00',3);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-05-20 09:00','2019-05-20 10:00',4);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-01-30 12:00','2019-05-20 13:00',1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-01-30 13:00','2019-05-20 14:00',1);
 
 insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('2019-12-13','2019-12-31',true,1,1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-12-30 12:00','2019-08-23 13:00',4);

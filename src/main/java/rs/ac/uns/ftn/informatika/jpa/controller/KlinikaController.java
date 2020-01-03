@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStudent1PRETRAGA;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOStudent1PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PretragaKlinikaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PretragaLekaraPrekoKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 
@@ -103,6 +107,45 @@ public class KlinikaController {
 		}
 		
 		return new ResponseEntity<>(klinikeDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pretraziLekareOdabraneKlinike/{klinikaID}/datum/{datum}/idTipaPregleda/{tipPregledaID}") 
+	public ResponseEntity<List<LekarDTOStudent1PretragaLekara>> pretragaLekaraUKlinici(@PathVariable Long klinikaID, @PathVariable String datum, @PathVariable Long tipPregledaID){
+		
+		System.out.println("***KLINIKA ID: " + klinikaID );
+		System.out.println("***DATUM: " + datum );
+		System.out.println("***TIP PREGLEDA: " + tipPregledaID);
+		
+		String[] split = datum.split("T");
+		String datumBezT = split[0] + " " + split[1];
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime datumLDT = LocalDateTime.parse(datumBezT, formatter);
+		
+		List<LekarDTOStudent1PretragaLekara> lekariDTO = klinikaService.pretraziLekareUKlinici(klinikaID, datumLDT, tipPregledaID);
+		if(lekariDTO == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(lekariDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/pretraziLekarePrekoKlinike") 
+	public ResponseEntity<List<LekarDTOStudent1PretragaLekara>> pretragaLekaraPrekoKlinike(@RequestBody PretragaLekaraPrekoKlinikeDTO plpkDTO){
+		
+		System.out.println("***KLINIKA ID: " + plpkDTO.getKlinikaID() );
+		System.out.println("***DATUM: " + plpkDTO.getDatum() );
+		System.out.println("***TIP PREGLEDA: " + plpkDTO.getTipPregleda());
+		System.out.println("***IME LEKARA: " + plpkDTO.getImeLekara()); // bude prazan string, ako se ne unese nista
+		System.out.println("***PREZIME LEKARA: " + plpkDTO.getPrezimeLekara()); // bude prazan string, ako se ne unese nista
+		System.out.println("***OCENA VECA OD: " + plpkDTO.getOcenaVecaOd()); // bude null, ako se ne unese nista
+		
+		List<LekarDTOStudent1PretragaLekara> lekariDTO = klinikaService.pretraziLekareUKliniciPrekoKlinike(plpkDTO.getKlinikaID(), plpkDTO.getDatum(), plpkDTO.getTipPregleda(),
+																										plpkDTO.getImeLekara(), plpkDTO.getPrezimeLekara(), plpkDTO.getOcenaVecaOd());
+		if(lekariDTO == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(lekariDTO, HttpStatus.OK);
 	}
 	
 }
