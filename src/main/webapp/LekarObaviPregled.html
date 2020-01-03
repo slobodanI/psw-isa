@@ -36,6 +36,73 @@
 	<br/>
 	<br/>
 	
+		<div id='buttonPrikaziDiv' class="form-group col-md-6">
+			<input type="button" id="kartonPrikaziBtn" onclick="prikaziKarton()" class="btn col-md-6 btn-lg btn-block btn-outline-primary" value="Prikazi karton">	
+		</div>
+		
+		<div id='buttonSakrijDiv' class="form-group col-md-6">
+			<input type="button" id="kartonSakrijBtn" onclick="sakrijKarton()" class="btn col-md-6 btn-lg btn-block btn-outline-primary" value="Sakrij karton">	
+		</div>
+		
+		
+		
+		<form id="formaKarton">
+		
+		<div id="formaKartonDiv" class="card mb-4 box-shadow">
+		
+		<div class="card-header text-center">
+            <h4 class="my-0 font-weight-normal">Karton</h4>
+        </div>
+        
+        <br>
+			
+			<div class="form-group col-md-6">
+	    		<label>ID kartona:</label>
+	    		<input id='idKartonaTxt' class="form-control" type="text" required disabled>
+	    	</div>
+	    	
+	    	<div class="form-group col-md-6">
+	    		<label>Krvna grupa:</label>
+	    		<div id="selectKrvnaGrupa" class="form-group col-md-6">
+	    	
+	    		</div>
+	    	</div>
+	    	
+	    	<div class="form-group col-md-6">
+	    		<label>Dioptrija:</label>
+	    		<input id='dioptrijaTxt' class="form-control" type="text" required>
+	    	</div>
+	    	
+	    	<div class="form-group col-md-6">
+	    		<label>Visina:</label>
+	    		<input id='visinaTxt' class="form-control" type="number" required>
+	    	</div>
+	    	
+	    	<div class="form-group col-md-6">
+	    		<label>Težina:</label>
+	    		<input id='tezinaTxt' class="form-control" type="number" required>
+	    	</div>
+	    	
+	    	<div class="form-group">
+	  			<label>Alergije:</label>
+	  			<textarea class="form-control" rows="5" id="alergijeTxt" required></textarea>
+			</div>
+			
+			<div class="form-group">
+	  			<label>Lista bolesti:</label>
+	  			<textarea class="form-control" rows="5" id="listaBolestiTxt" required></textarea>
+			</div>
+			
+			<input type="submit" id="potvrdiBtn" class="btn btn-lg btn-block btn-outline-primary" value="Potvrdi promene na kartonu">
+			
+		</div>
+		
+		</form>
+	
+	<br/>
+	<br/>
+	<br/>
+	
 	<form id="forma">
 		<div id="formaDiv" class="card mb-4 box-shadow">
 		

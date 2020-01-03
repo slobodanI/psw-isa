@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOzaStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.ZdravsveniKartonInfoDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
 
 @Service
@@ -26,6 +28,9 @@ public class PacijentService {
 	
 	@Autowired
 	private LekarService lekarService;
+	
+	@Autowired
+	private ZdravstveniKartonService zkService;
 	
 	public Pacijent findOne(Long id) {
 		return pacijentRepository.findById(id).orElseGet(null);
@@ -214,8 +219,45 @@ public class PacijentService {
 		return mapa;
 	}
 	
-	
-	
+	//vrati zdravstveni karton pacijenta sa datim id-jem
+	public ZdravstveniKarton getKarton(Long id) 
+	{
+		Pacijent pacijent = this.findOne(id);
+		ZdravstveniKarton zk = pacijent.getZdravstveniKarton();
+		return zk;
+	}
+
+	public String setKarton(Long id, ZdravsveniKartonInfoDTO zk) 
+	{
+		
+		if(zk.getKrvnaGrupa().isEmpty() || zk.getDioptrija().isEmpty() || zk.getAlergije().isEmpty() || zk.getListaBolesti().isEmpty())
+		{
+			return "Morate popuniti sva polja";
+		}
+		
+		if(zk.getVisina().isNaN() || zk.getTezina().isNaN())
+		{
+			return "Težina i visina moraju biti brojevi";
+		}
+		
+		if(zk.getVisina()<0 || zk.getTezina()<0)
+		{
+			return "Težina i visina moraju biti pozitivni brojevi";
+		}
+		
+		Pacijent pacijent = this.findOne(id);
+		ZdravstveniKarton karton = pacijent.getZdravstveniKarton();
+		karton.setKrvnaGrupa(zk.getKrvnaGrupa());
+		karton.setDioptrija(zk.getDioptrija());
+		karton.setVisina(zk.getVisina());
+		karton.setTezina(zk.getTezina());
+		karton.setAlergije(zk.getAlergije());
+		karton.setListaBolesti(zk.getListaBolesti());
+		zkService.save(karton);
+		
+		
+		return "Uspešno unete informacije u karton";
+	}
 	
 	
 }

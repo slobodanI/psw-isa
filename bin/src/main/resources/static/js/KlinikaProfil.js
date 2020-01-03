@@ -4,6 +4,9 @@ var klinikaID = params.get("klinikaID");
 $(document).ready(function(){
 		
 	koJeUlogovan();
+	$("#btn-pretragaLekara").click(function(event) {
+		window.location = "./PretragaLekaraPrekoKlinike.html?klinikaID=" + klinikaID;
+	});
 	
 });
 
