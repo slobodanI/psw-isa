@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/datatables.min.js"></script>
+	<script type="text/javascript" src="js/PretragaLekaraPacijent.js"></script>
+	<link rel="stylesheet" href="js/datatables.min.css">
+	<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="js/select.dataTables.min.css">
+	<link rel="stylesheet" href="js/jquery.dataTables.min.css">
+
+<meta charset="UTF-8">
+<title>Pretraga Lekara</title>
+</head>
+<body id="bodyID">
+
+	<h3>Pretraživanje lekara</h3>
+	<hr>
+	
+	<div class="div-searchLekare">
+		<form id="form-searchLekare">
+			<table>
+				<tr>
+					<td>Ime Lekara:</td>
+					<td><input type="text" name="imeLekara"></td>
+				</tr>
+				<tr>
+					<td>Prezime Lekara:</td>
+					<td><input type="text" name="prezimeLekara"></td>
+				</tr>
+				<tr>
+					<td>Ocena veća od:</td>
+					<td><input type="number" name="ocenaLekara"></td>
+				</tr>
+				<tr><td><input type="submit" value="Pretraga Lekara"></td></tr>	
+			</table>
+		</form>
+	</div>
+
+	<hr><hr><hr>
+	<div id="divTabela">
+	
+	</div>
+
+	
+		
+</body>
+</html>

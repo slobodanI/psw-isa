@@ -20,6 +20,10 @@ $(document).ready(function(){
 		window.location = "./OcenjivanjeLekara.html";
 	});
 	
+	$("#btn-pretragaKlinika").click(function(event){
+		window.location = "./PretragaKlinika.html";
+	});
+	
 	prikaziKlinike();
 	
 });

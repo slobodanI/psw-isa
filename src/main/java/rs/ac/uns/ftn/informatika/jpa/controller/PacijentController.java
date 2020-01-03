@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOzaStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.ZdravsveniKartonInfoDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
+import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
 
 @RestController
@@ -102,5 +105,25 @@ public class PacijentController {
 		return new ResponseEntity<>(pacijentiLekara, HttpStatus.OK);
 	}
 	
+	//vrati zdravstveni karton pacijenta sa datim id-jem
+	@GetMapping(value = "getKartonInfo/{id}")
+	public ResponseEntity<ZdravsveniKartonInfoDTO> getKarton(@PathVariable Long id) {
+
+		ZdravstveniKarton zk = pacijentService.getKarton(id);
+
+		if (zk == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(new ZdravsveniKartonInfoDTO(zk), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "setKartonInfo/{id}")
+	public ResponseEntity<String> setKarton(@PathVariable Long id, @RequestBody ZdravsveniKartonInfoDTO zk) {
+
+		String poruka = pacijentService.setKarton(id, zk);
+
+		return new ResponseEntity<>(poruka, HttpStatus.OK);
+	}
 	
 }
