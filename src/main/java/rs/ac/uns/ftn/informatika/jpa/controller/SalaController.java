@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.DodajSaluDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaSale;
@@ -79,7 +80,6 @@ public class SalaController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		sala.setNaziv(salaDTO.getNaziv());
-		sala.setZauzetost(salaDTO.getZauzetost());
 
 		sala = salaService.save(sala);
 		return new ResponseEntity<>(new SalaDTO(sala), HttpStatus.OK);
@@ -92,7 +92,6 @@ public class SalaController {
 		Klinika klinika = klinikaService.findOne(salaDTO.getIdKlinike());
 		Sala sala = new Sala();
 		sala.setNaziv(salaDTO.getNaziv());
-		sala.setZauzetost(salaDTO.getZauzetost());
 		sala.setKlinika(klinika);
 
 		List<Sala> sveSale = salaService.findAll();
@@ -139,6 +138,16 @@ public class SalaController {
 			return new ResponseEntity<>(nadjeneSale, HttpStatus.OK);
 		
 	}
+	
+	@GetMapping(value = "vratiSaleKlinike/{id}", consumes = "application/json")
+	public ResponseEntity<List<SalaDTO>> vratiSaleKlinike(@PathVariable Long id) 
+	{
+		//System.out.println("###############-PRE-##############");
+		List<SalaDTO> saleKlinike = salaService.vratiSveSaleKlinike(id);
+		//System.out.println("###############-POSLE-##############");	
+		return new ResponseEntity<>(saleKlinike, HttpStatus.OK);
+	}
+	
 	
 	
 

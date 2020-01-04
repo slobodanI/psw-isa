@@ -28,8 +28,8 @@ public class PregledDTO {
 		id = pregled.getId();
 		informacije = pregled.getInformacije();
 		dijagnoza = pregled.getDijagnoza();		
-		datumPregleda = pregled.getDatumPregleda();
-		satnica = pregled.getSatnica();			
+//		datumPregleda = pregled.getDatumPregleda();
+//		satnica = pregled.getSatnica();			
 		lekar = new LekarDTOzaStudent1(pregled.getLekar());				
 		popust = pregled.getPopust();
 		tipPregleda = pregled.getTipPregleda();

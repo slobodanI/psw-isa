@@ -1,5 +1,8 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Sala {
@@ -19,8 +23,8 @@ public class Sala {
 	@Column(nullable =  false, unique = true)
 	private String naziv;
 	
-	@Column(nullable =  false)
-	private String zauzetost;
+	@OneToMany(mappedBy = "sala",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	private Set<ZauzetostSala> listaZauzetostiSala = new HashSet<ZauzetostSala>();
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
@@ -29,11 +33,10 @@ public class Sala {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sala(Long id, String naziv, String zauzetost) {
+	public Sala(Long id, String naziv) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
-		this.zauzetost = zauzetost;
 	}
 
 	public Long getId() {
@@ -52,13 +55,6 @@ public class Sala {
 		this.naziv = naziv;
 	}
 
-	public String getZauzetost() {
-		return zauzetost;
-	}
-
-	public void setZauzetost(String zauzetost) {
-		this.zauzetost = zauzetost;
-	}
 
 	public Klinika getKlinika() {
 		return klinika;
@@ -66,6 +62,14 @@ public class Sala {
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
+	}
+
+	public Set<ZauzetostSala> getListaZauzetostiSala() {
+		return listaZauzetostiSala;
+	}
+
+	public void setListaZauzetostiSala(Set<ZauzetostSala> listaZauzetostiSala) {
+		this.listaZauzetostiSala = listaZauzetostiSala;
 	}
 	
 	
