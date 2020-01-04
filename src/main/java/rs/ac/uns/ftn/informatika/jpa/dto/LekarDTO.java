@@ -1,10 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
-import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 
 public class LekarDTO {
 
@@ -23,6 +20,8 @@ public class LekarDTO {
 	private String radniKalendar;
 	private int radnoVremeOd;
 	private int radnoVremeDo;
+	private TipPregleda tipPregleda;
+	private Long idTipPregleda;
 //	private PacijentDTO pacijent;
 //	private PregledDTO pregled;
 
@@ -44,6 +43,8 @@ public class LekarDTO {
 		radniKalendar = lekar.getRadniKalendar();
 		radnoVremeOd=lekar.getRadnoVremeOd();
 		radnoVremeDo=lekar.getRadnoVremeDo();
+		tipPregleda = lekar.getTipPregleda();
+		idTipPregleda = lekar.getTipPregleda().getId();
 //		radnoVreme = lekar.getRadnoVreme();
 //		kl=lekar.getKlinika();
 //		pacijent=new PacijentDTO(lekar.getPacijent());
@@ -52,7 +53,7 @@ public class LekarDTO {
 	}
 
 	public LekarDTO(Long id, String ime, String prezime, Double ukupnaOcena, int brojOcena, KlinikaDTO klinika,
-			int radnoVremeOd,int radnoVremeDo, String username, String password, Long idKlinike, String radniKalendar) {
+			int radnoVremeOd,int radnoVremeDo, String username, String password, Long idKlinike, String radniKalendar,TipPregleda tp) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -68,6 +69,8 @@ public class LekarDTO {
 		this.uloga = "Lekar";
 		this.radniKalendar = radniKalendar;
 		this.idKlinike = idKlinike;
+		this.tipPregleda = tp;
+		this.idTipPregleda = tp.getId();
 		// this.kl=kl;
 	}
 	public LekarDTO(String ime,String prezime,String password) {
@@ -200,6 +203,23 @@ public class LekarDTO {
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
 	}
+
+	public TipPregleda getTipPregleda() {
+		return tipPregleda;
+	}
+
+	public void setTipPregleda(TipPregleda tipPregleda) {
+		this.tipPregleda = tipPregleda;
+	}
+
+	public Long getIdTipPregleda() {
+		return idTipPregleda;
+	}
+
+	public void setIdTipPregleda(Long idTipPregleda) {
+		this.idTipPregleda = idTipPregleda;
+	}
+	
 	
 
 }

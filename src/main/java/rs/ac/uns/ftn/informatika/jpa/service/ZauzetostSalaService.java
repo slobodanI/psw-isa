@@ -10,37 +10,38 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import rs.ac.uns.ftn.informatika.jpa.dto.ZauzetostLekaraDTO;
-import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
-import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostLekara;
-import rs.ac.uns.ftn.informatika.jpa.repository.ZauzetostLekaraRepository;
+import rs.ac.uns.ftn.informatika.jpa.dto.ZauzetostSalaDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Sala;
+import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostSala;
+import rs.ac.uns.ftn.informatika.jpa.repository.ZauzetostSalaRepository;
 
 @Service
-public class ZauzetostLekaraService {
+public class ZauzetostSalaService {
 	
 	@Autowired
-	private ZauzetostLekaraRepository zauzetostLekaraRepository;
+	private ZauzetostSalaRepository zauzetostSalaRepository;
 	
-	@Autowired LekarService lekarService;
+	@Autowired SalaService salaService;
 	
-	public ZauzetostLekara findOne(Long id) {
-		return zauzetostLekaraRepository.findById(id).orElseGet(null);
+	public ZauzetostSala findOne(Long id) {
+		return zauzetostSalaRepository.findById(id).orElseGet(null);
 	}
 	
-	public List<ZauzetostLekara> findAll(){
-		return zauzetostLekaraRepository.findAll();
+	public List<ZauzetostSala> findAll(){
+		return zauzetostSalaRepository.findAll();
 	}
 	
-	public ZauzetostLekara save(ZauzetostLekara z) {
-		return zauzetostLekaraRepository.save(z);
+	public ZauzetostSala save(ZauzetostSala s) {
+		return zauzetostSalaRepository.save(s);
 	}
 	public void remove(Long id) {
-		zauzetostLekaraRepository.deleteById(id);
+		zauzetostSalaRepository.deleteById(id);
 	}
 	
-	public String dodajZauzetost(ZauzetostLekaraDTO zau) {
+	public String dodajZauzetost(ZauzetostSalaDTO zau) {
 		
-		Lekar lekar=lekarService.findOne(zau.getLekarId());
+	
+		Sala sala = salaService.findOne(zau.getSalaId());
 		
 		LocalDateTime datePocetak;
 		LocalDateTime dateKraj;
@@ -60,9 +61,9 @@ public class ZauzetostLekaraService {
 				return "Datum pocetka ne moze biti pre datuma kraja";
 			}
 			
-			Set<ZauzetostLekara> zauzetost = lekar.getListaZauzetostiLekara();
+			Set<ZauzetostSala> zauzetost = sala.getListaZauzetostiSala();
 			
-			for(ZauzetostLekara z:zauzetost) {
+			for(ZauzetostSala z:zauzetost) {
 				LocalDateTime p2=z.getPocetak();
 				LocalDateTime k2=z.getKraj();
 				Boolean overlap = datePocetak.isBefore(k2) && p2.isBefore(dateKraj);
@@ -80,16 +81,19 @@ public class ZauzetostLekaraService {
 			return "Datum nije uspesno konvertovan";
 		}
 		
-		ZauzetostLekara zaz=new ZauzetostLekara();
+		ZauzetostSala zaz=new ZauzetostSala();
 		zaz.setPocetak(datePocetak);
 		zaz.setKraj(dateKraj);
-		zaz.setLekar(lekar);
+		zaz.setSala(sala);
 		this.save(zaz);
 		
-		Lekar lek = zaz.getLekar();
-		Set<ZauzetostLekara> zauzetost = lek.getListaZauzetostiLekara();
+		Sala s = zaz.getSala();
+		Set<ZauzetostSala> zauzetost = s.getListaZauzetostiSala();
 		zauzetost.add(zaz);
-		lekarService.save(lek);
+		salaService.save(s);
+		
+		
+		
 		
 		return "Uspesno dodato u listu zauzetosti";
 		

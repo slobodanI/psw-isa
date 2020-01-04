@@ -6,7 +6,7 @@ public class DodajSaluDTO {
 	
 	private Long id;
 	private String naziv;
-	private String zauzetost;
+
 	private Long idKlinike;
 //	private KlinikaDTO klinika;
 	//private Long idKlinike;
@@ -19,7 +19,6 @@ public class DodajSaluDTO {
 	public DodajSaluDTO(Sala sala) {
 		id=sala.getId();
 		naziv=sala.getNaziv();
-		zauzetost=sala.getZauzetost();
 //		klinika=new KlinikaDTO(sala.getKlinika());
 		//idKlinike=sala.getKlinika().getId();
 		
@@ -29,7 +28,6 @@ public class DodajSaluDTO {
 	public DodajSaluDTO(String naziv, String zauzetost, Long idKlinike) {
 		super();
 		this.naziv = naziv;
-		this.zauzetost = zauzetost;
 		this.idKlinike=idKlinike;
 //		this.klinika = klinika;
 	//	this.idKlinike=idKlinike;
@@ -51,13 +49,6 @@ public class DodajSaluDTO {
 		this.naziv = naziv;
 	}
 
-	public String getZauzetost() {
-		return zauzetost;
-	}
-
-	public void setZauzetost(String zauzetost) {
-		this.zauzetost = zauzetost;
-	}
 
 	public Long getIdKlinike() {
 		return idKlinike;

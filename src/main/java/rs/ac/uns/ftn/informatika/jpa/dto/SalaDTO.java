@@ -6,8 +6,8 @@ public class SalaDTO {
 	
 	private Long id;
 	private String naziv;
-	private String zauzetost;
 	private KlinikaDTO klinika;
+	
 	//private Long idKlinike;
 	
 	
@@ -18,18 +18,16 @@ public class SalaDTO {
 	public SalaDTO(Sala sala) {
 		id=sala.getId();
 		naziv=sala.getNaziv();
-		zauzetost=sala.getZauzetost();
 		klinika=new KlinikaDTO(sala.getKlinika());
 		//idKlinike=sala.getKlinika().getId();
 		
 	}
 	
 	
-	public SalaDTO(Long id, String naziv, String zauzetost, KlinikaDTO klinika) {
+	public SalaDTO(Long id, String naziv, KlinikaDTO klinika) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
-		this.zauzetost = zauzetost;
 		this.klinika = klinika;
 	//	this.idKlinike=idKlinike;
 	}
@@ -50,13 +48,6 @@ public class SalaDTO {
 		this.naziv = naziv;
 	}
 
-	public String getZauzetost() {
-		return zauzetost;
-	}
-
-	public void setZauzetost(String zauzetost) {
-		this.zauzetost = zauzetost;
-	}
 
 	public KlinikaDTO getKlinika() {
 		return klinika;
