@@ -75,21 +75,20 @@ public class LekarService {
 		
 		List<LekarPregledKalendar> kal = new ArrayList<LekarPregledKalendar>();
 		
-		System.out.println("######### Stiglo je do ovde #############");
-		
 		for (Pregled pregled : pregledi) 
 		{
+			//ako pregled nije obavljen dodaj u listu
 			if(pregled.isObavljen() == false)
 			{
 				LekarPregledKalendar pr = new LekarPregledKalendar();
 				pr.setId(pregled.getId());
 				
+				//formatiranje datuma i vremena
 				String[] split = pregled.getSatnica().split("-");
 				String[] date = pregled.getDatumPregleda().split("-");
 				String datum = date[2] + "-" + date[1] + "-" + date[0];
 				
 				pr.setPocetak(datum + "T" + split[0]);
-				System.out.println("######### " + pr.getPocetak() + " #############");
 				pr.setKraj(datum + "T" + split[1]);
 				pr.setTip(pregled.getTipPregleda().toString());
 				pr.setLekarId(pregled.getLekar().getId());

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
@@ -231,5 +232,11 @@ public class PregledService {
 		this.save(pregled);
 		
 		return "Stari pregled uspešno promenjen";
+	}
+
+	//vraca pregled koji ce biti prikazan kad se odabere sa kalendara
+	public PregledKalendarDTO vratiPregledKalendar(Long id) {
+		Pregled pregled = this.findOne(id);
+		return new PregledKalendarDTO(pregled);
 	}
 }
