@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/datatables.min.js"></script>
+	<script type="text/javascript" src="js/PredefinisaniPregled.js"></script>
+
+
+
+
+<meta charset="UTF-8">
+<title>Dodavanje predefinisanog pregleda</title>
+</head>
+<body>
+
+	<h3>Dodavanje predefinisanog pregleda</h3>
+	<hr>
+	<div class="dodavanjePredefPregleda">
+		<form	id="form-dodavanjePredefPregleda">
+			<table>
+				<tr>
+					<td>Datum:</td>
+					<td><input type = "date" name = "datumPregleda" required></td>
+				</tr>
+				
+				<tr>
+					<td>Pocetak pregleda:</td>
+					<td><input type="time" name="pocetak" min="08:00" max="16:00" required  ></td>
+				</tr>
+				
+				<tr>
+					<td>Kraj pregleda:</td>
+					<td><input type="time" name="kraj" min="08:00" max="16:00" required ></td>
+				</tr>
+					
+				<tr>
+					<td>Tip Pregleda:</td>
+					<td><select id="select-tipPregleda" required onChange="popuniLekare()"></select></td></tr>
+				
+				<tr>
+					<td>Lekar:</td>
+					<td><select id="select-Lekara" required></select></td></tr>
+
+				
+				<tr>
+					<td>Sala:</td>
+					<td><select id="select-salu" required></select></td>
+				</tr>
+				
+				<tr>
+					<td>Cena pregleda:</td>
+					<td><input type="number" name="cena" min="0" required></td>
+				</tr>
+				<tr>
+					<td>Popust na pregled:</td>
+					<td><input type="number" name="popust" min="0" max="100" required></td>
+				</tr>
+				<tr><td><input type="submit" value="Dodaj predefinisani pregled"></td></tr>	
+			</table>
+		
+		</form>
+		
+	</div>
+
+</body>
+</html>
