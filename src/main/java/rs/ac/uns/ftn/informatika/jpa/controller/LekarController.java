@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.jpa.dto.DodavanjeLekaraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarPregledKalendar;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.OperacijaKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -200,6 +202,28 @@ public class LekarController {
 		
 		
 		return new ResponseEntity<>(ods, HttpStatus.OK);
+	}
+	
+	//vraca preglede za prikaz na kalendar
+	@GetMapping(value = "/getLekarPregledi/{id}", produces = "application/json")
+	public ResponseEntity<List<LekarPregledKalendar>> getLekarPregledi(@PathVariable Long id) {
+		
+	
+		List<LekarPregledKalendar> preg = lekarService.getPregledi(id);
+		
+		
+		return new ResponseEntity<>(preg, HttpStatus.OK);
+	}
+	
+	//vraca operacije za prikaz na kalendar
+	@GetMapping(value = "/getLekarOperacije/{id}", produces = "application/json")
+	public ResponseEntity<List<OperacijaKalendarDTO>> getLekarOperacije(@PathVariable Long id) {
+			
+		
+		List<OperacijaKalendarDTO> op = lekarService.getOperacije(id);
+			
+			
+		return new ResponseEntity<>(op, HttpStatus.OK);
 	}
 	
 	

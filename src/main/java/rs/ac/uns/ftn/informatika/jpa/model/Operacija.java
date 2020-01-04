@@ -26,7 +26,10 @@ public class Operacija {
 	private String informacije;
 	
 	@Column(nullable =  false)
-	private String datumVreme;
+	private String datumOperacije;
+	
+	@Column(nullable =  false)
+	private String satnica;
 	
 	@Column(nullable =  false)
 	private int cena;
@@ -48,12 +51,13 @@ public class Operacija {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Operacija(Long id, String informacije, String datumIVreme, int cena, Set<Lekar> lekari, Pacijent pacijent,
+	public Operacija(Long id, String informacije, String datumOperacije, String satnica, int cena, Set<Lekar> lekari, Pacijent pacijent,
 			ZdravstveniKarton zdravstveniKarton) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
-		this.datumVreme = datumIVreme;
+		this.datumOperacije = datumOperacije;
+		this.satnica = satnica;
 		this.cena = cena;
 		this.lekari = lekari;
 		this.pacijent = pacijent;
@@ -76,12 +80,20 @@ public class Operacija {
 		this.informacije = informacije;
 	}
 
-	public String getDatumIVreme() {
-		return datumVreme;
+	public String getDatumOperacije() {
+		return datumOperacije;
 	}
 
-	public void setDatumIVreme(String datumIVreme) {
-		this.datumVreme = datumIVreme;
+	public void setDatumOperacije(String datumOperacije) {
+		this.datumOperacije = datumOperacije;
+	}
+
+	public String getSatnica() {
+		return satnica;
+	}
+
+	public void setSatnica(String satnica) {
+		this.satnica = satnica;
 	}
 
 	public int getCena() {
@@ -123,6 +135,7 @@ public class Operacija {
 	public void setObavljen(boolean obavljen) {
 		this.obavljen = obavljen;
 	}
+
 	
 	
 	

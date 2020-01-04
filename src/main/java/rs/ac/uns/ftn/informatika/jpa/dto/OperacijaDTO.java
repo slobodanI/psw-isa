@@ -22,7 +22,7 @@ public class OperacijaDTO {
 	public OperacijaDTO(Operacija operacija) {
 		id = operacija.getId();
 		informacije = operacija.getInformacije();
-		datumVreme = operacija.getDatumIVreme();
+		//datumVreme = operacija.getDatumIVreme();
 		cena = operacija.getCena();
 
 		LekarDTOzaStudent1 lekarDTO;
