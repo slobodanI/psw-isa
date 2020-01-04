@@ -88,6 +88,8 @@ function RenderHtmlOnSuccess(id) {
 		    //kad se klikne na dugme Odgovori u tabeli uzimaju se podaci iz reda
 		    //i salju se u odgovarajuca polja u formi za odgovaranje
 		    $('.pregledajButton').on("click", function () {
+		    	 sakrijKarton();
+		    	
 		    	 var data = table.api().row( $(this).parents('tr') ).data();
 				 id_pregleda = data[0];
 				 $('#idPregledaTxt').val(id_pregleda);
@@ -115,6 +117,8 @@ function RenderHtmlOnSuccess(id) {
 				 
 				 //kreiranje mape sa lekovima
 				 receptiMap = new Map();
+				 
+				 $('#buttonPrikaziDiv').show();
 
 				 //prikazi i fokusiraj na formu za pregled
 		    	 $('#formaDiv').show();
@@ -266,12 +270,102 @@ function zavrsiPregled()
 		});	
 }
 
-$( document ).ready(function() {
+function kreirajSelectKrvnaGrupa(callback)
+{
+	html = '<select id="kgSelect" class="form-control" required>';
+	html += '<option value="A">A</option>';
+	html += '<option value="B">B</option>';
+	html += '<option value="AB">AB</option>';
+	html += '<option value="O">O</option>';
+	html += '</select>';
+	
+	callback(html);
+}
+
+function prikaziKarton()
+{
+	$('#buttonPrikaziDiv').hide();
+	$('#buttonSakrijDiv').show();
+	
+	kreirajSelectKrvnaGrupa(function(html){
+		$('#selectKrvnaGrupa').html(html);
+	})
+	
+	var id = $('#idPacijentaTxt').val();
+	
+	$.get({
+		url : 'pacijent/getKartonInfo/'+id,
+		success : function(karton) 
+		{
+			$('#idKartonaTxt').val(karton.id);
+			$('#kgSelect').val(karton.krvnaGrupa);
+			$('#dioptrijaTxt').val(karton.dioptrija);
+			$('#visinaTxt').val(karton.visina);
+			$('#tezinaTxt').val(karton.tezina);
+			$('#alergijeTxt').val(karton.alergije);
+			$('#listaBolestiTxt').val(karton.listaBolesti);
+			
+		},
+		error : function()
+		{
+			alert('Greska pri dobavljanju informacija o zdravstvenom kartonu');
+		}
+	});
+	
+	$('#formaKarton').show();
+	$("#formaKarton :input").focus();
+}
+
+function sakrijKarton()
+{
+	$('#buttonPrikaziDiv').show();
+	$('#buttonSakrijDiv').hide();
+	$('#formaKarton').hide();
+}
+
+function azurirajKarton()
+{
+	var idP = $('#idPacijentaTxt').val();
+	
+	var id = $('#idKartonaTxt').val();
+	var krvnaGrupa =$('#kgSelect').val();
+	var dioptrija = $('#dioptrijaTxt').val();
+	var visina = $('#visinaTxt').val();
+	var tezina = $('#tezinaTxt').val();
+	var alergije = $('#alergijeTxt').val();
+	var listaBolesti = $('#listaBolestiTxt').val();
+	
+	$.post
+	({
+		url: 'pacijent/setKartonInfo/'+idP,
+		data: JSON.stringify({id,krvnaGrupa,dioptrija,visina,tezina,alergije,listaBolesti}),
+		contentType: 'application/json',
+		success: function(poruka)
+		{
+			
+			alert(poruka);
+			//location.reload();
+
+		},
+		error: function()
+		{
+			alert("Greska pri unošenju informacija u karton");
+		}	
+	});	
+}
+
+$( document ).ready(function() 
+{
     
 	koJeUlogovan();
 	
+	$('#buttonPrikaziDiv').hide();
+	$('#buttonSakrijDiv').hide();
+	$('#formaKarton').hide();
+	
 	//submit forme
-	$( "#forma" ).submit(function( event ) {
+	$( "#forma" ).submit(function( event ) 
+	{
 		event.preventDefault();
 		
 		if($('#diagnozaType').val() < 0)
@@ -284,5 +378,12 @@ $( document ).ready(function() {
 		}
 		  
 		});
+	
+	//submit forme sa informacijama o kartonu
+	$( "#formaKarton" ).submit(function( event ) {
+		event.preventDefault();
+		
+		azurirajKarton();
+	});
 	
 });
