@@ -34,8 +34,8 @@ public class PregledDTOStudent1 {
 	
 	public PregledDTOStudent1(Pregled pregled) {
 		this.id = pregled.getId();
-		this.datumPregleda = pregled.getDatumPregleda();
-		this.satnica = pregled.getSatnica();
+//		this.datumPregleda = pregled.getDatumPregleda();
+//		this.satnica = pregled.getSatnica();
 		this.sala = pregled.getSala().getNaziv();
 		this.lekar = pregled.getLekar().getIme() + " " + pregled.getLekar().getPrezime();
 		this.cena = pregled.getCena();

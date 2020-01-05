@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
@@ -19,21 +20,33 @@ import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 import rs.ac.uns.ftn.informatika.jpa.model.Lek;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.LekarOdsustvo;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.Recept;
+import rs.ac.uns.ftn.informatika.jpa.model.Sala;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
+import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostLekara;
+import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostSala;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 import rs.ac.uns.ftn.informatika.jpa.repository.PregledRepository;
 
 @Service
 public class PregledService {
-		
+	
+
+	
 	@Autowired
 	private PregledRepository pregledRepository;
 	
 	@Autowired
+	private TipPregledaService tipPregledaService;
+	
+	@Autowired
 	private LekService lekService;
+	
+	@Autowired
+	private SalaService salaService;
 	
 	@Autowired
 	private ReceptService receptService;
@@ -52,6 +65,12 @@ public class PregledService {
 	
 	@Autowired
 	private LekarService lekarService;
+	
+	@Autowired
+	private ZauzetostLekaraService zauzetostLekaraService;
+	
+	@Autowired
+	private ZauzetostSalaService zauzetostSalaService;
 	
 	@Autowired
 	private TipPregledaService tipService;
@@ -234,9 +253,117 @@ public class PregledService {
 		return "Stari pregled uspešno promenjen";
 	}
 
+
 	//vraca pregled koji ce biti prikazan kad se odabere sa kalendara
 	public PregledKalendarDTO vratiPregledKalendar(Long id) {
 		Pregled pregled = this.findOne(id);
 		return new PregledKalendarDTO(pregled);
 	}
+
+	
+	public String dodajPredefinisaniPregled(PredefPregledDTO pregled) {
+		boolean lekarVreme = true;
+		
+		Lekar lekar1 = lekarService.findOne(pregled.getLekar());
+		Set<ZauzetostLekara> zauzetost = lekar1.getListaZauzetostiLekara();
+		Set<LekarOdsustvo> odsustvo = lekar1.getListaOdsustava();
+		
+		//provere da li je pregled u terminu u kojem je odabrani lekar zauzet
+		if(zauzetost != null) {
+		for(ZauzetostLekara z : zauzetost) {
+			System.out.println(pregled.getDatumPregledaOd());
+			System.out.println(z.getKraj());
+			if(!pregled.getDatumPregledaOd().isAfter(z.getKraj()) && !pregled.getDatumPregledaOd().isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!pregled.getDatumPregledaDo().isAfter(z.getKraj()) && !pregled.getDatumPregledaDo().isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		}
+		for(LekarOdsustvo o : odsustvo) {
+			if(!pregled.getDatumPregledaDo().isAfter(o.getKraj()) && !pregled.getDatumPregledaDo().isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!pregled.getDatumPregledaOd().isAfter(o.getKraj()) && !pregled.getDatumPregledaOd().isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		if(pregled.getDatumPregledaOd().getHour()< lekar1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(pregled.getDatumPregledaOd().getHour() > lekar1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(pregled.getDatumPregledaDo().getHour() < lekar1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(pregled.getDatumPregledaDo().getHour() > lekar1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(pregled.getDatumPregledaOd().isBefore(LocalDateTime.now())) {
+			lekarVreme=false;
+		}
+		if(!pregled.getDatumPregledaDo().isAfter(pregled.getDatumPregledaOd())) {
+			return "Ne moze kraj pregleda biti pre pocetka pregleda";
+		}
+		if(lekarVreme == false) {
+			return "Odabrani lekar je zauzet u odabranom terminu.";
+		}
+		
+		boolean salaVreme = true;
+		Sala sala = salaService.findOne(pregled.getSala());
+		Set<ZauzetostSala> zauzetostSala = sala.getListaZauzetostiSala();
+		
+		for(ZauzetostSala z : zauzetostSala) {
+			if(!pregled.getDatumPregledaOd().isAfter(z.getKraj()) && !pregled.getDatumPregledaOd().isBefore(z.getPocetak())) {
+				salaVreme = false;
+			}
+			if(!pregled.getDatumPregledaDo().isAfter(z.getKraj()) && !pregled.getDatumPregledaDo().isBefore(z.getPocetak())) {
+				salaVreme=false;
+			}
+		}
+		if(salaVreme == false) {
+			return "Odabrana sala je zauzeta u odabranom terminu.";
+		}
+		
+		Pregled noviPregled = new Pregled();
+		noviPregled.setDatumPregledaOd(pregled.getDatumPregledaOd());
+		noviPregled.setDatumPregledaDo(pregled.getDatumPregledaDo());
+		noviPregled.setTipPregleda(tipPregledaService.findOne(pregled.getTipPregleda()));
+		noviPregled.setLekar(lekar1);
+		noviPregled.setSala(sala);
+		noviPregled.setCena(pregled.getCena());
+		noviPregled.setPopust(pregled.getPopust());
+		noviPregled.setDijagnoza(null);
+		noviPregled.setInformacije("");
+		noviPregled.setObavljen(false);
+		noviPregled.setPacijent(null);
+		noviPregled.setZdravstveniKarton(null);
+		
+		//dodajemo zauzetost u tabelu zauzetosti
+		ZauzetostLekara nova= new ZauzetostLekara();
+		nova.setPocetak(pregled.getDatumPregledaOd());
+		nova.setKraj(pregled.getDatumPregledaDo());
+		nova.setLekar(lekar1);
+		zauzetost.add(nova);
+		zauzetostLekaraService.save(nova);
+		
+		ZauzetostSala novaz = new ZauzetostSala();
+		novaz.setPocetak(pregled.getDatumPregledaOd());
+		novaz.setKraj(pregled.getDatumPregledaDo());
+		novaz.setSala(sala);
+		zauzetostSala.add(novaz);
+		zauzetostSalaService.save(novaz);
+		
+		this.save(noviPregled);
+
+		return null;
+		
+		
+	}
+	
+	
+	
+
 }

@@ -20,7 +20,11 @@ import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarPregledKalendar;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
+
 import rs.ac.uns.ftn.informatika.jpa.dto.OperacijaKalendarDTO;
+
+import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
+
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -204,6 +208,7 @@ public class LekarController {
 		return new ResponseEntity<>(ods, HttpStatus.OK);
 	}
 	
+
 	//vraca preglede za prikaz na kalendar
 	@GetMapping(value = "/getLekarPregledi/{id}", produces = "application/json")
 	public ResponseEntity<List<LekarPregledKalendar>> getLekarPregledi(@PathVariable Long id) {
@@ -224,6 +229,15 @@ public class LekarController {
 			
 			
 		return new ResponseEntity<>(op, HttpStatus.OK);
+
+	@GetMapping(value = "vratiLekareKlinike/{id}", consumes = "application/json")
+	public ResponseEntity<List<LekarDTO>> vrariLekareKlinike(@PathVariable Long id) 
+	{
+		//System.out.println("###############-PRE-##############");
+		List<LekarDTO> lekariKlinike = lekarService.vratiSveLekareKlinike(id);
+		//System.out.println("###############-POSLE-##############");	
+		return new ResponseEntity<>(lekariKlinike, HttpStatus.OK);
+
 	}
 	
 	

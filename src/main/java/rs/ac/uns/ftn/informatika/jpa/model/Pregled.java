@@ -1,7 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 
 @Entity
 public class Pregled {
@@ -35,10 +33,11 @@ public class Pregled {
 	private Set<Recept> recepti = new HashSet<Recept>();
 	
 	@Column(nullable =  false)
-	private String datumPregleda;
+	private LocalDateTime datumPregledaOd;
 	
 	@Column(nullable =  false)
-	private String satnica;
+	private LocalDateTime datumPregledaDo;
+	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Sala sala;
@@ -68,15 +67,15 @@ public class Pregled {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Pregled(Long id, String informacije, Dijagnoza dijagnoza, Set<Recept> recepti, String datumPregleda,
+	public Pregled(Long id, String informacije, Dijagnoza dijagnoza, Set<Recept> recepti, LocalDateTime datumPregledaOd, LocalDateTime datumPregledaDo,
 			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena, boolean obavljen) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
 		this.dijagnoza = dijagnoza;
 		this.recepti = recepti;
-		this.datumPregleda = datumPregleda;
-		this.satnica = satnica;
+		this.datumPregledaOd = datumPregledaOd;
+		this.datumPregledaDo = datumPregledaDo;
 //		this.sala = sala;
 		this.lekar = lekar;
 		this.popust = popust;
@@ -117,21 +116,22 @@ public class Pregled {
 		this.recepti = recepti;
 	}
 
-	public String getDatumPregleda() {
-		return datumPregleda;
+	public LocalDateTime getDatumPregledaOd() {
+		return datumPregledaOd;
 	}
 
-	public void setDatumPregleda(String datumPregleda) {
-		this.datumPregleda = datumPregleda;
+	public void setDatumPregledaOd(LocalDateTime datumPregleda) {
+		this.datumPregledaOd = datumPregleda;
+	}
+	
+	public LocalDateTime getDatumPregledaDo() {
+		return datumPregledaOd;
 	}
 
-	public String getSatnica() {
-		return satnica;
-	}
+	public void setDatumPregledaDo(LocalDateTime datumPregleda) {
+		this.datumPregledaDo = datumPregleda;
+	}	
 
-	public void setSatnica(String satnica) {
-		this.satnica = satnica;
-	}
 
 	public Sala getSala() {
 		return sala;

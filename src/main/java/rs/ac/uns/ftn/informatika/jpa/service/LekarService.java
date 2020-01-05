@@ -8,10 +8,16 @@ import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarPregledKalendar;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
+
 import rs.ac.uns.ftn.informatika.jpa.dto.OperacijaKalendarDTO;
+
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
+import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.LekarOdsustvo;
 import rs.ac.uns.ftn.informatika.jpa.model.Operacija;
@@ -23,6 +29,8 @@ public class LekarService {
 
 	@Autowired
 	private LekarRepository lekarRepository;
+	@Autowired
+	private AdministratorKlinikeService adminKlinikeService;
 	
 	public Lekar findOne(Long id) {
 		return lekarRepository.findById(id).orElseGet(null);
@@ -127,6 +135,25 @@ public class LekarService {
 		
 		return kal;
 	}
+	
+	//vraca sve lekare klinike pomocu id-a prijavljenog admina klinike
+	public List<LekarDTO> vratiSveLekareKlinike(Long id){
+		AdministratorKlinike admin = adminKlinikeService.findOne(id);
+		Klinika klinika = admin.getKlinika();
+		List<Lekar> lista = this.findAll();
+		
+		List<LekarDTO> rezultat = new ArrayList<>();
+		
+		for(Lekar l : lista) {
+			if (l.getKlinika().getId() == klinika.getId()){
+				rezultat.add(new LekarDTO(l));
+			}
+		}
+		
+		return rezultat;
+		
+	}
+
 	
 	
 }

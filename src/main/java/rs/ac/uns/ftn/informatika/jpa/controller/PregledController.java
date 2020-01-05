@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 
 @RestController
@@ -85,6 +85,7 @@ public class PregledController
 		return new ResponseEntity<>(poruka, HttpStatus.OK);
 	}
 	
+
 	//vraca pregled koji ce biti prikazan kad se odabere sa kalendara
 	@GetMapping(value = "/vratiPregledKalendar/{id}")
 	public ResponseEntity<PregledKalendarDTO> vratiPregledKalendar(@PathVariable Long id)
@@ -93,4 +94,28 @@ public class PregledController
 				
 		return new ResponseEntity<>(pregled, HttpStatus.OK);
 	}
+
+	@PostMapping(value = "/dodajPredefinisaniPregled")
+	public ResponseEntity<String> savePredefPregled(@RequestBody PredefPregledDTO pregledDTO){
+		
+		String pregled = pregledSevice.dodajPredefinisaniPregled(pregledDTO);
+		
+		if(pregled == "Ne moze kraj pregleda biti pre pocetka pregleda") {
+			return new ResponseEntity<>("Ne moze kraj pregleda biti pre pocetka pregleda",HttpStatus.CONFLICT);
+		}
+		else if(pregled == "Odabrani lekar je zauzet u odabranom terminu.") {
+			return new ResponseEntity<>("Odabrani lekar je zauzet u odabranom terminu.",HttpStatus.CONFLICT);
+		}
+		else if(pregled == "Odabrana sala je zauzeta u odabranom terminu.") {
+			return new ResponseEntity<>("Odabrana sala je zauzeta u odabranom terminu.",HttpStatus.CONFLICT);
+		}else {
+		
+		return new ResponseEntity<>("Uspesno dodat pregled",HttpStatus.OK);
+		}
+		
+	}
+	
+	
+
+
 }
