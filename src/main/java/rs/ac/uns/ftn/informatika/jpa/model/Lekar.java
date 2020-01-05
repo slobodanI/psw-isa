@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -72,6 +73,9 @@ public class Lekar {
 	
 	@Column(nullable = false)
 	private String uloga = "Lekar";
+	
+	@ManyToMany(mappedBy = "lekari")
+	private Set<Operacija> operacije =  new HashSet<Operacija>();
 	
 	public Lekar() {
 		// TODO Auto-generated constructor stub
@@ -251,6 +255,14 @@ public class Lekar {
 
 	public void setTipPregleda(TipPregleda tipPregleda) {
 		this.tipPregleda = tipPregleda;
+	}
+
+	public Set<Operacija> getOperacije() {
+		return operacije;
+	}
+
+	public void setOperacije(Set<Operacija> operacije) {
+		this.operacije = operacije;
 	}
 	
 	

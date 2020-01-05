@@ -83,6 +83,7 @@ insert into dijagnoza (sifra, naziv) values ('778','drugaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('632','trecaDijagnoza');
 insert into dijagnoza (sifra, naziv) values ('114','cetvrtaDijagnoza');
 
+
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen) values (1, 1, 1, 'info', '2019-04-30 13:40', '2019-04-30 14:10', 10, 1000,1,2, 1, true);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen) values (2, 1, 1, 'info', '2019-04-30 13:40','2019-04-30 14:10', 10, 1000,1,2, 1, true);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen) values (1, 1, 1, 'info', '2019-05-30 13:00','2019-05-30 13:30', 0, 1000,1,2, 1, true);
@@ -101,7 +102,8 @@ insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen) values (2, null, null, '', '2019-05-22 10:00','2019-05-22 10:30', 10, 1000,3,null, 2, false);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen) values (4, null, null, '', '2019-05-25 10:00','2019-05-25 10:30', 10, 1000,3,null, 2, false);
 
-insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_vreme, cena, obavljen) values (1, 1, 'info', '30-04-2019 12:00', 5000, true);
+
+insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_operacije, satnica, cena, obavljen) values (1, 1, 'info', '30-01-2020', '12:00-14:00', 5000, false);
 
 insert into lekar_operacija (operacija_id, lekar_id) values (1, 1);
 insert into lekar_operacija (operacija_id, lekar_id) values (1, 2);

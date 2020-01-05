@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
@@ -84,6 +85,16 @@ public class PregledController
 		return new ResponseEntity<>(poruka, HttpStatus.OK);
 	}
 	
+
+	//vraca pregled koji ce biti prikazan kad se odabere sa kalendara
+	@GetMapping(value = "/vratiPregledKalendar/{id}")
+	public ResponseEntity<PregledKalendarDTO> vratiPregledKalendar(@PathVariable Long id)
+	{	
+		PregledKalendarDTO pregled = pregledSevice.vratiPregledKalendar(id);
+				
+		return new ResponseEntity<>(pregled, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "/dodajPredefinisaniPregled")
 	public ResponseEntity<String> savePredefPregled(@RequestBody PredefPregledDTO pregledDTO){
 		
@@ -105,9 +116,6 @@ public class PregledController
 	}
 	
 	
-	
-	
-	
-	
-	
+
+
 }

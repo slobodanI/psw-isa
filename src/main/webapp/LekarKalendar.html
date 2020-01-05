@@ -2,18 +2,38 @@
 <html>
 <head>
 	<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
-	<script src="js/LekarObaviPregled.js" type="text/javascript"></script>
+	<script src="js/LekarKalendar.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/logout.js" type="text/javascript"></script>
-	<script src="js/datatables.min.js"></script>
-	<link rel="stylesheet" href="datatables.min.css">
-	<script src="js/dataTables.select.min.js" type="text/javascript"></script>
-	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="jquery.dataTables.min.css">
-	<link rel="stylesheet" href="select.dataTables.min.css">
-	<meta charset="UTF-8">
-<title>LekarObaviPregled</title>
+	
+	<link rel="stylesheet" href="core.css">
+	<link rel="stylesheet" href="daygrid.css">
+	<link rel="stylesheet" href="timegrid.css">
+	<link rel="stylesheet" href="list.css">
+	<script src="js/core.js" type="text/javascript"></script>
+	<script src="js/interaction.js" type="text/javascript"></script>
+	<script src="js/daygrid.js" type="text/javascript"></script>
+	<script src="js/timegrid.js" type="text/javascript"></script>
+	<script src="js/list.js" type="text/javascript"></script>
+	
+	<style>
+
+	  body {
+	    margin-bottom:50px;
+	    padding: 0;
+	    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	    font-size: 14px;
+	  }
+	
+	  #calendar {
+	    max-width: 900px;
+	    margin: 0 auto;
+	  }
+	
+	</style>
+<meta charset="UTF-8">
+<title>LekarKalendar</title>
 </head>
 <body>
 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -23,20 +43,20 @@
         <a class="p-2 text-dark" href="updateLekara.html">Izmeni profil</a>
         <a class="p-2 text-dark" href="LekarObaviPregled.html">Obavi pregled</a>
         <a class="p-2 text-dark" href="LekarStariPregledi.html">Stari pregledi</a>
+        <a class="p-2 text-dark" href="LekarKalendar.html">Kalendar</a>
       </nav>
       <a class="btn btn-outline-primary" onclick="logout()">Izloguj se</a>
     </div>
     
     <br>
     
-    <div id="divTabela">
-    </div>
+    <div id='calendar'></div>
     
-    <br/>
-	<br/>
-	<br/>
-	
-		<div id='buttonPrikaziDiv' class="form-group col-md-6">
+    <br>
+    <br>
+    
+    <div id="divPokreniPregled">
+    	<div id='buttonPrikaziDiv' class="form-group col-md-6">
 			<input type="button" id="kartonPrikaziBtn" onclick="prikaziKarton()" class="btn col-md-6 btn-lg btn-block btn-outline-primary" value="Prikazi karton">	
 		</div>
 		
@@ -162,6 +182,6 @@
 	
 		</div>
 	</form>
-    
+    </div>
 </body>
 </html>
