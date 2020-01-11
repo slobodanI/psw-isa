@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent2;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
-import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 
 @RestController
@@ -115,6 +115,22 @@ public class PregledController
 		
 	}
 	
+	@PostMapping(value = "/dodajNoviPregled")
+	public ResponseEntity<String> saveNoviPregled(@RequestBody PregledDTOStudent2 pregledDTO){
+		
+		String pregled = pregledSevice.dodajNoviPregled(pregledDTO);
+		if(pregled == "Ne moze kraj pregleda biti pre pocetka pregleda") {
+			return new ResponseEntity<>("Ne moze kraj pregleda biti pre pocetka pregleda",HttpStatus.CONFLICT);
+		}
+		else if(pregled == "Odabrani lekar je zauzet u odabranom terminu.") {
+			return new ResponseEntity<>("Odabrani lekar je zauzet u odabranom terminu.",HttpStatus.CONFLICT);
+		}else {
+			
+			return new ResponseEntity<>("Uspesno dodat pregled",HttpStatus.OK);
+			}
+		
+		
+	}
 	
 
 

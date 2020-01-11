@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,11 +26,13 @@ public class Operacija {
 	@Column(nullable =  false)
 	private String informacije;
 	
-	@Column(nullable =  false)
-	private String datumOperacije;
+	@Column(nullable = false)
+	private LocalDateTime datumOperacijeOd;
 	
-	@Column(nullable =  false)
-	private String satnica;
+	@Column(nullable = false)
+	private LocalDateTime datumOperacijeDo;
+	
+
 	
 	@Column(nullable =  false)
 	private int cena;
@@ -52,16 +55,16 @@ public class Operacija {
 	}
 
 	public Operacija(Long id, String informacije, String datumOperacije, String satnica, int cena, Set<Lekar> lekari, Pacijent pacijent,
-			ZdravstveniKarton zdravstveniKarton) {
+			ZdravstveniKarton zdravstveniKarton,LocalDateTime datumOd,LocalDateTime datumDo) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
-		this.datumOperacije = datumOperacije;
-		this.satnica = satnica;
 		this.cena = cena;
 		this.lekari = lekari;
 		this.pacijent = pacijent;
 		this.zdravstveniKarton = zdravstveniKarton;
+		this.datumOperacijeOd=datumOd;
+		this.datumOperacijeDo=datumDo;
 	}
 
 	public Long getId() {
@@ -78,22 +81,6 @@ public class Operacija {
 
 	public void setInformacije(String informacije) {
 		this.informacije = informacije;
-	}
-
-	public String getDatumOperacije() {
-		return datumOperacije;
-	}
-
-	public void setDatumOperacije(String datumOperacije) {
-		this.datumOperacije = datumOperacije;
-	}
-
-	public String getSatnica() {
-		return satnica;
-	}
-
-	public void setSatnica(String satnica) {
-		this.satnica = satnica;
 	}
 
 	public int getCena() {
@@ -136,6 +123,23 @@ public class Operacija {
 		this.obavljen = obavljen;
 	}
 
+	public LocalDateTime getDatumOperacijeOd() {
+		return datumOperacijeOd;
+	}
+
+	public void setDatumOperacijeOd(LocalDateTime datumOperacijeOd) {
+		this.datumOperacijeOd = datumOperacijeOd;
+	}
+
+	public LocalDateTime getDatumOperacijeDo() {
+		return datumOperacijeDo;
+	}
+
+	public void setDatumOperacijeDo(LocalDateTime datumOperacijeDo) {
+		this.datumOperacijeDo = datumOperacijeDo;
+	}
+
+	
 	
 	
 	

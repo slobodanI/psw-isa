@@ -52,7 +52,21 @@ public class SalaService {
 		return rezultat;
 	}
 	
-	
+	public List<SalaDTO> vratiSlobodneSale(Long id){
+		AdministratorKlinike admin = adminKlinikeService.findOne(id);
+		Klinika klinika = admin.getKlinika();
+		List<Sala> lista = this.findAll();
+		
+		List<SalaDTO> rezultat = new ArrayList<>();
+		
+		for(Sala s : lista) {
+			if(s.getKlinika().getId() == klinika.getId()) {
+				rezultat.add(new SalaDTO(s));
+			}
+		}
+		return rezultat;
+		
+	}
 	
 
 }
