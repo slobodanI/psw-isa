@@ -229,6 +229,7 @@ public class LekarController {
 			
 			
 		return new ResponseEntity<>(op, HttpStatus.OK);
+	}
 
 	@GetMapping(value = "vratiLekareKlinike/{id}", consumes = "application/json")
 	public ResponseEntity<List<LekarDTO>> vrariLekareKlinike(@PathVariable Long id) 

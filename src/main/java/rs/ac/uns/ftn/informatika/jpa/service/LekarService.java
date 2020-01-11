@@ -92,14 +92,14 @@ public class LekarService {
 				pr.setId(pregled.getId());
 				
 				//formatiranje datuma i vremena
-				String[] split = pregled.getSatnica().split("-");
-				String[] date = pregled.getDatumPregleda().split("-");
-				String datum = date[2] + "-" + date[1] + "-" + date[0];
-				
-				pr.setPocetak(datum + "T" + split[0]);
-				pr.setKraj(datum + "T" + split[1]);
-				pr.setTip(pregled.getTipPregleda().toString());
-				pr.setLekarId(pregled.getLekar().getId());
+//				String[] split = pregled.getSatnica().split("-");
+//				String[] date = pregled.getDatumPregleda().split("-");
+//				String datum = date[2] + "-" + date[1] + "-" + date[0];
+//				
+//				pr.setPocetak(datum + "T" + split[0]);
+//				pr.setKraj(datum + "T" + split[1]);
+//				pr.setTip(pregled.getTipPregleda().toString());
+//				pr.setLekarId(pregled.getLekar().getId());
 				
 				kal.add(pr);
 			}
@@ -122,12 +122,12 @@ public class LekarService {
 				OperacijaKalendarDTO dto = new OperacijaKalendarDTO();
 				dto.setId(op.getId());
 				
-				String[] vreme = op.getSatnica().split("-");
-				String[] datum = op.getDatumOperacije().split("-");
-				String date = datum[2] + "-" + datum[1] + "-" + datum[0];
-				
-				dto.setPocetak(date + "T" + vreme[0]);
-				dto.setKraj(date + "T" + vreme[1]);
+//				String[] vreme = op.getSatnica().split("-");
+//				String[] datum = op.getDatumOperacije().split("-");
+//				String date = datum[2] + "-" + datum[1] + "-" + datum[0];
+//				
+//				dto.setPocetak(date + "T" + vreme[0]);
+//				dto.setKraj(date + "T" + vreme[1]);
 				
 				kal.add(dto);
 			}

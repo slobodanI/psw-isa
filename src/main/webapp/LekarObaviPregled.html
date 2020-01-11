@@ -160,9 +160,58 @@
 	    </div>
 	    
 	    <input type="submit" id="potvrdiBtn" class="btn btn-lg btn-block btn-outline-primary" value="Potvrdi dijagnozu">
-	
+	    
+
 		</div>
 	</form>
-    
+	
+		<br>
+	    <hr>
+	    <br>
+	    
+	    <button id='zp' class="btn col-md-6 btn-lg btn-block btn-outline-primary">Zakazi pregled</button>
+	    <br>
+	    <div id="zakaziPregled" class="form-group col-md-6">
+	    	<form	id="form-dodavanjePregleda">
+	    	<table>
+	    	<tr>
+					<td>Datum pregleda:</td>
+					<td><input type = "date" name = "datumPregleda" required></td>
+				</tr>
+				
+				<tr>
+					<td>Pocetak pregleda:</td>
+					<td><input type="time" name="pocetak" min="08:00" max="16:00" required  ></td>
+				</tr>
+				
+				<tr>
+					<td>Kraj pregleda:</td>
+					<td><input type="time" name="kraj" min="08:00" max="16:00" required ></td>
+				</tr>
+	    		<tr><td><input type="submit" value="Zakazi novi pregled"></td></tr>	
+	    	</table>
+	    	</form>
+	    	
+	    </div>
+	    <br>
+	    <button id='zo' class="btn col-md-6 btn-lg btn-block btn-outline-primary">Zakazi operaciju</button>
+	    <br>
+	    <div id="zakaziOperaciju" class="form-group col-md-6">
+	    		    	<form	id="form-dodavanjeOperacije">
+	    	<table>
+	    	<tr>
+					<td>Datum operacije:</td>
+					<td><input type = "date" name = "datumOperacije" required></td>
+				</tr>
+				
+	    		<tr><td><input type="submit" value="Zakazi novu operaciju"></td></tr>	
+	    	</table>
+	    	</form>
+	    </div>
+	
+	<br>
+	<br>
+	<br>
+	
 </body>
 </html>

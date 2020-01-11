@@ -1,5 +1,7 @@
 //mapa lekova koje treba poslati u bazu
 var receptiMap;
+var lekarId;
+var idPac;
 
 //proveri ko je ulogovan
 function koJeUlogovan() 
@@ -13,7 +15,7 @@ function koJeUlogovan()
 			{
 				logout();
 			}
-			
+			lekarId=user.id;
 			//renderuj tabelu pacijenata
 			RenderHtmlOnSuccess(user.id);
 			$('#formaDiv').hide();
@@ -89,11 +91,13 @@ function RenderHtmlOnSuccess(id) {
 		    //i salju se u odgovarajuca polja u formi za odgovaranje
 		    $('.pregledajButton').on("click", function () {
 		    	 sakrijKarton();
-		    	
+		    	 $("#zp").show();
+		    	 $("#zo").show();
 		    	 var data = table.api().row( $(this).parents('tr') ).data();
 				 id_pregleda = data[0];
 				 $('#idPregledaTxt').val(id_pregleda);
 		    	 id_pacijenta = data[1];
+		    	 idPac=id_pacijenta;
 		    	 $('#idPacijentaTxt').val(id_pacijenta);
 		    	 lbo_pacijenta = data[2];
 		    	 $('#lboPacijentaTxt').val(lbo_pacijenta);
@@ -358,6 +362,21 @@ $( document ).ready(function()
 {
     
 	koJeUlogovan();
+	submitFormeZaNoviPregled();
+	submitFormeZaNovuOperaciju();
+	
+	$("#zp").hide();
+	$("#zo").hide();
+	$('#zakaziPregled').hide();
+	$('#zakaziOperaciju').hide();
+	$("#zp").click(function(){
+		$('#zakaziPregled').toggle();
+	});
+	$("#zo").click(function(){
+		$('#zakaziOperaciju').toggle();
+	});
+	
+	
 	
 	$('#buttonPrikaziDiv').hide();
 	$('#buttonSakrijDiv').hide();
@@ -387,3 +406,69 @@ $( document ).ready(function()
 	});
 	
 });
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+//Za studenta 2
+
+function submitFormeZaNoviPregled(){
+	$("#form-dodavanjePregleda").submit(function (event){
+		event.preventDefault();
+		var pocetak = $('input[name="datumPregleda"]').val();
+		var pocetakVreme = $('input[name="pocetak"]').val();
+		var kraj = $('input[name="datumPregleda"]').val();
+		var krajVreme = $('input[name="kraj"]').val();
+		var datumPregledaOd = pocetak+'T'+pocetakVreme;
+		var datumPregledaDo = kraj+'T'+krajVreme;
+		var lekar = lekarId;
+		var pacijent = idPac;
+		
+		$.post({
+			url : 'pregledi/dodajNoviPregled',
+			contentType: 'application/json',
+			data: JSON.stringify({datumPregledaOd,datumPregledaDo,lekar,pacijent}),
+			
+			success: function(response){
+				alert(response);
+			},
+			error: function(response){
+				alert(response);
+			},
+			
+			
+			
+		});
+		
+		
+		
+	});
+}
+function submitFormeZaNovuOperaciju(){
+	$("#form-dodavanjeOperacije").submit(function (event){
+		event.preventDefault();
+		var datumOperacije = $('input[name="datumOperacije"]').val();
+		datumOperacije = datumOperacije+"T00:00"
+		var pacijent=idPac;
+		
+		
+		$.post({
+			url : 'operacije/dodajNovuOperaciju',
+			contentType: 'application/json',
+			data: JSON.stringify({datumOperacije,pacijent}),
+			
+			success: function(response){
+				alert(response);
+			},
+			error: function(response){
+				alert(response);
+			},
+			
+			
+			
+		});
+	
+	});
+	
+}
+
