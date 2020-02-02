@@ -20,10 +20,12 @@ function whoIsLoggedIn() {
 				} else {
 //					console.log("NIKO NIJE ULOGOVAN");
 					$("#bodyID").hide(); // bolje je mozda skociti na stranu za login
+					window.location = "./index.html";
 				}
 				
 			} else {
 				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
 			}
 
 		}

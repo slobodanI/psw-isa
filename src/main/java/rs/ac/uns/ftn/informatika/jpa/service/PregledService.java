@@ -161,8 +161,8 @@ public class PregledService {
 		
 		List<PregledDTOStudent1> predefinisatiPregledi = new ArrayList<PregledDTOStudent1>();
 		for(Pregled pregled : sviPregledi) {
-			if(pregled.getSala().getKlinika().getId().equals(klinikaID)){ // pregled u toj klinici
-				if(pregled.getPacijent() == null) { // ovo znaci da je predefinisan pregled
+			if(pregled.getPacijent() == null){ // ovo znaci da je predefinisan pregled
+				if(pregled.getSala().getKlinika().getId().equals(klinikaID)) { // pregled u toj klinici
 					if(pregled.getDatumPregledaOd().isAfter(sada)) {
 						PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
 						predefinisatiPregledi.add(predefPregledDTO);
@@ -548,14 +548,62 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		}
 		
 		
-		System.out.println("**********ISPISIVANJE ZAUZETOSTI LEKARA***********");
-		System.out.println("JA SAM DODAO: " + termin);
-		System.out.println("A LEKAR SADRZI: " );
-		for(ZauzetostLekara zau: lekar.getListaZauzetostiLekara()) {
-			System.out.println("-termin OD: " + zau.getPocetak());
-		}
+//		System.out.println("**********ISPISIVANJE ZAUZETOSTI LEKARA***********");
+//		System.out.println("JA SAM DODAO: " + termin);
+//		System.out.println("A LEKAR SADRZI: " );
+//		for(ZauzetostLekara zau: lekar.getListaZauzetostiLekara()) {
+//			System.out.println("-termin OD: " + zau.getPocetak());
+//		}
 		
 		return true;
 	}
-
+	
+	public boolean potvrdiIliOdbiPregled(Long pregledID, String odluka) {
+		
+		if(pregledID != null) {
+			if(pregledID <= 0) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+		if(odluka != null) {
+			if(odluka.equals("potvrdi") == false && odluka.equals("odustani") == false) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+		Pregled pregled = findOne(pregledID);
+		
+		if(pregled == null) {
+			return false;
+		}
+		
+		//pacijent je vec rekao da PRIHVATA pregled
+		if(pregled.isPrihvacen() == true) {
+			return false;
+		}
+		
+		//pacijent je vec rekao da ODBIJA pregled
+		if(pregled.isObrisan() == true) {
+			return false;
+		}
+		
+		if(odluka.equals("potvrdi")) {
+			pregled.setPrihvacen(true);
+		}
+		
+		if(odluka.equals("odustani")) {
+			pregled.setPrihvacen(false);
+			pregled.setObrisan(true);
+		}
+		
+		this.save(pregled);
+		
+		return true;
+	}
+	
 }
