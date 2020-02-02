@@ -157,13 +157,16 @@ public class PregledService {
 	public List<PregledDTOStudent1> getPredefinisanePreglede(Long klinikaID) {
 		
 		List<Pregled> sviPregledi = findAll();
+		LocalDateTime sada = LocalDateTime.now();
 		
 		List<PregledDTOStudent1> predefinisatiPregledi = new ArrayList<PregledDTOStudent1>();
 		for(Pregled pregled : sviPregledi) {
 			if(pregled.getSala().getKlinika().getId().equals(klinikaID)){ // pregled u toj klinici
 				if(pregled.getPacijent() == null) { // ovo znaci da je predefinisan pregled
-					PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
-					predefinisatiPregledi.add(predefPregledDTO);
+					if(pregled.getDatumPregledaOd().isAfter(sada)) {
+						PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
+						predefinisatiPregledi.add(predefPregledDTO);
+					}					
 				}
 			}
 		}
@@ -341,6 +344,9 @@ public class PregledService {
 		noviPregled.setObavljen(false);
 		noviPregled.setPacijent(null);
 		noviPregled.setZdravstveniKarton(null);
+		noviPregled.setObavljen(false);
+		noviPregled.setPrihvacen(true);
+		noviPregled.setObrisan(false);
 		
 		//dodajemo zauzetost u tabelu zauzetosti
 		ZauzetostLekara nova= new ZauzetostLekara();
@@ -428,6 +434,9 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		noviPregled.setObavljen(false);
 		noviPregled.setCena(1000);
 		noviPregled.setPopust(0);
+		noviPregled.setObavljen(false);
+		noviPregled.setPrihvacen(true);
+		noviPregled.setObrisan(false);
 		
 		//dodaje u zauzetost Lekara
 		ZauzetostLekara nova= new ZauzetostLekara();
@@ -443,5 +452,110 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		
 	}
 	
+	//zakazivanje pregleda od strane pacijenta
+	//izabrao je tip pregleda, kliniku, lekara, termin // lekar sadrzi kliniku i tip pregleda
+	public boolean zakaziPregled(Long lekarID, LocalDateTime termin, Long pacijentID) {
+		
+		//provera prosledjenih parametara
+		if(lekarID != null) {
+			if(lekarID <= 0) {
+				System.out.println("-lekar id je manje od nula!" + lekarID);
+				return false;
+			}
+		} else {
+			System.out.println("-lekar id null");
+			return false;
+		}
+		
+		if(pacijentID != null) {
+			if(pacijentID <= 0) {
+				System.out.println("-pacijent id je manje od nula!" + pacijentID);
+				return false;
+			}
+		} else {
+			System.out.println("-lekar id null");
+			return false;
+		}
+		
+		LocalDateTime sada = LocalDateTime.now();
+		
+		if(termin != null) {
+			if(termin.isBefore(sada)) {
+				System.out.println("-termin je pre sada");
+				return false;
+			}
+		} else {
+			System.out.println("-termin je null");
+			return false;
+		}
+		
+		Lekar lekar = lekarService.findOne(lekarID);
+		Pacijent pacijent = pacijentService.findOne(pacijentID);
+		
+		if(lekar == null || pacijent == null) {
+			System.out.println("lekar ili pacijent je null: " + lekar );
+			System.out.println("lekar ili pacijent je null: " + pacijent );
+			return false;
+		}
+		
+		//ako je pacijent jos jednom kliknuo na dugme za potvrdu pregleda
+		//ili jednostavno da nema prelklapanja
+		for(Pregled p : this.findAll()) {
+			if(termin.isBefore(p.getDatumPregledaDo()) && termin.plusHours(1).isAfter(p.getDatumPregledaOd())) {
+				return false;
+			}
+		}
+		
+		//ako je sve uredu, kreiram pregled i sačuvam ga
+		Pregled noviPregled = new Pregled();
+		noviPregled.setSala(null);
+		noviPregled.setDatumPregledaOd(termin);
+		noviPregled.setDatumPregledaDo(termin.plusHours(1));
+		noviPregled.setLekar(lekar);
+		noviPregled.setTipPregleda(lekar.getTipPregleda());
+		noviPregled.setPacijent(pacijent);
+		noviPregled.setZdravstveniKarton(pacijent.getZdravstveniKarton());
+		noviPregled.setDijagnoza(null);
+		noviPregled.setInformacije("");
+		noviPregled.setCena(1000/*lekar.getTipPregleda().getCena()*/); // ovo treba biti cena tipa pregleda
+		noviPregled.setPopust(0);
+		noviPregled.setObavljen(false);
+		noviPregled.setPrihvacen(true);
+		noviPregled.setObrisan(false);
+		
+		
+		this.save(noviPregled);
+		
+		//dodavanje u listu zauzetosti lekara
+		ZauzetostLekara nova= new ZauzetostLekara();
+		nova.setPocetak(noviPregled.getDatumPregledaOd());
+		nova.setKraj(noviPregled.getDatumPregledaDo());
+		nova.setLekar(lekar);
+		//zauzetost.add(nova);
+		zauzetostLekaraService.save(nova);
+					
+		EmailDTO emailDTO = new EmailDTO(pacijent.getId().intValue(), "Pristigao je novi zahtev za pregled.",
+											"Pacijent je uspešno zakazao pregled. Treba da dodelite salu za pregled", "");
+
+		try 
+		{
+			emailService.sendNotificaitionAsync(emailDTO);
+		}
+		catch( Exception e )
+		{
+//			logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+		}
+		
+		
+		System.out.println("**********ISPISIVANJE ZAUZETOSTI LEKARA***********");
+		System.out.println("JA SAM DODAO: " + termin);
+		System.out.println("A LEKAR SADRZI: " );
+		for(ZauzetostLekara zau: lekar.getListaZauzetostiLekara()) {
+			System.out.println("-termin OD: " + zau.getPocetak());
+		}
+		
+		return true;
+	}
 
 }

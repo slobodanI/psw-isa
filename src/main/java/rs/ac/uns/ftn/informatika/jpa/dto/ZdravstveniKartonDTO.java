@@ -35,15 +35,21 @@ public class ZdravstveniKartonDTO {
 		PregledDTO pregledDTO;
 		for(Pregled p : zk.getListaPregleda()) {
 			//System.out.println("Pregled: " + p.getCena() + p.getDatumPregleda() + p.getInformacije() + p.getSatnica() + p.getTipPregleda() + p.getId() + p.getDijagnoza());
-			pregledDTO = new PregledDTO(p);
-			//System.out.println("Pregled DTO: " + pregledDTO.getCena() + pregledDTO.getDatumPregleda() + pregledDTO.getInformacije() + pregledDTO.getId());
-			listaPregleda.add(pregledDTO);
+			if(p.isObavljen()) {
+				pregledDTO = new PregledDTO(p);
+				//System.out.println("Pregled DTO: " + pregledDTO.getCena() + pregledDTO.getDatumPregleda() + pregledDTO.getInformacije() + pregledDTO.getId());
+				listaPregleda.add(pregledDTO);
+			}
+			
 		}
 
 		OperacijaDTO operacijaDTO;
 		for(Operacija o : zk.getListaOperacija()) {
-			operacijaDTO = new OperacijaDTO(o);
-			listaOperacija.add(operacijaDTO);
+			if(o.isObavljen()) {
+				operacijaDTO = new OperacijaDTO(o);
+				listaOperacija.add(operacijaDTO);
+			}
+			
 		}
 		
 		listaBolesti = zk.getListaBolesti();

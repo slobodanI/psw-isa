@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
 import java.awt.List;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +12,8 @@ public class OperacijaDTO {
 	
 	private Long id;
 	private String informacije;
-	private String datumVreme;
+	private LocalDateTime datumOperacijeOD;
+	private LocalDateTime datumOperacijeDO;
 	private int cena;
 	private Collection<LekarDTOzaStudent1> lekari = new ArrayList<LekarDTOzaStudent1>();// mozda samo ime lekara da stavim
 	
@@ -24,7 +26,8 @@ public class OperacijaDTO {
 		informacije = operacija.getInformacije();
 		//datumVreme = operacija.getDatumIVreme();
 		cena = operacija.getCena();
-
+		datumOperacijeOD = operacija.getDatumOperacijeOd();
+		datumOperacijeDO = operacija.getDatumOperacijeDo();
 		LekarDTOzaStudent1 lekarDTO;
 		for(Lekar l : operacija.getLekari()) {
 			lekarDTO = new LekarDTOzaStudent1(l);
@@ -48,12 +51,21 @@ public class OperacijaDTO {
 		this.informacije = informacije;
 	}
 
-	public String getDatumVreme() {
-		return datumVreme;
+	
+	public LocalDateTime getDatumOperacijeOD() {
+		return datumOperacijeOD;
 	}
 
-	public void setDatumVreme(String datumVreme) {
-		this.datumVreme = datumVreme;
+	public void setDatumOperacijeOD(LocalDateTime datumOperacijeOD) {
+		this.datumOperacijeOD = datumOperacijeOD;
+	}
+
+	public LocalDateTime getDatumOperacijeDO() {
+		return datumOperacijeDO;
+	}
+
+	public void setDatumOperacijeDO(LocalDateTime datumOperacijeDO) {
+		this.datumOperacijeDO = datumOperacijeDO;
 	}
 
 	public int getCena() {

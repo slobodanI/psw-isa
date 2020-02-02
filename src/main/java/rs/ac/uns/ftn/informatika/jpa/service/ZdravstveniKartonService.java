@@ -48,25 +48,25 @@ public class ZdravstveniKartonService {
 		//zdravstveni karton treba da sadrzi samo obavljene preglede
 		ZdravstveniKarton zdravstveniKarton = ZKRepository.findOneByPacijentId(idPacijenta);
 		
-		Set<Pregled> listaPregledaObaljveni = new HashSet<Pregled>();
-		Set<Operacija> listaOperacijaObavljeni = new HashSet<Operacija>();
+//		Set<Pregled> listaPregledaObaljveni = new HashSet<Pregled>();
+//		Set<Operacija> listaOperacijaObavljeni = new HashSet<Operacija>();
+//		
+//		for(Pregled p : zdravstveniKarton.getListaPregleda()) {
+//			if(p.isObavljen()) {
+//				listaPregledaObaljveni.add(p);
+//			}
+//		}
+//		
+//		for(Operacija o : zdravstveniKarton.getListaOperacija()) {
+//			if(o.isObavljen()) {
+//				listaOperacijaObavljeni.add(o);
+//			}
+//		}
+//		
+//		zdravstveniKarton.setListaPregleda(listaPregledaObaljveni);
+//		zdravstveniKarton.setListaOperacija(listaOperacijaObavljeni);
 		
-		for(Pregled p : zdravstveniKarton.getListaPregleda()) {
-			if(p.isObavljen()) {
-				listaPregledaObaljveni.add(p);
-			}
-		}
-		
-		for(Operacija o : zdravstveniKarton.getListaOperacija()) {
-			if(o.isObavljen()) {
-				listaOperacijaObavljeni.add(o);
-			}
-		}
-		
-		zdravstveniKarton.setListaPregleda(listaPregledaObaljveni);
-		zdravstveniKarton.setListaOperacija(listaOperacijaObavljeni);
-		
-		return ZKRepository.findOneByPacijentId(idPacijenta);
+		return zdravstveniKarton;
 	}
 	
 	

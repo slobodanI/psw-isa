@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
+import java.time.LocalDateTime;
+
 import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
@@ -11,8 +13,8 @@ public class PregledDTO {
 	private String informacije;
 	private Dijagnoza dijagnoza;
 	//private Set<Recept> recepti = new HashSet<Recept>();
-	private String datumPregleda;
-	private String satnica;	
+	private LocalDateTime datumPregledaOD;
+	private LocalDateTime datumPregledaDO;	
 //	@Column(nullable =  false)
 //	private Sala sala;
 	private LekarDTOzaStudent1 lekar;
@@ -28,8 +30,8 @@ public class PregledDTO {
 		id = pregled.getId();
 		informacije = pregled.getInformacije();
 		dijagnoza = pregled.getDijagnoza();		
-//		datumPregleda = pregled.getDatumPregleda();
-//		satnica = pregled.getSatnica();			
+		datumPregledaOD = pregled.getDatumPregledaOd();
+		datumPregledaDO = pregled.getDatumPregledaDo();
 		lekar = new LekarDTOzaStudent1(pregled.getLekar());				
 		popust = pregled.getPopust();
 		tipPregleda = pregled.getTipPregleda();
@@ -60,20 +62,22 @@ public class PregledDTO {
 		this.dijagnoza = dijagnoza;
 	}
 
-	public String getDatumPregleda() {
-		return datumPregleda;
+	
+
+	public LocalDateTime getDatumPregledaOD() {
+		return datumPregledaOD;
 	}
 
-	public void setDatumPregleda(String datumPregleda) {
-		this.datumPregleda = datumPregleda;
+	public void setDatumPregledaOD(LocalDateTime datumPregledaOD) {
+		this.datumPregledaOD = datumPregledaOD;
 	}
 
-	public String getSatnica() {
-		return satnica;
+	public LocalDateTime getDatumPregledaDO() {
+		return datumPregledaDO;
 	}
 
-	public void setSatnica(String satnica) {
-		this.satnica = satnica;
+	public void setDatumPregledaDO(LocalDateTime datumPregledaDO) {
+		this.datumPregledaDO = datumPregledaDO;
 	}
 
 	public LekarDTOzaStudent1 getLekar() {

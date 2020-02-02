@@ -81,35 +81,35 @@ public class OpstiService {
 
 		List<Pacijent> sviPacijenti = pacijentService.findAll();
 		for(Pacijent p : sviPacijenti) {
-			if(p.getUsername().equals(pacijent.getUsername()) || p.getLbo().equals(pacijent.getLbo())) {
+			if(p.getUsername().equals(pacijent.getUsername()) || p.getLbo().equals(pacijent.getLbo()) || p.getEmail().equals(pacijent.getEmail())) {
 				return false;
 			}
 		}
 		
 		List<AdministratorKlinickogCentra> sviAKC = administratorKlinickogCentraService.findAll();
 		for(AdministratorKlinickogCentra akc : sviAKC) {
-			if(akc.getUsername().equals(pacijent.getUsername())) {
+			if(akc.getUsername().equals(pacijent.getUsername()) || akc.getEmail().equals(pacijent.getEmail())) {
 				return false;
 			}
 		}
 		
 		List<AdministratorKlinike> sviAK = administratorKlinikeService.findAll();
 		for(AdministratorKlinike ak : sviAK) {
-			if(ak.getUsername().equals(pacijent.getUsername())) {
+			if(ak.getUsername().equals(pacijent.getUsername()) || ak.getEmail().equals(pacijent.getEmail())) {
 				return false;
 			}
 		}
 		
 		List<Lekar> sviLekari = lekarService.findAll();
 		for(Lekar l : sviLekari) {
-			if(l.getUsername().equals(pacijent.getUsername())) {
+			if(l.getUsername().equals(pacijent.getUsername()) || l.getEmail().equals(pacijent.getEmail())) {
 				return false;
 			}
 		}
 		
 		List<MedicinskaSestra> sveMS = medicinskaSestraService.findAll();
 		for(MedicinskaSestra ms : sveMS) {
-			if(ms.getUsername().equals(pacijent.getUsername())) {
+			if(ms.getUsername().equals(pacijent.getUsername()) || ms.getEmail().equals(pacijent.getEmail())) {
 				return false;
 			}
 		}
@@ -129,7 +129,7 @@ public class OpstiService {
 		
 		List<Pacijent> sviPacijenti = pacijentService.findAll();
 		for(Pacijent p : sviPacijenti) {
-			if(p.getUsername().equals(userInfo.getUsername())) {
+			if(p.getEmail().equals(userInfo.getEmail())) {
 				if(p.getPassword().equals(userInfo.getPassword())) {
 					if(p.getAktiviranNalog().equals(true)) {
 						session.setAttribute("id", p.getId());
@@ -142,7 +142,7 @@ public class OpstiService {
 		
 		List<AdministratorKlinickogCentra> sviAdministratoriKlinickogCentra = administratorKlinickogCentraService.findAll();
 		for(AdministratorKlinickogCentra akc : sviAdministratoriKlinickogCentra) {
-			if(akc.getUsername().equals(userInfo.getUsername())) {
+			if(akc.getEmail().equals(userInfo.getEmail())) {
 				if(akc.getPassword().equals(userInfo.getPassword())) {
 					session.setAttribute("id", akc.getId());
 					session.setAttribute("uloga", akc.getUloga());
@@ -153,7 +153,7 @@ public class OpstiService {
 		
 		List<AdministratorKlinike> sviAdministratoriKlinika = administratorKlinikeService.findAll();
 		for(AdministratorKlinike ak : sviAdministratoriKlinika) {
-			if(ak.getUsername().equals(userInfo.getUsername())) {
+			if(ak.getEmail().equals(userInfo.getEmail())) {
 				if(ak.getPassword().equals(userInfo.getPassword())) {
 					session.setAttribute("id", ak.getId());
 					session.setAttribute("uloga", ak.getUloga());
@@ -164,7 +164,7 @@ public class OpstiService {
 		
 		List<Lekar> sviLekari = lekarService.findAll();
 		for(Lekar l : sviLekari) {
-			if(l.getUsername().equals(userInfo.getUsername())) {
+			if(l.getEmail().equals(userInfo.getEmail())) {
 				if(l.getPassword().equals(userInfo.getPassword())) {
 					session.setAttribute("id", l.getId());
 					session.setAttribute("uloga", l.getUloga());
@@ -175,7 +175,7 @@ public class OpstiService {
 		
 		List<MedicinskaSestra> sveMedicinskeSestre = medicinskaSestraService.findAll();
 		for(MedicinskaSestra ms : sveMedicinskeSestre) {
-			if(ms.getUsername().equals(userInfo.getUsername())) {
+			if(ms.getEmail().equals(userInfo.getEmail())) {
 				if(ms.getPassword().equals(userInfo.getPassword())) {
 					session.setAttribute("id", ms.getId());
 					session.setAttribute("uloga", ms.getUloga());

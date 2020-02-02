@@ -91,8 +91,8 @@ public class KlinikaController {
 	@PostMapping(value = "/pretraziKlinike")
 	public ResponseEntity<List<KlinikaDTOzaStudent1PRETRAGA>> pretragaKlinika(@RequestBody PretragaKlinikaDTO pretragaKlinikaDTO){
 		
-		System.out.println("***DATUM: " + pretragaKlinikaDTO.getDatum() );
-		System.out.println("***TIP PREGLEDA: " + pretragaKlinikaDTO.getTipPregleda());
+//		System.out.println("***DATUM: " + pretragaKlinikaDTO.getDatum() );
+//		System.out.println("***TIP PREGLEDA: " + pretragaKlinikaDTO.getTipPregleda());
 		List<Klinika> klinike = klinikaService.pretraziKlinike(pretragaKlinikaDTO.getDatum(), pretragaKlinikaDTO.getTipPregleda());
 		if(klinike == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -101,8 +101,8 @@ public class KlinikaController {
 		// convert clinics to DTOs
 		List<KlinikaDTOzaStudent1PRETRAGA> klinikeDTO = new ArrayList<>();
 		for (Klinika k : klinike) {
-			System.out.println("NAZIV KLINIKE: " + k.getNaziv());
-			System.out.println("ID KLINIKE: " + k.getId());
+//			System.out.println("NAZIV KLINIKE: " + k.getNaziv());
+//			System.out.println("ID KLINIKE: " + k.getId());
 			klinikeDTO.add(new KlinikaDTOzaStudent1PRETRAGA(k));
 		}
 		
@@ -112,9 +112,9 @@ public class KlinikaController {
 	@GetMapping(value = "/pretraziLekareOdabraneKlinike/{klinikaID}/datum/{datum}/idTipaPregleda/{tipPregledaID}") 
 	public ResponseEntity<List<LekarDTOStudent1PretragaLekara>> pretragaLekaraUKlinici(@PathVariable Long klinikaID, @PathVariable String datum, @PathVariable Long tipPregledaID){
 		
-		System.out.println("***KLINIKA ID: " + klinikaID );
-		System.out.println("***DATUM: " + datum );
-		System.out.println("***TIP PREGLEDA: " + tipPregledaID);
+//		System.out.println("***KLINIKA ID: " + klinikaID );
+//		System.out.println("***DATUM: " + datum );
+//		System.out.println("***TIP PREGLEDA: " + tipPregledaID);
 		
 		String[] split = datum.split("T");
 		String datumBezT = split[0] + " " + split[1];
@@ -132,12 +132,12 @@ public class KlinikaController {
 	@PostMapping(value = "/pretraziLekarePrekoKlinike") 
 	public ResponseEntity<List<LekarDTOStudent1PretragaLekara>> pretragaLekaraPrekoKlinike(@RequestBody PretragaLekaraPrekoKlinikeDTO plpkDTO){
 		
-		System.out.println("***KLINIKA ID: " + plpkDTO.getKlinikaID() );
-		System.out.println("***DATUM: " + plpkDTO.getDatum() );
-		System.out.println("***TIP PREGLEDA: " + plpkDTO.getTipPregleda());
-		System.out.println("***IME LEKARA: " + plpkDTO.getImeLekara()); // bude prazan string, ako se ne unese nista
-		System.out.println("***PREZIME LEKARA: " + plpkDTO.getPrezimeLekara()); // bude prazan string, ako se ne unese nista
-		System.out.println("***OCENA VECA OD: " + plpkDTO.getOcenaVecaOd()); // bude null, ako se ne unese nista
+//		System.out.println("***KLINIKA ID: " + plpkDTO.getKlinikaID() );
+//		System.out.println("***DATUM: " + plpkDTO.getDatum() );
+//		System.out.println("***TIP PREGLEDA: " + plpkDTO.getTipPregleda());
+//		System.out.println("***IME LEKARA: " + plpkDTO.getImeLekara()); // bude prazan string, ako se ne unese nista
+//		System.out.println("***PREZIME LEKARA: " + plpkDTO.getPrezimeLekara()); // bude prazan string, ako se ne unese nista
+//		System.out.println("***OCENA VECA OD: " + plpkDTO.getOcenaVecaOd()); // bude null, ako se ne unese nista
 		
 		List<LekarDTOStudent1PretragaLekara> lekariDTO = klinikaService.pretraziLekareUKliniciPrekoKlinike(plpkDTO.getKlinikaID(), plpkDTO.getDatum(), plpkDTO.getTipPregleda(),
 																										plpkDTO.getImeLekara(), plpkDTO.getPrezimeLekara(), plpkDTO.getOcenaVecaOd());

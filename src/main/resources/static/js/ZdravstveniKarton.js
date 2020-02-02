@@ -62,28 +62,44 @@ function ucitajPodatke(idPacijenta) {
 
 function izlistajListuObavljenihPregleda(pregledi) {
 	if(pregledi.length != 0) {
+var tableUDivu1 = $("<table id='tabelaPregleda' class='display'> </table>");// ili mozda primer $("div").addClass("important");
+		
+		var thead1 = $("<thead> </thead>");
+		thead1.append("<tr><th>Tip pregleda</th><th>Informacije</th><th>Dijagnoza</th><th>Datum pregleda</th><th>Lekar</th>")
+		
+		var tbody1 = $("<tbody id='teloTabele'> </tbody>");
+		
 		for(var p of pregledi) {
-			var li = $("<li> </li>");
-			var ptag = $("<p> </p>");
-			ptag.append("Id pregleda: " + p.id + "<br>");
-			ptag.append("Tip pregleda: " + p.tipPregleda + "<br>")
-			ptag.append("Informacije: " + p.informacije + "<br>");
 			
+			var tr1 = $("<tr> </tr>");
+			var tdTipPregleda1 = $("<td> </td>");
+			tdTipPregleda1.append(p.tipPregleda.naziv);
+			var tdInformacije1 = $("<td> </td>");
+			tdInformacije1.append(p.informacije);
+			var tdDijagnoza = $("<td> </td>");
 			if(p.dijagnoza != null){
-				ptag.append("Dijagnoza: " + p.dijagnoza.naziv + "<br>");
+				tdDijagnoza.append(p.dijagnoza.naziv);
 			} else {
-				ptag.append("Dijagnoza: Nema dijagnoze <br>");
+				tdDijagnoza.append("Nema dijagnoze");
 			}
-			ptag.append("Datum pregleda: " + p.datumPregleda + "<br>");
+			var tdDatumPregleda1 = $("<td> </td>");
+			tdDatumPregleda1.append(p.datumPregledaOD);
+			var tdLekarPregled = $("<td> </td>");
+			tdLekarPregled.append(p.lekar.ime + " " + p.lekar.prezime);
 			
-			ptag.append("Ime Lekara: " + p.lekar.ime + "<br>");
-			ptag.append("Prezime Lekara: " + p.lekar.prezime + "<br>");
-			ptag.append("Ocena Lekara: " + p.lekar.ocena + "<br>");
+			tr1.append(tdTipPregleda1).append(tdInformacije1).append(tdDijagnoza).append(tdDatumPregleda1).append(tdLekarPregled);
+			tbody1.append(tr1);
 			
-			li.append(ptag);
-			
-			$("#ul-listaPregleda").append(li).append("<hr>");
 		}
+		
+		tableUDivu1.append(thead1).append(tbody1);
+		$("#divTabela1").append(tableUDivu1);
+		
+		var table = $('#tabelaPregleda').dataTable({
+	        "pagingType": "full_numbers",
+	        select: false
+	    });
+		
 	} else {
 		$("#h3-listaPregleda").append(" - NEMATE OBAVLJENIH PREGLEDA");
 	}
@@ -91,26 +107,42 @@ function izlistajListuObavljenihPregleda(pregledi) {
 
 function izlistajListuObavljenihOperacija(operacije) {
 	if(operacije.length != 0) {
+var tableUDivu2 = $("<table id='tabelaOperacija' class='display'> </table>");// ili mozda primer $("div").addClass("important");
+		
+		var thead2 = $("<thead> </thead>");
+		thead2.append("<tr><th>Informacije</th><th>Vreme OD</th><th>Vreme DO</th><th>Cena</th><th>Lekari</th>")
+		
+		var tbody2 = $("<tbody id='teloTabele'> </tbody>");
+		
 		for(var o of operacije) {
-			var li = $("<li> </li>");
-			var ptag = $("<p> </p>");
-			ptag.append("Id operacije: " + o.id + "<br>");
-			ptag.append("Informacije: " + o.informacije + "<br>");
-			ptag.append("Datum operacije: " + o.datumVreme + "<br>");			
-			ptag.append("Cena operacije: " + o.cena + "<br>");
 			
-			ptag.append("Lekari: <br>");
-			var count = 1;
+			var tr2 = $("<tr> </tr>");
+			var tdInformacije2 = $("<td> </td>");
+			tdInformacije2.append(o.informacije);
+			var tdVremeOD = $("<td> </td>");
+			tdVremeOD.append(o.datumOperacijeOD);
+			var tdVremeDO = $("<td> </td>");
+			tdVremeDO.append(o.datumOperacijeDO);
+			var tdCena2 = $("<td> </td>");
+			tdCena2.append(o.cena);
+			var tdLekari = $("<td> </td>");
 			for(var l of o.lekari) {
-				ptag.append("___Lekar " + count + ": " + l.ime + " " + l.prezime + ", ocena: " + l.ocena + "<br>");
-				count = count + 1;
+				tdLekari.append(l.ime + " " + l.prezime + "<br>");
 			}
 			
+			tr2.append(tdInformacije2).append(tdVremeOD).append(tdVremeDO).append(tdCena2).append(tdLekari);
+			tbody2.append(tr2);
 			
-			li.append(ptag);
-			
-			$("#ul-listaOperacija").append(li).append("<hr>");
 		}
+		
+		tableUDivu2.append(thead2).append(tbody2);
+		$("#divTabela2").append(tableUDivu2);
+		
+		var table = $('#tabelaOperacija').dataTable({
+	        "pagingType": "full_numbers",
+	        select: false
+	    });
+		
 	} else {
 		$("#h3-listOperacija").append(" - NEMATE OBAVLJENIH OPERACIJA");
 	}
