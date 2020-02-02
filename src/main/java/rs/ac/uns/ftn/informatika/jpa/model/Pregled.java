@@ -63,12 +63,18 @@ public class Pregled {
 	@Column(nullable = false)
 	private boolean obavljen;
 	
+	@Column(nullable = false)
+	private boolean prihvacen;
+	
+	@Column(nullable = false)
+	private boolean obrisan;
+	
 	public Pregled() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Pregled(Long id, String informacije, Dijagnoza dijagnoza, Set<Recept> recepti, LocalDateTime datumPregledaOd, LocalDateTime datumPregledaDo,
-			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena, boolean obavljen) {
+			String satnica, Sala sala, Lekar lekar, int popust, TipPregleda tipPregleda, int cena, boolean obavljen, boolean prihvacen, boolean obrisan) {
 		super();
 		this.id = id;
 		this.informacije = informacije;
@@ -82,6 +88,8 @@ public class Pregled {
 		this.tipPregleda = tipPregleda;
 		this.cena = cena;
 		this.obavljen = obavljen;
+		this.prihvacen = prihvacen;
+		this.obrisan = obrisan;
 	}
 
 	public Long getId() {
@@ -125,7 +133,7 @@ public class Pregled {
 	}
 	
 	public LocalDateTime getDatumPregledaDo() {
-		return datumPregledaOd;
+		return datumPregledaDo;
 	}
 
 	public void setDatumPregledaDo(LocalDateTime datumPregleda) {
@@ -198,7 +206,23 @@ public class Pregled {
 	public void setObavljen(boolean obavljen) {
 		this.obavljen = obavljen;
 	}
-	
+		
+	public boolean isPrihvacen() {
+		return prihvacen;
+	}
+
+	public void setPrihvacen(boolean prihvacen) {
+		this.prihvacen = prihvacen;
+	}
+
+	public boolean isObrisan() {
+		return obrisan;
+	}
+
+	public void setObrisan(boolean obrisan) {
+		this.obrisan = obrisan;
+	}
+
 	public List<Recept> receptiToList()
 	{
 		List<Recept> rez = new ArrayList<Recept>();

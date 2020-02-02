@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.dto;
 
+import java.time.LocalDateTime;
+
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.Sala;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
@@ -8,8 +10,8 @@ import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 public class PregledDTOStudent1 {
 	
 	private Long id;
-	private String datumPregleda; // za sad ima i datum i satnicu
-	private String satnica;	
+	private LocalDateTime datumPregledaOD; 
+	private LocalDateTime datumPregledaDO;	
 	private String sala;
 	private String lekar; // ime i prezime lekara
 	private int cena;
@@ -20,11 +22,11 @@ public class PregledDTOStudent1 {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PregledDTOStudent1(Long id, String datumPregleda, String satnica, Sala sala, String lekar,
+	public PregledDTOStudent1(Long id, LocalDateTime datumPregledaOD, LocalDateTime datumPregledaDO, Sala sala, String lekar,
 								int cena, int popust, TipPregleda tipPregleda) {
 		this.id = id;
-		this.datumPregleda = datumPregleda;
-		this.satnica = satnica;
+		this.datumPregledaOD = datumPregledaOD;
+		this.datumPregledaDO = datumPregledaDO;
 		this.sala = sala.getNaziv();
 		this.lekar = lekar;
 		this.cena = cena;
@@ -34,8 +36,8 @@ public class PregledDTOStudent1 {
 	
 	public PregledDTOStudent1(Pregled pregled) {
 		this.id = pregled.getId();
-//		this.datumPregleda = pregled.getDatumPregleda();
-//		this.satnica = pregled.getSatnica();
+		this.datumPregledaOD = pregled.getDatumPregledaOd();
+		this.datumPregledaDO = pregled.getDatumPregledaDo();
 		this.sala = pregled.getSala().getNaziv();
 		this.lekar = pregled.getLekar().getIme() + " " + pregled.getLekar().getPrezime();
 		this.cena = pregled.getCena();
@@ -51,20 +53,22 @@ public class PregledDTOStudent1 {
 		this.id = id;
 	}
 
-	public String getDatumPregleda() {
-		return datumPregleda;
+	
+
+	public LocalDateTime getDatumPregledaOD() {
+		return datumPregledaOD;
 	}
 
-	public void setDatumPregleda(String datumPregleda) {
-		this.datumPregleda = datumPregleda;
+	public void setDatumPregledaOD(LocalDateTime datumPregledaOD) {
+		this.datumPregledaOD = datumPregledaOD;
 	}
 
-	public String getSatnica() {
-		return satnica;
+	public LocalDateTime getDatumPregledaDO() {
+		return datumPregledaDO;
 	}
 
-	public void setSatnica(String satnica) {
-		this.satnica = satnica;
+	public void setDatumPregledaDO(LocalDateTime datumPregledaDO) {
+		this.datumPregledaDO = datumPregledaDO;
 	}
 
 	public String getSala() {

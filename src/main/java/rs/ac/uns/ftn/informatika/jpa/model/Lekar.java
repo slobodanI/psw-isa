@@ -42,6 +42,9 @@ public class Lekar {
 	private String password;
 	
 	@Column(nullable =  false)
+	private String email;
+	
+	@Column(nullable =  false)
 	private String radniKalendar;
 	
 //	@Column(nullable = true)
@@ -57,7 +60,7 @@ public class Lekar {
 	private Set<LekarOdsustvo> listaOdsustava = new HashSet<LekarOdsustvo>();
 	
 	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
-	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>(); // ovo se ne koristi koliko ja znam STUDENT 1
+	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>(); 
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
@@ -263,6 +266,14 @@ public class Lekar {
 
 	public void setOperacije(Set<Operacija> operacije) {
 		this.operacije = operacije;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

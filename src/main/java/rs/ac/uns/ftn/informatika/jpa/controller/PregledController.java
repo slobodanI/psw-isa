@@ -2,6 +2,10 @@ package rs.ac.uns.ftn.informatika.jpa.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Context;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent2;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledZakazivanjeDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
@@ -132,6 +137,49 @@ public class PregledController
 		
 	}
 	
-
+	//zakazivanje pregleda od strane pacijenta
+	//izabrao je tip pregleda, kliniku, lekara, termin // lekar sadrzi kliniku i tip pregleda
+	@PostMapping(value = "/zakaziPregled")
+	public ResponseEntity<Void> zakaziPregled(@RequestBody PregledZakazivanjeDTO pregledZakazivanjeDTO, @Context HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		
+		// IZ NEKOG RAZLOGA "Pacijent" != "Pacijent"
+		Long pacijentID = (long) 0;
+		String uloga = "";
+		
+//		System.out.println("***ISPIS PRISTIGLIH PODATAKA");
+//		System.out.println("lekarID : " + pregledZakazivanjeDTO.getLekarID());
+//		System.out.println("termin:" + pregledZakazivanjeDTO.getTermin());
+//		System.out.println("Sesija: " + session.toString());
+//		System.out.println("idPacijenta: " + session.getAttribute("id"));
+//		System.out.println("uloga: " + session.getAttribute("uloga"));
+		
+//		***ISPIS PRISTIGLIH PODATAKA
+//		lekarID : 1
+//		termin:2020-02-28T08:00
+//		Sesija: org.apache.catalina.session.StandardSessionFacade@99b8788
+//		idPacijenta: 1
+//		uloga: Pacijent
+		
+//		if(session == null) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);			
+//		}
+				
+		pacijentID = (Long) session.getAttribute("id");
+		uloga = (String) session.getAttribute("uloga");
+		
+		if(uloga != null) {
+			if(uloga.equals("Pacijent")) {
+				if(pregledSevice.zakaziPregled(pregledZakazivanjeDTO.getLekarID(), pregledZakazivanjeDTO.getTermin(), pregledZakazivanjeDTO.getPacijentID())) {
+					return new ResponseEntity<>(HttpStatus.OK);
+				}
+			} 
+		}
+		
+						
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				
+	}
 
 }

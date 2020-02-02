@@ -78,7 +78,8 @@ function dobaviPredefinisanePreglede(klinikaID) {
 					var li = $("<li> </li>");
 					var ptag = $("<p> </p>");
 					
-					ptag.append("Datum i vreme: " + pregled.datumPregleda + " " + pregled.satnica + "<br>"); // OVO CE SE MENJATI, BICE SAMO JEDNO POLJE a ne i datum i vreme
+					ptag.append("Datum i vreme OD: " + pregled.datumPregledaOD +  "<br>"); 
+					ptag.append("Datum i vreme DO: " + pregled.datumPregledaDO +  "<br>"); 
 					ptag.append("Sala: " + pregled.sala + "<br>");
 					ptag.append("Lekar: " + pregled.lekar + "<br>");
 					ptag.append("Tip pregleda: " + pregled.tipPregleda + "<br>");

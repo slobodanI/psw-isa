@@ -32,6 +32,7 @@ function koJeUlogovan() {
 				if (user.uloga == "Pacijent") {
 					dobaviPodatkeOPacijentu(user.id);
 					id = user.id;
+					$(".zapocniPregled").hide();
 				} else if (user.uloga == "AdministratorKlinickogCentra") {
 //					window.location = "./AdminKlinickogCentraHome.html";
 				} else if (user.uloga == "AdministratorKlinike") {
@@ -78,7 +79,7 @@ function dobaviPodatkeOPacijentu(id) {
 			$("#pacGrad").append("Grad: " + pacijent.grad);
 			$("#pacDrzava").append("Država: " + pacijent.drzava);
 			$("#pacBrojTel").append("Broj telefona: " + pacijent.brojTel);
-			$("#pacLbo").append("Kategorija: " + pacijent.lbo);
+			$("#pacLbo").append("LBO: " + pacijent.lbo);
 			
 			//za formu za izmenu			
 			$('input[name="username"]').val(pacijent.username);

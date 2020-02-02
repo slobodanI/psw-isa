@@ -161,11 +161,29 @@ public class KlinikaService {
 				}
 				
 				// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
-				for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
-//					System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
-					if(moguciTermini.contains(zauzetost.getPocetak())) {
-						moguciTermini.remove(zauzetost.getPocetak());
+//				for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+////					System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+//					if(moguciTermini.contains(zauzetost.getPocetak())) {
+//						moguciTermini.remove(zauzetost.getPocetak());
+//					}
+//				}
+				
+				ArrayList<LocalDateTime> moguciTermini2 = new ArrayList<LocalDateTime>();
+				for(LocalDateTime pom : moguciTermini) {
+					moguciTermini2.add(pom);
+				}
+				
+				
+				for(LocalDateTime termin2 : moguciTermini2) {
+					LocalDateTime termin2KRAJ = termin2.plusHours(1);
+					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {				
+						if(termin2.isBefore(zauzetost.getKraj()) && termin2KRAJ.isAfter(zauzetost.getPocetak())) {
+							moguciTermini.remove(termin2);
+							break;
+						}
+						
 					}
+					
 				}
 				
 				// ako postoji makar jedan slobodan termin za taj dan
@@ -249,13 +267,51 @@ public class KlinikaService {
 						moguciTermini.add(termin);
 					}
 					
+					
 					// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
-					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
-						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
-						if(moguciTermini.contains(zauzetost.getPocetak())) {
-							moguciTermini.remove(zauzetost.getPocetak());
-						}
+//					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+////						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+////						if(moguciTermini.contains(zauzetost.getPocetak())) {
+////							moguciTermini.remove(zauzetost.getPocetak());
+////							continue;
+////						}
+////						for(int i = 0; i < moguciTermini.size(); i++) {
+////							if(moguciTermini.get(i).isBefore(zauzetost.getKraj()) && moguciTermini.get(i).plusHours(1).isAfter(zauzetost.getPocetak())) {
+////								moguciTermini.remove(i);
+////								continue;
+////							}
+////						}
+//						
+//						for(LocalDateTime termin2 : moguciTermini) {
+//							LocalDateTime termin2KRAJ = termin2.plusHours(1);
+//							if(termin2.isAfter(zauzetost.getKraj()) || termin2KRAJ.isBefore(zauzetost.getPocetak())) {
+//								moguciTermini2.add(termin2);
+//							}
+//						}
+//						
+//					}
+					
+					ArrayList<LocalDateTime> moguciTermini2 = new ArrayList<LocalDateTime>();
+					for(LocalDateTime pom : moguciTermini) {
+						moguciTermini2.add(pom);
 					}
+					
+					
+					for(LocalDateTime termin2 : moguciTermini2) {
+						LocalDateTime termin2KRAJ = termin2.plusHours(1);
+						for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+//							System.out.println("DA LI JE : " + termin2 + ", PRE : " + zauzetost.getKraj());
+//							System.out.println(",A DA LI JE : " + termin2KRAJ +  "POSLE : " + zauzetost.getPocetak());
+							if(termin2.isBefore(zauzetost.getKraj()) && termin2KRAJ.isAfter(zauzetost.getPocetak())) {
+//								System.out.println("********* BRISANJE : " + termin2 + "**************");
+								moguciTermini.remove(termin2);
+								break;
+							}
+							
+						}
+						
+					}
+					
 					
 					// ako postoji makar jedan slobodan termin za taj dan
 					if(moguciTermini.size() > 0) {
@@ -385,11 +441,32 @@ public List<LekarDTOStudent1PretragaLekara> pretraziLekareUKliniciPrekoKlinike(L
 					}
 					
 					// prolazim kroz sve zakazane termine iz radnog kalendara(LISTA ZAUZETOSTI,a ne zakazaniPregledi)
-					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
-						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
-						if(moguciTermini.contains(zauzetost.getPocetak())) {
-							moguciTermini.remove(zauzetost.getPocetak());
+//					for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+//						//System.out.println("Zauzetost lekara:" + zauzetost.getPocetak());
+//						if(moguciTermini.contains(zauzetost.getPocetak())) {
+//							moguciTermini.remove(zauzetost.getPocetak());
+//						}
+//					}
+					
+					ArrayList<LocalDateTime> moguciTermini2 = new ArrayList<LocalDateTime>();
+					for(LocalDateTime pom : moguciTermini) {
+						moguciTermini2.add(pom);
+					}
+					
+					
+					for(LocalDateTime termin2 : moguciTermini2) {
+						LocalDateTime termin2KRAJ = termin2.plusHours(1);
+						for(ZauzetostLekara zauzetost : lekar.getListaZauzetostiLekara()) {
+//							System.out.println("DA LI JE : " + termin2 + ", PRE : " + zauzetost.getKraj());
+//							System.out.println(",A DA LI JE : " + termin2KRAJ +  "POSLE : " + zauzetost.getPocetak());
+							if(termin2.isBefore(zauzetost.getKraj()) && termin2KRAJ.isAfter(zauzetost.getPocetak())) {
+//								System.out.println("********* BRISANJE : " + termin2 + "**************");
+								moguciTermini.remove(termin2);
+								break;
+							}
+							
 						}
+						
 					}
 					
 					// ako postoji makar jedan slobodan termin za taj dan

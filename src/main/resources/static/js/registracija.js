@@ -26,7 +26,7 @@ $(document).ready(function(){
 						window.location = "./index.html";
 					},
 					error: function(){
-						alert("Korisnik sa ovim username-om/lbo-m već postoji.");
+						alert("Korisnik sa ovim username-om/lbo-m/email-om već postoji.");
 					}
 				});
 			}

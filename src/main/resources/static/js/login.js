@@ -4,16 +4,18 @@ $(document).ready(function() {
 		window.location = "./registracija.html";
 	});
 	
+	koJeUlogovan();
+	
 	$('#logInForma').submit(function(event) {
 		event.preventDefault();
-		var username = $('input[name="username"]').val();
+		var email = $('input[name="email"]').val();
 		var password = $('input[name="password"]').val();
 //		$('#error').hide();
 		
 		
 		$.post({
 			url: 'api/logIn',														
-			data: JSON.stringify({username, password}),
+			data: JSON.stringify({email, password}),
 			contentType: 'application/json',
 			success: function() {
 //				$('#success').text('Novi proizvod uspešno kreiran.');
