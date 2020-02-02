@@ -24,9 +24,40 @@ $(document).ready(function(){
 		window.location = "./PretragaKlinika.html";
 	});
 	
+	koJeUlogovan();
 	prikaziKlinike();
 	
 });
+
+function koJeUlogovan() {
+	$.get({
+		url : 'api/whoIsLoggedIn',
+//		contentType : 'application/json',
+		success : function(user) {
+			if (user != undefined) {
+				if (user.uloga == "Pacijent") {
+					//window.location = "./PacijentHome.html";
+				} else if (user.uloga == "AdministratorKlinickogCentra") {
+					//window.location = "./AdminKlinickogCentraHome.html";
+				} else if (user.uloga == "AdministratorKlinike") {
+					//window.location = "./AdministratorKlinikeHome.html";
+				} else if (user.uloga == "Lekar") {
+					//window.location = "./profilLekara.html";
+				} else if (user.uloga == "MedicinskaSestra") {
+					//window.location = "./MedicinskaSestraHome.html";
+				} else {
+					console.log("NIKO NIJE ULOGOVAN");
+					window.location = "./index.html";
+				}
+				
+			} else {
+				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
+			}
+
+		}
+	});
+}
 
 function prikaziKlinike() {
 	$.get({

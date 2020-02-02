@@ -33,6 +33,7 @@ function whoIsLoggedIn() {
 				
 			} else {
 				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
 			}
 
 		}

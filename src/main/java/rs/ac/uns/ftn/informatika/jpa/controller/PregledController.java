@@ -17,14 +17,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent2;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledOdlukaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledZakazivanjeDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.service.EmailService;
 import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 
 @RestController
@@ -33,6 +37,9 @@ public class PregledController
 {
 	@Autowired
 	private PregledService pregledSevice;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	//metoda popunjava informacije jednog pregleda
 	@PostMapping(value="/zavrsiPregled", consumes = "application/json")
@@ -181,5 +188,38 @@ public class PregledController
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				
 	}
+	//kada kliknem na link iz maila za potvrdu, dolazim ovde
+	@PutMapping(value = "/potvrdaPregleda")
+	public ResponseEntity<Void> potvrdiIliOdbiPregled(@RequestBody PregledOdlukaDTO pregledOdlukaDTO){
+		
+		if( pregledSevice.potvrdiIliOdbiPregled(pregledOdlukaDTO.getPregledID(), pregledOdlukaDTO.getOdluka()) ) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	//za STUDENTA 2, kada bude slao mail pacijentu
+	@GetMapping(value = "/testPotvrdePregleda/{idPregleda}")
+	public ResponseEntity<Void> testPotvrdePregleda(@PathVariable Long idPregleda){
+		
+		//treba poslati idPregleda koji ima: obrisan=false i prihvacen=false
+		//po defaultu su ove vrednosti obirsan=false i prihvacen=true
+		//kada admin promeni termin ili lekara, treba da postavi prihvacen=false i da posalje mail
+		EmailDTO emailDTO = new EmailDTO(1, "Odluka o pregledu.",
+				"Ako želite da prihvatite pregled: ...info o pregledu... onda kliknite ovde: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=potvrdi, <br> a ako odbijate: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=odustani", "");
 
+		
+		try 
+		{		
+		emailService.sendNotificaitionAsync(emailDTO);
+		}
+		catch( Exception e )
+		{
+		//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+		System.out.println("### Greska prilikom slanja mail-a! ###");
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }

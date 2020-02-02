@@ -140,7 +140,7 @@ public class PacijentService {
 		List<KlinikaDTOzaStrudent1> poseceneKlinike = new ArrayList<KlinikaDTOzaStrudent1>();
 		
 		for(Pregled p : pacijent.getZakazaniPregledi()) {// zakazani pregledi su zapravo svi pregledi
-			if(p.isObavljen()) {
+			//if(p.isObavljen()) { //pregled ne mora biti obavljen, mora samo biti zakazan
 				KlinikaDTOzaStrudent1 klinika = new KlinikaDTOzaStrudent1(p.getLekar().getKlinika());
 				
 				//da nemam duplikata u listi
@@ -154,7 +154,7 @@ public class PacijentService {
 					poseceneKlinike.add(klinika);
 				}
 				
-			}
+			//}
 		}
 		
 		return poseceneKlinike;
@@ -169,7 +169,7 @@ public class PacijentService {
 		List<LekarDTOzaStudent1> poseceniLekari = new ArrayList<LekarDTOzaStudent1>();
 		
 		for(Pregled p : pacijent.getZakazaniPregledi()) {// zakazani pregledi su zapravo svi pregledi
-			if(p.isObavljen()) {
+			//if(p.isObavljen()) { // pregled ne mora biti obavljen, mora samo biti zakazan
 				LekarDTOzaStudent1 lekar = new LekarDTOzaStudent1(p.getLekar());
 				
 				//da nemam duplikata u listi
@@ -183,7 +183,7 @@ public class PacijentService {
 					poseceniLekari.add(lekar);
 				}
 				
-			}
+			//}
 		}
 		
 		return poseceniLekari;
