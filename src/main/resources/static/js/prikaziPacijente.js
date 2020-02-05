@@ -82,10 +82,10 @@
 					}
 					
 				}else{
-					$(".nemaLekara").append("Nema pacijenata na ovoj klinici");
+					$(".nemaPacijenata").append("Nema pacijenata na ovoj klinici");
 			}
 			}else{
-				$(".nemaLekara").append("Nema pacijenata na ovoj klinici");
+				$(".nemaPacijenata").append("Nema pacijenata na ovoj klinici");
 			}
 		},
 			
