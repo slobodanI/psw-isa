@@ -8,6 +8,7 @@ public class SalaDTO {
 	private String naziv;
 	private KlinikaDTO klinika;
 	
+	
 	//private Long idKlinike;
 	
 	

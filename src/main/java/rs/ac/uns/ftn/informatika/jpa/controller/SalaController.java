@@ -139,6 +139,16 @@ public class SalaController {
 		
 	}
 	
+	//Dobavljanje sala koje su slobodne za vreme pregleda
+	@GetMapping(value="/prikaziSaleZaPregled/{idPregleda}",consumes="application/json")
+	public ResponseEntity<List<SalaDTO>> prikaziSaleZaPreglede(@PathVariable Long idPregleda)
+	{
+		List<SalaDTO> saleKlinike = salaService.vratiSlobodneSaleZaPregled(idPregleda);
+		return new ResponseEntity<>(saleKlinike,HttpStatus.OK);
+		
+	}
+	
+	
 	@GetMapping(value = "vratiSaleKlinike/{id}", consumes = "application/json")
 	public ResponseEntity<List<SalaDTO>> vratiSaleKlinike(@PathVariable Long id) 
 	{

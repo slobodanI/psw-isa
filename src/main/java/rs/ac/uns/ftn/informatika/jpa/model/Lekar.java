@@ -56,11 +56,11 @@ public class Lekar {
 	@Column(nullable = false)
 	private int radnoVremeDo;	
 	
-	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	@OneToMany(mappedBy = "lekar",fetch = FetchType.EAGER,cascade= CascadeType.ALL)
 	private Set<LekarOdsustvo> listaOdsustava = new HashSet<LekarOdsustvo>();
 	
-	@OneToMany(mappedBy = "lekar",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
-	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>(); 
+	@OneToMany(mappedBy = "lekar",fetch = FetchType.EAGER,cascade= CascadeType.ALL)
+	private Set<ZauzetostLekara> listaZauzetostiLekara = new HashSet<ZauzetostLekara>(); // ovo se ne koristi koliko ja znam STUDENT 1
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Klinika klinika;
@@ -71,7 +71,7 @@ public class Lekar {
 //	@Column(nullable =  false)
 //	private Collection<Pacijent> listaPacijenata;
 	
-	@OneToMany(mappedBy = "lekar", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
 	private Set<Pregled> listaZakazanihPregleda = new HashSet<Pregled>();
 	
 	@Column(nullable = false)

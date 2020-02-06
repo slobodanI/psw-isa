@@ -23,7 +23,7 @@ public class Sala {
 	@Column(nullable =  false, unique = true)
 	private String naziv;
 	
-	@OneToMany(mappedBy = "sala",fetch = FetchType.LAZY,cascade= CascadeType.ALL)
+	@OneToMany(mappedBy = "sala",fetch = FetchType.EAGER,cascade= CascadeType.ALL)
 	private Set<ZauzetostSala> listaZauzetostiSala = new HashSet<ZauzetostSala>();
 	
 	@ManyToOne(fetch = FetchType.EAGER)

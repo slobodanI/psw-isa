@@ -387,7 +387,6 @@ public List<LekarDTOStudent1PretragaLekara> pretraziLekareUKliniciPrekoKlinike(L
 			if(k.getId() == klinikaID) {
 				//prolazim kroz sve lekare klinike
 				for(Lekar lekar : k.getLekari()) {
-					
 					boolean flagZaOdsustva = false;
 					
 					// prvo proverim tip pregleda
