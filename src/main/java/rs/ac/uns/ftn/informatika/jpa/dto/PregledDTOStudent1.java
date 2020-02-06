@@ -38,7 +38,12 @@ public class PregledDTOStudent1 {
 		this.id = pregled.getId();
 		this.datumPregledaOD = pregled.getDatumPregledaOd();
 		this.datumPregledaDO = pregled.getDatumPregledaDo();
-		this.sala = pregled.getSala().getNaziv();
+		if(pregled.getSala() == null) {
+			this.sala = "nije dodeljena sala";
+		} else {
+			this.sala = pregled.getSala().getNaziv();
+		}
+		
 		this.lekar = pregled.getLekar().getIme() + " " + pregled.getLekar().getPrezime();
 		this.cena = pregled.getCena();
 		this.popust = pregled.getPopust();
