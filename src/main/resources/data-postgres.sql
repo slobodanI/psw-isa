@@ -98,10 +98,17 @@ insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, 3, 3, '', '2019-05-22 10:00','2019-05-22 10:30', 10, 1000,3,null, 2, false, true, false);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (4, 1, 1, '', '2019-05-25 10:00','2019-05-25 10:30', 10, 1000,3,null, 2, false, true, false);
 
-insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, null, null, '', '2020-05-13 10:00','2020-05-13 10:30', 10, 1000,3,null, 2, false, true, false);
-insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, null, null, '', '2019-05-22 10:00','2019-05-22 10:30', 10, 1000,3,null, 2, false, true, false);
-insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (4, null, null, '', '2019-05-25 10:00','2019-05-25 10:30', 10, 1000,3,null, 2, false, true, false);
-
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, null, null, '', '2020-05-13 10:00','2020-05-13 10:30', 10, 1000,3,null, 2, false, false, false);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, null, null, '', '2019-05-22 10:00','2019-05-22 10:30', 10, 1000,3,null, 2, false, false, false);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (4, null, null, '', '2019-05-25 10:00','2019-05-25 10:30', 10, 1000,3,null, 2, false, false, false);
+--treba mi ovaj pregled za testove
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, 1, 1, '', '2020-05-13 11:00','2020-05-13 11:30', 10, 1000,3,null, 2, false, true, true);
+--i ovaj
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (2, 1, 1, '', '2020-05-13 12:00','2020-05-13 12:30', 10, 1000,3,null, 2, false, false, false);
+--zakazani pregledi, koje otkazujem
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-04-30 13:00', '2020-04-30 14:00', 10, 1000,1,null, 1, false, true, false);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-04-30 14:00', '2020-04-30 15:00', 10, 1000,1,null, 1, false, true, false);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-02-07 12:00', '2020-02-07 13:00', 10, 1000,1,null, 1, false, true, false);
 
 insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_operacije_od,datum_operacije_do, cena, obavljen) values (1, 1, 'info', '2020-01-30 12:00','2020-01-30 14:00', 5000, true);
 
@@ -138,6 +145,10 @@ insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 13:00','
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 14:00','2020-02-28 15:00',1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 11:00','2020-02-28 12:20',1);
 
+--kada otkazem pregled ovo treba izbrisati
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-04-30 13:00', '2020-04-30 14:00',1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-04-30 14:00', '2020-04-30 15:00',1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-07 12:00', '2020-02-07 13:00',1);
 
 insert into lekar_odsustvo (pocetak,kraj,odobreno,tip,lekar_id) values ('2019-12-13','2019-12-31',true,1,1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2019-12-30 12:00','2019-08-23 13:00',4);

@@ -24,6 +24,10 @@ $(document).ready(function(){
 		window.location = "./PretragaKlinika.html";
 	});
 	
+	$("#btn-listZakazanih").click(function(event){
+		window.location = "./PacijentZakazaniPregledi.html";
+	});
+	
 	koJeUlogovan();
 	prikaziKlinike();
 	

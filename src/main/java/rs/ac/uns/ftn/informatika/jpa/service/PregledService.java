@@ -177,6 +177,22 @@ public class PregledService {
 	
 	public Boolean zakaziPredefPregled(Long pregledID, Long pacijentID) {
 		
+		if(pregledID != null) {
+			if(pregledID <= 0) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+		if(pacijentID != null) {
+			if(pacijentID <= 0) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
 		Pacijent pacijent = pacijentService.findOne(pacijentID);
 		Pregled pregled = findOne(pregledID);
 		
@@ -192,9 +208,10 @@ public class PregledService {
 		
 		pregled.setPacijent(pacijent);
 		pregled.setZdravstveniKarton(pacijent.getZdravstveniKarton());
+		pregled.setPrihvacen(true);
 		save(pregled);
 		
-		EmailDTO emailDTO = new EmailDTO(pacijent.getId().intValue(), "Uspesno zakazan pregled", "Uspesno ste zakazali pregled preko profila klinike", "");
+		EmailDTO emailDTO = new EmailDTO(pacijent.getId().intValue(), "Uspesno zakazan pregled: ", "Uspesno ste zakazali pregled preko profila klinike <br> Termin: "+ pregled.getDatumPregledaOd()+"", "");
 
 		try 
 		{
@@ -345,7 +362,7 @@ public class PregledService {
 		noviPregled.setPacijent(null);
 		noviPregled.setZdravstveniKarton(null);
 		noviPregled.setObavljen(false);
-		noviPregled.setPrihvacen(true);
+		noviPregled.setPrihvacen(false);
 		noviPregled.setObrisan(false);
 		
 		//dodajemo zauzetost u tabelu zauzetosti
@@ -501,9 +518,11 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		//ako je pacijent jos jednom kliknuo na dugme za potvrdu pregleda
 		//ili jednostavno da nema prelklapanja
 		for(Pregled p : this.findAll()) {
-			if(termin.isBefore(p.getDatumPregledaDo()) && termin.plusHours(1).isAfter(p.getDatumPregledaOd())) {
-				return false;
-			}
+			if(p.isObrisan() == false) { // ako je neki pregled koji je bio zakazan, obrisan iz nekog razloga
+				if(termin.isBefore(p.getDatumPregledaDo()) && termin.plusHours(1).isAfter(p.getDatumPregledaOd())) {
+					return false;
+				}
+			}			
 		}
 		
 		//ako je sve uredu, kreiram pregled i sačuvam ga
@@ -520,7 +539,7 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		noviPregled.setCena(1000/*lekar.getTipPregleda().getCena()*/); // ovo treba biti cena tipa pregleda
 		noviPregled.setPopust(0);
 		noviPregled.setObavljen(false);
-		noviPregled.setPrihvacen(true);
+		noviPregled.setPrihvacen(false);
 		noviPregled.setObrisan(false);
 		
 		
@@ -577,6 +596,9 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		}
 		
 		Pregled pregled = findOne(pregledID);
+		boolean flag = false;
+		Long lekarID = 0L;
+		LocalDateTime termin = null;
 		
 		if(pregled == null) {
 			return false;
@@ -599,11 +621,91 @@ public String dodajNoviPregled(PregledDTOStudent2 pregled) {
 		if(odluka.equals("odustani")) {
 			pregled.setPrihvacen(false);
 			pregled.setObrisan(true);
+			flag = true;
+			termin = pregled.getDatumPregledaOd();
 		}
 		
 		this.save(pregled);
 		
+		//ako je obrisan, treba ukloniti i zauzetost kod lekara
+		if(flag == true) {
+			Lekar lekar = lekarService.findOne(lekarID);
+			
+			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
+				if(zl.getPocetak().isEqual(termin)) {
+					lekar.getListaZauzetostiLekara().remove(zl);
+				}
+			}
+			
+			lekarService.save(lekar);
+		}
+		
 		return true;
 	}
 	
+	
+	public List<PregledDTOStudent1> getZakazanePreglede(Long pacijentID) {
+		
+		List<Pregled> sviPregledi = findAll();
+		LocalDateTime sada = LocalDateTime.now();
+		
+		List<PregledDTOStudent1> zakazaniPregledi = new ArrayList<PregledDTOStudent1>();
+		for(Pregled pregled : sviPregledi) {
+			if(pregled.isObavljen() == false && pregled.isObrisan() == false && pregled.isPrihvacen() == true) {
+				if(pregled.getPacijent().getId().equals(pacijentID)) {	
+					if(sada.isBefore(pregled.getDatumPregledaOd())) {
+						PregledDTOStudent1 predefPregledDTO = new PregledDTOStudent1(pregled);
+						zakazaniPregledi.add(predefPregledDTO);		
+					}					
+				}												
+			}			
+		}
+		
+		return zakazaniPregledi;
+	}
+	
+	
+	public Boolean otkaziZakazanPregled(Long pregledID) {
+		
+		if(pregledID != null) {
+			if(pregledID <= 0) {
+				return false;
+			}
+		} else {
+			return false;
+		}		
+		
+		Pregled pregled = findOne(pregledID);
+		
+		//ako postoje u bazi
+		if(pregled == null) {
+			return false;
+		}
+		
+		LocalDateTime sutra = LocalDateTime.now().plusDays(1);
+		
+		//ako je vec obrisan...
+		if(pregled.isObrisan() == true) {
+			return false;
+		}
+		
+		//otkazivanje mora biti najranije 24h pre pregleda
+		if(sutra.isBefore(pregled.getDatumPregledaOd())) {
+			pregled.setObrisan(true);
+			pregled.setPrihvacen(false);
+			//obrisi termin iz zauzetostiLekara
+			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
+				if(zl.getPocetak().equals(pregled.getDatumPregledaOd())) {
+					zauzetostLekaraService.remove(zl.getId());
+				}
+			}
+									
+		} else {
+			return false;
+		}
+			
+		save(pregled);
+				
+		return true;
+	}
 }

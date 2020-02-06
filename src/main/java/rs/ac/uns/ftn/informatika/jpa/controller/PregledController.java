@@ -151,7 +151,7 @@ public class PregledController
 		
 		HttpSession session = request.getSession();
 		
-		// IZ NEKOG RAZLOGA "Pacijent" != "Pacijent"
+		// IZ NEKOG RAZLOGA "Pacijent" != "Pacijent", ... nisam koristi .equals() ...
 		Long pacijentID = (long) 0;
 		String uloga = "";
 		
@@ -176,13 +176,13 @@ public class PregledController
 		pacijentID = (Long) session.getAttribute("id");
 		uloga = (String) session.getAttribute("uloga");
 		
-		if(uloga != null) {
-			if(uloga.equals("Pacijent")) {
+//		if(uloga != null) { // zbog testova, kako da posaljem sesiju tj. request ???
+//			if(uloga.equals("Pacijent")) {
 				if(pregledSevice.zakaziPregled(pregledZakazivanjeDTO.getLekarID(), pregledZakazivanjeDTO.getTermin(), pregledZakazivanjeDTO.getPacijentID())) {
 					return new ResponseEntity<>(HttpStatus.OK);
 				}
-			} 
-		}
+//			} 
+//		}
 		
 						
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -220,6 +220,24 @@ public class PregledController
 		}
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/zakazaniPregleda/{pacijentID}")
+	public ResponseEntity<List<PregledDTOStudent1>> dobaviZakazanePreglede(@PathVariable Long pacijentID){
+		
+		List<PregledDTOStudent1> zakazaniPregledi = pregledSevice.getZakazanePreglede(pacijentID);
+		
+		return new ResponseEntity<>(zakazaniPregledi, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/otkaziPregled/{pregledID}")
+	public ResponseEntity<Void> otkaziPregled(@PathVariable Long pregledID){
+		
+		if(pregledSevice.otkaziZakazanPregled(pregledID)) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 }
