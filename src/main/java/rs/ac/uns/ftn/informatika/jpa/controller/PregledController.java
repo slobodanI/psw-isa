@@ -9,6 +9,7 @@ import javax.ws.rs.core.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -143,6 +144,43 @@ public class PregledController
 		
 		
 	}
+	@PutMapping(value = "dodajSaluZaPregled/{idPregleda}/sala/{idSale}")
+	public ResponseEntity<String> dodajSaluZaPregled(@PathVariable("idPregleda") Long idPregleda ,@PathVariable("idSale") Long idSale ){
+		
+		String str = pregledSevice.upisiSalu(idPregleda, idSale);
+		str="Sve ok";
+		return new ResponseEntity<>(str,HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping(value ="/prikaziZahteve/{idAdmina}")
+	public ResponseEntity<List<PregledDTOStudent2>> prikaziZahteveZaPregled(@PathVariable Long idAdmina)
+	{
+		
+		List<PregledDTOStudent2> zahtevi = pregledSevice.vratiZahteveZaPregled(idAdmina);
+		return new ResponseEntity<>(zahtevi,HttpStatus.OK);
+		
+		
+	}
+	
+	@PutMapping(value ="/nemaSlobodneSale/{idPregleda}")
+	public ResponseEntity<String> nemaSale(@PathVariable("idPregleda") Long idPregleda){
+		String str = pregledSevice.nemaSale(idPregleda);
+		str="Sve ok";
+		return new ResponseEntity<>(str,HttpStatus.OK);
+		
+	}
+	
+	
+	@Scheduled(cron = "0 */59 */23 * * *")
+	public void automatskiDodeliSale() {
+		pregledSevice.automatskoDodavanjeSala();
+		//System.out.println("DALI RADI OVO BAREM");
+	}
+	
+	
+	
 	
 	//zakazivanje pregleda od strane pacijenta
 	//izabrao je tip pregleda, kliniku, lekara, termin // lekar sadrzi kliniku i tip pregleda
