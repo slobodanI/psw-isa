@@ -652,10 +652,14 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 public String nemaSale(Long pregledId) {
 	Pregled pregled = this.findOne(pregledId);
 	LocalDateTime vreme = pregled.getDatumPregledaOd();
+	LocalDateTime pocetnoVreme = pregled.getDatumPregledaOd();
+	Long idPregleda = pregled.getId();
 	Klinika kl = pregled.getLekar().getKlinika();
 	Set<Sala>SaleKlinike = kl.getSale();
 	Lekar l1 = pregled.getLekar();
 	Set<ZauzetostLekara> originalniLekarZ =l1.getListaZauzetostiLekara();
+	
+	//brisem iz zauzetosti lekara
 	for(ZauzetostLekara zlo : originalniLekarZ) {
 		if(zlo.getPocetak()==vreme && zlo.getKraj()==vreme.plusHours(1)) {
 			originalniLekarZ.remove(zlo);
@@ -684,12 +688,12 @@ public String nemaSale(Long pregledId) {
 	
 	for(Sala s : SaleKlinike) {
 		boolean salaVreme = true;
-		System.out.println(s.getId());
+	//	System.out.println(s.getId());
 		Set<ZauzetostSala> zauzetostSala = s.getListaZauzetostiSala();
 		if(zauzetostSala != null) {
 		for(ZauzetostSala z : zauzetostSala) {
-			System.out.println(z.getKraj()+"aAA KRAJ   SSS");
-			System.out.println(vreme);
+		//	System.out.println(z.getKraj()+"aAA KRAJ   SSS");
+		//	System.out.println(vreme);
 			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
 				
 				salaVreme = false;
@@ -710,11 +714,13 @@ public String nemaSale(Long pregledId) {
 	}
 	System.out.println(konacnoVreme);
 	
+	//pretrazujem lekare sve
+	
 	for(Lekar l : kl.getLekari()) {
-		System.out.println(l.getTipPregleda().getId());
-		System.out.println(tip1.getId());
+	//	System.out.println(l.getTipPregleda().getId());
+	//	System.out.println(tip1.getId());
 		if(l.getTipPregleda().equals(tip1)) {
-		System.out.println("DALI OVDE DODJE UOPSTE");
+	//	System.out.println("DALI OVDE DODJE UOPSTE");
 		boolean lekarVreme = true;
 		Set<ZauzetostLekara> zauzetost = l.getListaZauzetostiLekara();
 		Set<LekarOdsustvo> odsustvo = l.getListaOdsustava();
@@ -760,10 +766,68 @@ public String nemaSale(Long pregledId) {
 			}
 		
 		}	
+		
 	}
 	
 	
-	System.out.println("Lekar=   " + nadjenLekar+ "       sala:  "+nadjenaSala);
+	///////////// proveravam da li je poctni lekar slobodan u tom terminu,ako mogu njega da ostavim
+
+	if(l1.getTipPregleda().equals(tip1)) {
+	//System.out.println("DALI OVDE DODJE UOPSTE");
+	boolean lekarVreme = true;
+	Set<ZauzetostLekara> zauzetost = l1.getListaZauzetostiLekara();
+	Set<LekarOdsustvo> odsustvo = l1.getListaOdsustava();
+	
+	if(zauzetost != null) {
+		for(ZauzetostLekara z : zauzetost) {
+			
+			//System.out.println(z.getKraj());
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		}
+		for(LekarOdsustvo o : odsustvo) {
+			if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		if(vreme.getHour()< l1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() > l1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() < l1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() > l1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(vreme.isBefore(LocalDateTime.now())) {
+			lekarVreme=false;
+		}
+		if(lekarVreme == true) {
+			konacniLekar=l1;
+			nadjenLekar = true;
+		}
+	
+	}	
+	
+	
+	
+	/////////
+	
+	
+	//System.out.println("Lekar=   " + nadjenLekar+ "       sala:  "+nadjenaSala);
+	
+	///ako je pronadjen i lekar i sala,dodeli ih
 	if(nadjenLekar==true && nadjenaSala == true) {
 		oba=true;
 		pregled.setDatumPregledaOd(konacnoVreme);
@@ -789,10 +853,38 @@ public String nemaSale(Long pregledId) {
 		zauzetostSala.add(novaz);
 		zauzetostSalaService.save(novaz);
 		
+		//ako je doslo do promena,posalji mail
+		if(!pocetnoVreme.isEqual(konacnoVreme)) {
+			String datumivreme[]=pregled.getDatumPregledaOd().toString().split("T");
+			
+			EmailDTO emailDTO = new EmailDTO(1, "Odluka o pregledu.",
+					"Ako želite da prihvatite pregled: <br>"
+					+"Vreme pregleda: "+ datumivreme[0] + " "+datumivreme[1]+"<br>"
+					+"Sala pregleda: " +pregled.getSala().getNaziv()+"<br>"
+					+"Lekar: "+pregled.getLekar().getPrezime()+" "+pregled.getLekar().getIme()+"<br>"
+					+"Cena: "+pregled.getCena()+"<br>"
+					+" onda kliknite ovde: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=potvrdi, <br> a ako odbijate: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=odustani", "");
+
+			
+			try 
+			{		
+			emailService.sendNotificaitionAsync(emailDTO);
+			}
+			catch( Exception e )
+			{
+			//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+			}
+			
+			pregled.setPrihvacen(false);
+			this.save(pregled);
+			
+		}
 		
 		break;
 	}
 	
+	//iteracija
 	vreme=vreme.plusHours(1);
 	
 	}

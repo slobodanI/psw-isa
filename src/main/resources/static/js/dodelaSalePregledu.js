@@ -83,7 +83,7 @@ function popuniTabelu(){
 				$("#divTabela").empty();
 				if(sale != undefined){
 					if(sale.length == 0) {
-						alert("NEMA SLOBODNIH SALA");
+						alert("NEMA SLOBODNIH SALA,SISTEM CE DODELITI PRVU SLEDECU SLOBODNU SALU I ODRADITI NEOPHODNE PROMENE!");
 						nemaSale(idPregleda);
 					}
 					iscrtajTabelu(sale);

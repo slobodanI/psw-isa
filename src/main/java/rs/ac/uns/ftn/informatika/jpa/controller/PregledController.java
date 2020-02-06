@@ -173,10 +173,10 @@ public class PregledController
 	}
 	
 	
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 */59 */23 * * *")
 	public void automatskiDodeliSale() {
 		pregledSevice.automatskoDodavanjeSala();
-		System.out.println("DALI RADI OVO BAREM");
+		//System.out.println("DALI RADI OVO BAREM");
 	}
 	
 	
