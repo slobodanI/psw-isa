@@ -466,7 +466,13 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 	List<PregledDTOStudent2> rezultat = new ArrayList<>();
 	for(Pregled p : sviPregledi) {
 		if(p.getLekar().getKlinika().getId() == admin.getKlinika().getId()) {
-			pomocnaLista.add(p);
+			if(p.isObavljen()==false) {
+				if(p.isPrihvacen()==false) {
+					if(p.isObrisan()==false) {
+					pomocnaLista.add(p);
+					}
+				}
+			}
 		}
 	}
 	
@@ -641,6 +647,48 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 	if(pregled!=null) {
 		if(sala!=null) {
 			pregled.setSala(sala);
+			String datumivreme[]=pregled.getDatumPregledaOd().toString().split("T");
+			
+			EmailDTO emailDTO = new EmailDTO(1, "Odluka o pregledu.",
+					"Ako želite da prihvatite pregled: <br>"
+					+"Vreme pregleda: "+ datumivreme[0] + " "+datumivreme[1]+"<br>"
+					+"Sala pregleda: " +pregled.getSala().getNaziv()+"<br>"
+					+"Lekar: "+pregled.getLekar().getPrezime()+" "+pregled.getLekar().getIme()+"<br>"
+					+"Cena: "+pregled.getCena()+"<br>"
+					+" onda kliknite ovde: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=potvrdi, <br> a ako odbijate: <br> http://localhost:8080/PotvrdaMailom.html?pregledID="+idPregleda+"&odluka=odustani", "");
+
+			
+			try 
+			{		
+			emailService.sendNotificaitionAsync(emailDTO);
+			}
+			catch( Exception e )
+			{
+			//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+			}
+			
+			
+			EmailDTO emailDTO2 = new EmailDTO(1, "Obavestenje o pregledu.",
+					"Dodat je novi pregled: <br>"
+					+"Vreme pregleda: "+ datumivreme[0] + " "+datumivreme[1]+"<br>"
+					+"Sala pregleda: " +pregled.getSala().getNaziv()+"<br>"
+					+"Pacijent: "+pregled.getPacijent().getPrezime()+" "+pregled.getPacijent().getIme()+"<br>", "");
+
+			
+			try 
+			{		
+			emailService.sendNotificaitionAsync(emailDTO2);
+			}
+			catch( Exception e )
+			{
+			//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+			}
+			
+			
+			
+			
 		}
 	}
 	this.save(pregled);
@@ -854,7 +902,7 @@ public String nemaSale(Long pregledId) {
 		zauzetostSalaService.save(novaz);
 		
 		//ako je doslo do promena,posalji mail
-		if(!pocetnoVreme.isEqual(konacnoVreme)) {
+		
 			String datumivreme[]=pregled.getDatumPregledaOd().toString().split("T");
 			
 			EmailDTO emailDTO = new EmailDTO(1, "Odluka o pregledu.",
@@ -876,10 +924,32 @@ public String nemaSale(Long pregledId) {
 			System.out.println("### Greska prilikom slanja mail-a! ###");
 			}
 			
+			EmailDTO emailDTO2 = new EmailDTO(1, "Obavestenje o pregledu.",
+					"Dodat je novi pregled: <br>"
+					+"Vreme pregleda: "+ datumivreme[0] + " "+datumivreme[1]+"<br>"
+					+"Sala pregleda: " +pregled.getSala().getNaziv()+"<br>"
+					+"Pacijent: "+pregled.getPacijent().getPrezime()+" "+pregled.getPacijent().getIme()+"<br>", "");
+
+			
+			try 
+			{		
+			emailService.sendNotificaitionAsync(emailDTO2);
+			}
+			catch( Exception e )
+			{
+			//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+			System.out.println("### Greska prilikom slanja mail-a! ###");
+			}
+			
+			
+			
+			
+			
+			
 			pregled.setPrihvacen(false);
 			this.save(pregled);
 			
-		}
+		
 		
 		break;
 	}
