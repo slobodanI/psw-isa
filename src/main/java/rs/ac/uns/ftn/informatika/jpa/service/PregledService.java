@@ -658,21 +658,28 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 			pregled.setObrisan(true);
 			flag = true;
 			termin = pregled.getDatumPregledaOd();
+			lekarID = pregled.getLekar().getId();
 		}
 		
 		this.save(pregled);
 		
 		//ako je obrisan, treba ukloniti i zauzetost kod lekara
 		if(flag == true) {
-			Lekar lekar = lekarService.findOne(lekarID);
-			
-			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
-				if(zl.getPocetak().isEqual(termin)) {
-					lekar.getListaZauzetostiLekara().remove(zl);
+//			Lekar lekar = lekarService.findOne(lekarID);
+//			
+//			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
+//				if(zl.getPocetak().isEqual(termin)) {
+//					lekar.getListaZauzetostiLekara().remove(zl);
+//				}
+//			}
+//			
+//			lekarService.save(lekar);
+			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
+				if(zl.getPocetak().equals(termin)) {
+					zauzetostLekaraService.remove(zl.getId());
 				}
 			}
 			
-			lekarService.save(lekar);
 		}
 		
 		return true;
