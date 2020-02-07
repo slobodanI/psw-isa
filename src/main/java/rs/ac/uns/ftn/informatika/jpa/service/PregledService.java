@@ -675,7 +675,8 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 //			
 //			lekarService.save(lekar);
 			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
-				if(zl.getPocetak().equals(termin)) {
+				if(zl.getPocetak().equals(termin) && zl.getLekar().getId().equals(lekarID)) {
+					System.out.println("******Brise se: " +  zl.getPocetak() + ", KOD LEKAR ID: " + zl.getLekar().getId());
 					zauzetostLekaraService.remove(zl.getId());
 				}
 			}
@@ -737,7 +738,8 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 			pregled.setPrihvacen(false);
 			//obrisi termin iz zauzetostiLekara
 			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
-				if(zl.getPocetak().equals(pregled.getDatumPregledaOd())) {
+				if(zl.getPocetak().equals(pregled.getDatumPregledaOd()) && zl.getLekar().getId().equals(pregled.getLekar().getId())) {
+					System.out.println("****Brise se ZAKAZANI PREGLED, TERMIN : " + zl.getPocetak() );
 					zauzetostLekaraService.remove(zl.getId());
 				}
 			}
