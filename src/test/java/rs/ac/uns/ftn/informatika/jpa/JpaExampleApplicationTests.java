@@ -133,7 +133,7 @@ public class JpaExampleApplicationTests {
 	
 	//***pozitivni*** 
 	
-	
+	@Test
 	public void testPretraziKlinike5() {
 		LocalDateTime datum = LocalDateTime.of(2020,3,25,0,0);
 		Long idTipaPregleda = 1L;
@@ -229,8 +229,10 @@ public class JpaExampleApplicationTests {
 		Long pacijentID = 1L; 
 		Long lekarID = 1L;		
 		LocalDateTime termin = LocalDateTime.of(2020,10,13,10,0); 
-				
+		Long size = (long) pregledService.findAll().size();
 		assertEquals(true, pregledService.zakaziPregled(lekarID, termin, pacijentID));
+				
+		assertEquals(size + 1, pregledService.findAll().size());
 	}
 	
 	//***negativni***
@@ -290,6 +292,10 @@ public class JpaExampleApplicationTests {
 	public void testPotvrdiIliOdbiPregledPOZ() {
 		Long pregledID = 18L; 
 		String odluka = "potvrdi";
+		assertEquals(false, pregledService.findOne(pregledID).isPrihvacen());
+		
 		assertEquals(true, pregledService.potvrdiIliOdbiPregled(pregledID, odluka));
+		
+		assertEquals(true, pregledService.findOne(pregledID).isPrihvacen());
 	}
 }
