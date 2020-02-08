@@ -154,6 +154,14 @@ public class LekarService {
 		
 	}
 
+	public Boolean promenjenaLozinka(Long id) {
+		
+		Lekar lekar = this.findOne(id);
+		
+		return lekar.getPromenjenaLozinka();
+		
+	}
 	
+
 	
 }

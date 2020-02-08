@@ -2,6 +2,9 @@ var params = new URL(location.href).searchParams;
 var idPregleda = params.get("idPregleda");
 
 $(document).ready(function() {
+	$("#nemaSala").hide();
+	$("#formSala").show();
+	$("#divTabela").show();
 	popuniTabelu();
 	submitForme();
 
@@ -32,7 +35,12 @@ function iscrtajTabelu(sale){
 			btn.click(odaberiSalu(s.id));
 			tdOdaberi.append(btn);
 			
-			tr.append(tdNaziv).append(tdBroj).append(tdOdaberi);
+			var tdKalendar = $("<td> </td>");
+			var btn2 = $('<button>Kalendar</button>');
+			btn2.click(prikaziKalendar(s.id));
+			tdKalendar.append(btn2);
+			
+			tr.append(tdNaziv).append(tdBroj).append(tdOdaberi).append(tdKalendar);
 			tbody.append(tr);
 		}
 		tableUDivu.append(thead).append(tbody);
@@ -59,17 +67,37 @@ function odaberiSalu(id){
 		});
 	}
 }
-function nemaSale(id){
+function nemaSale(prosledjen){
+		
+	$("#nemaSala").show();
+	$("#formSala").hide();
+	$("#divTabela").hide();
 	
-		$.ajax({
-			url:'pregledi/nemaSlobodneSale/'+idPregleda,
-			type: 'PUT',
-			success: function(){
-					window.location = "./prikaziZahteve.html";
-				}
-			
-			});
+	$.get({
+		url:'pregledi/prviSlobodanTermin/'+idPregleda,
+
+		contentType:'application/json',
+		success: function(string){
+			$("#slobodan").append(string);
+		}
 	
+	});	
+	
+//		$.ajax({
+//			url:'pregledi/nemaSlobodneSale/'+idPregleda,
+//			type: 'PUT',
+//			success: function(){
+//					window.location = "./prikaziZahteve.html";
+//				}
+//			
+//			});
+	
+}
+
+function prikaziKalendar(id){
+	return function(){
+	window.location = "./salaKalendar.html?idSale="+id;
+	}
 }
 
 
@@ -83,7 +111,7 @@ function popuniTabelu(){
 				$("#divTabela").empty();
 				if(sale != undefined){
 					if(sale.length == 0) {
-						alert("NEMA SLOBODNIH SALA,SISTEM CE DODELITI PRVU SLEDECU SLOBODNU SALU I ODRADITI NEOPHODNE PROMENE!");
+			//			alert("NEMA SLOBODNIH SALA,SISTEM CE DODELITI PRVU SLEDECU SLOBODNU SALU I ODRADITI NEOPHODNE PROMENE!");
 						nemaSale(idPregleda);
 					}
 					iscrtajTabelu(sale);
@@ -141,7 +169,16 @@ function submitForme(){
 	
 }
 
-
+function prihvati(){
+	$.ajax({
+		url:'pregledi/nemaSlobodneSale/'+idPregleda,
+		type: 'PUT',
+		success: function(){
+				window.location = "./prikaziZahteve.html";
+			}
+		
+		});
+}
 
 
 

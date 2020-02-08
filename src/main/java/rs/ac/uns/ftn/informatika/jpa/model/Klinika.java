@@ -66,6 +66,8 @@ public class Klinika {
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Sala> sale = new HashSet<Sala>();
 	
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
+	private Set<Cenovnik> cenovnik = new HashSet<Cenovnik>();
 //	private HashMap<TipPregleda,Double> cenovnik;
 
 	
@@ -229,6 +231,15 @@ public class Klinika {
 		this.sale = sale;
 	}
 
+	public Set<Cenovnik> getCenovnik() {
+		return cenovnik;
+	}
+
+	public void setCenovnik(Set<Cenovnik> cenovnik) {
+		this.cenovnik = cenovnik;
+	}
+
+	
 	
 
 	

@@ -90,4 +90,13 @@ public class AdministratorKlinikeService {
 		
 		return administrator;
 	}
+	
+	
+	public Boolean promenjenaLozinka(Long id) {
+		
+		AdministratorKlinike admin = this.findOne(id);
+		
+		return admin.getPromenjenaLozinka();
+		
+	}
 }

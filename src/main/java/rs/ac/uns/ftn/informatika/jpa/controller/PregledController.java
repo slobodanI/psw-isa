@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.controller;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +26,11 @@ import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent2;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledOdlukaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledOtkaziDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledZakazivanjeDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
-import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.service.EmailService;
 import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 
@@ -268,6 +270,14 @@ public class PregledController
 		return new ResponseEntity<>(zakazaniPregledi, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/zakazaniPregledaLekar/{lekarID}")
+	public ResponseEntity<List<PregledOtkaziDTO>> dobaviZakazanePregledeLekar(@PathVariable Long lekarID){
+		
+		List<PregledOtkaziDTO> zakazaniPregledi = pregledSevice.getZakazanePregledeLekar(lekarID);
+		
+		return new ResponseEntity<>(zakazaniPregledi, HttpStatus.OK);
+	}
+	
 	@PutMapping(value = "/otkaziPregled/{pregledID}")
 	public ResponseEntity<Void> otkaziPregled(@PathVariable Long pregledID){
 		
@@ -276,6 +286,27 @@ public class PregledController
 		}
 		
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping(value="/vratiZaKalendar/od/{Od}/do/{Do}/tip/{tip}")
+	public ResponseEntity<ArrayList<Integer>> vratiZaGrafik(@PathVariable("Od") LocalDateTime Od, @PathVariable("Do") LocalDateTime Do, @PathVariable("Tip") Long Tip){
+		
+		ArrayList<Integer> rez = pregledSevice.vratiZaGrafik(Od, Do, Tip);
+		return new ResponseEntity<>(rez, HttpStatus.OK);
+		
+	}
+	@GetMapping(value="/vratiZaKalendarDatum/od/{Od}/do/{Do}/tip/{tip}")
+	public ResponseEntity<ArrayList<LocalDateTime>> vratiZaGrafikDatume(@PathVariable("Od") LocalDateTime Od, @PathVariable("Do") LocalDateTime Do, @PathVariable("Tip") Long Tip){
+		
+		ArrayList<LocalDateTime> rez = pregledSevice.vratiDatumeZaGrafik(Od, Do, Tip);
+		return new ResponseEntity<>(rez, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(value = "/prviSlobodanTermin/{pregledID}")
+	public ResponseEntity<String> vratiPrviSlobodanTermin(@PathVariable("pregledID") Long pregledID){
+		String rez = pregledSevice.prviSlobodanTermin(pregledID);
+		return new ResponseEntity<>(rez,HttpStatus.OK);
 	}
 	
 }

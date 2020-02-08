@@ -71,4 +71,10 @@ public class AdministratorKlinikeController {
 
 	}
 	
+	@GetMapping(value = "/promenjenaLozinka/{id}")
+	public ResponseEntity<Boolean> promenjenaLozinka(@PathVariable Long id){
+			Boolean pom=adminKservice.promenjenaLozinka(id);
+			return new ResponseEntity<>(pom,HttpStatus.OK);
+	}
+	
 }

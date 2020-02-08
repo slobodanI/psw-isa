@@ -257,4 +257,12 @@ public class LekarController {
 //	
 	
 	
+	@GetMapping(value = "/promenjenaLozinka/{id}")
+	public ResponseEntity<Boolean> promenjenaLozinka(@PathVariable Long id){
+			Boolean pom=lekarService.promenjenaLozinka(id);
+			return new ResponseEntity<>(pom,HttpStatus.OK);
+	}
+	
+	
+	
 }

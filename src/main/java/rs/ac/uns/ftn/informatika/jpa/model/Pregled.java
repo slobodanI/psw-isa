@@ -26,7 +26,7 @@ public class Pregled {
 	@Column(nullable =  false)
 	private String informacije;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Dijagnoza dijagnoza;
 	
 	@OneToMany(mappedBy = "pregled", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -42,7 +42,7 @@ public class Pregled {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Sala sala;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Lekar lekar;
 	
 	@Column(nullable =  false)
@@ -54,10 +54,10 @@ public class Pregled {
 	@Column(nullable =  false)
 	private int cena;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Pacijent pacijent;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private ZdravstveniKarton zdravstveniKarton;
 	
 	@Column(nullable = false)

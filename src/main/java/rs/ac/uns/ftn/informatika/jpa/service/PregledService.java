@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.IntToLongFunction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +15,7 @@ import rs.ac.uns.ftn.informatika.jpa.dto.PredefPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledDTOStudent2;
 import rs.ac.uns.ftn.informatika.jpa.dto.PregledKalendarDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PregledOtkaziDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
@@ -699,8 +699,29 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		return zakazaniPregledi;
 	}
 	
+	public List<PregledOtkaziDTO> getZakazanePregledeLekar(Long lekarID){
+		List<Pregled> sviPregledi = findAll();
+		LocalDateTime sada = LocalDateTime.now();
+		
+		List<PregledOtkaziDTO> zakazaniPregledi = new ArrayList<PregledOtkaziDTO>();
+		for(Pregled pregled : sviPregledi) {
+			if(pregled.isObavljen() == false && pregled.isObrisan() == false && pregled.isPrihvacen() == true) {
+				if(pregled.getLekar().getId().equals(lekarID)) {	
+					if(sada.isBefore(pregled.getDatumPregledaOd())) {
+						PregledOtkaziDTO predefPregledDTO = new PregledOtkaziDTO(pregled);
+						zakazaniPregledi.add(predefPregledDTO);		
+					}					
+				}												
+			}			
+		}
+		
+		return zakazaniPregledi;
+		
+		
+	}
 	
-	public Boolean otkaziZakazanPregled(Long pregledID) {
+	
+public Boolean otkaziZakazanPregled(Long pregledID) {
 		
 		if(pregledID != null) {
 			if(pregledID <= 0) {
@@ -711,6 +732,7 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		}		
 		
 		Pregled pregled = findOne(pregledID);
+
 		
 		//ako postoje u bazi
 		if(pregled == null) {
@@ -718,6 +740,8 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		}
 		
 		LocalDateTime sutra = LocalDateTime.now().plusDays(1);
+		Long lekarID = pregled.getLekar().getId();
+		LocalDateTime termin = pregled.getDatumPregledaOd();
 		
 		//ako je vec obrisan...
 		if(pregled.isObrisan() == true) {
@@ -728,13 +752,31 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		if(sutra.isBefore(pregled.getDatumPregledaOd())) {
 			pregled.setObrisan(true);
 			pregled.setPrihvacen(false);
+					
 			//obrisi termin iz zauzetostiLekara
 			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
-				if(zl.getPocetak().equals(pregled.getDatumPregledaOd())) {
+				if(zl.getPocetak().equals(termin) && zl.getLekar().getId().equals(lekarID)) {
+					System.out.println("****Brise se ZAKAZANI PREGLED, TERMIN : " + zl.getPocetak() );
 					zauzetostLekaraService.remove(zl.getId());
+					break;
 				}
 			}
-									
+//			Long lekarID = pregled.getLekar().getId();
+//			Lekar lekar = lekarService.findOne(lekarID);			
+			
+//			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
+//				if(zl.getPocetak().isEqual(pregled.getDatumPregledaOd()) && zl.getLekar().getId().equals(lekarID)) {
+//					System.out.println("*******Brise se iz zauzetosti lekara: " + zl.getPocetak());
+//					Set<ZauzetostLekara> zauzetost = lekar.getListaZauzetostiLekara();
+//					zauzetost.remove(zl);
+//					lekar.setListaZauzetostiLekara(zauzetost);
+//					
+//					lekarService.save(lekar);
+//					break;
+//				}
+//			}
+				
+			
 		} else {
 			return false;
 		}
@@ -743,6 +785,7 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 				
 		return true;
 	}
+	
 public String upisiSalu(Long idPregleda,Long idSale) {
 	Pregled pregled = this.findOne(idPregleda);
 	Sala sala = salaService.findOne(idSale);
@@ -799,6 +842,202 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 	
 }
 
+public String prviSlobodanTermin(Long pregledId) {
+	
+	Pregled pregled = this.findOne(pregledId);
+	LocalDateTime vreme = pregled.getDatumPregledaOd();
+	LocalDateTime pocetnoVreme = pregled.getDatumPregledaOd();
+	Long idPregleda = pregled.getId();
+	Klinika kl = pregled.getLekar().getKlinika();
+	Set<Sala>SaleKlinike = kl.getSale();
+	Lekar l1 = pregled.getLekar();
+	Set<ZauzetostLekara> originalniLekarZ =l1.getListaZauzetostiLekara();
+	
+	//brisem iz zauzetosti lekara
+	for(ZauzetostLekara zlo : originalniLekarZ) {
+		if(zlo.getPocetak()==vreme && zlo.getKraj()==vreme.plusHours(1)) {
+			originalniLekarZ.remove(zlo);
+		}
+	}
+	
+//	l1.setListaZauzetostiLekara(originalniLekarZ);
+//	lekarService.save(l1);
+	
+//	List<ZauzetostLekara> zl = zauzetostLekaraService.findAll();
+	//zauzetostLekaraService.remove(id);
+	
+	
+	TipPregleda tip1=pregled.getTipPregleda();
+	Sala konacnaSala = new Sala();
+	Lekar konacniLekar = new Lekar();
+	LocalDateTime konacnoVreme = null;
+	boolean nadjenaSala = false;
+	boolean nadjenLekar = false;
+	
+	boolean oba = false;
+	while(oba == false) {
+		
+		if(vreme.getHour()>15) {
+			vreme=vreme.plusDays(1);
+			vreme=vreme.withHour(0);
+			continue;
+		}else if(vreme.getHour()<8) {
+			vreme=vreme.plusHours(1);
+			continue;
+		}
+	
+	for(Sala s : SaleKlinike) {
+		boolean salaVreme = true;
+	//	System.out.println(s.getId());
+		Set<ZauzetostSala> zauzetostSala = s.getListaZauzetostiSala();
+		if(zauzetostSala != null) {
+		for(ZauzetostSala z : zauzetostSala) {
+		//	System.out.println(z.getKraj()+"aAA KRAJ   SSS");
+		//	System.out.println(vreme);
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				
+				salaVreme = false;
+			}
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				salaVreme=false;
+			}
+		}
+		}
+		if(salaVreme == true) {
+			konacnaSala = s;
+			nadjenaSala = true;
+			konacnoVreme=vreme;
+			
+		}
+		
+		
+	}
+	System.out.println(konacnoVreme);
+	
+	//pretrazujem lekare sve
+	
+	for(Lekar l : kl.getLekari()) {
+	//	System.out.println(l.getTipPregleda().getId());
+	//	System.out.println(tip1.getId());
+		if(l.getTipPregleda().equals(tip1)) {
+	//	System.out.println("DALI OVDE DODJE UOPSTE");
+		boolean lekarVreme = true;
+		Set<ZauzetostLekara> zauzetost = l.getListaZauzetostiLekara();
+		Set<LekarOdsustvo> odsustvo = l.getListaOdsustava();
+		
+		if(zauzetost != null) {
+			for(ZauzetostLekara z : zauzetost) {
+				
+				//System.out.println(z.getKraj());
+				if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+					lekarVreme = false;
+				}
+				if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+					lekarVreme = false;
+				}
+			}
+			}
+			for(LekarOdsustvo o : odsustvo) {
+				if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+					lekarVreme = false;
+				}
+				if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+					lekarVreme = false;
+				}
+			}
+			if(vreme.getHour()< l.getRadnoVremeOd()) {
+				lekarVreme = false;
+			}
+			if(vreme.getHour() > l.getRadnoVremeDo()) {
+				lekarVreme = false;
+			}
+			if(vreme.getHour() < l.getRadnoVremeOd()) {
+				lekarVreme = false;
+			}
+			if(vreme.getHour() > l.getRadnoVremeDo()) {
+				lekarVreme = false;
+			}
+			if(vreme.isBefore(LocalDateTime.now())) {
+				lekarVreme=false;
+			}
+			if(lekarVreme == true) {
+				konacniLekar=l;
+				nadjenLekar = true;
+			}
+		
+		}	
+		
+	}
+	
+	
+	///////////// proveravam da li je poctni lekar slobodan u tom terminu,ako mogu njega da ostavim
+
+	if(l1.getTipPregleda().equals(tip1)) {
+	//System.out.println("DALI OVDE DODJE UOPSTE");
+	boolean lekarVreme = true;
+	Set<ZauzetostLekara> zauzetost = l1.getListaZauzetostiLekara();
+	Set<LekarOdsustvo> odsustvo = l1.getListaOdsustava();
+	
+	if(zauzetost != null) {
+		for(ZauzetostLekara z : zauzetost) {
+			
+			//System.out.println(z.getKraj());
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!vreme.isAfter(z.getKraj()) && !vreme.isBefore(z.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		}
+		for(LekarOdsustvo o : odsustvo) {
+			if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+			if(!vreme.isAfter(o.getKraj()) && !vreme.isBefore(o.getPocetak())) {
+				lekarVreme = false;
+			}
+		}
+		if(vreme.getHour()< l1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() > l1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() < l1.getRadnoVremeOd()) {
+			lekarVreme = false;
+		}
+		if(vreme.getHour() > l1.getRadnoVremeDo()) {
+			lekarVreme = false;
+		}
+		if(vreme.isBefore(LocalDateTime.now())) {
+			lekarVreme=false;
+		}
+		if(lekarVreme == true) {
+			konacniLekar=l1;
+			nadjenLekar = true;
+		}
+	
+	}	
+	if(nadjenLekar==true && nadjenaSala == true) {
+		oba=true;
+		break;
+	}
+	vreme=vreme.plusHours(1);
+	
+	}
+	String datumivreme[] = konacnoVreme.toString().split("T");
+	String rezultat = datumivreme[0] + " " + datumivreme[1]; 
+	return rezultat;
+	
+	
+	/////////
+	
+	
+	
+}
+
+
 public String nemaSale(Long pregledId) {
 	Pregled pregled = this.findOne(pregledId);
 	LocalDateTime vreme = pregled.getDatumPregledaOd();
@@ -815,6 +1054,12 @@ public String nemaSale(Long pregledId) {
 			originalniLekarZ.remove(zlo);
 		}
 	}
+	
+//	l1.setListaZauzetostiLekara(originalniLekarZ);
+//	lekarService.save(l1);
+	
+//	List<ZauzetostLekara> zl = zauzetostLekaraService.findAll();
+	//zauzetostLekaraService.remove(id);
 	
 	
 	TipPregleda tip1=pregled.getTipPregleda();
@@ -1082,6 +1327,55 @@ public void automatskoDodavanjeSala() {
 	}
 	
 }
+
+public ArrayList<Integer> vratiZaGrafik(LocalDateTime Od,LocalDateTime Do,Long tip) {
+	ArrayList<Integer> brojPregleda= new ArrayList<>();
+	ArrayList<LocalDateTime> datumi=new ArrayList<>();
+	Integer brojac = 0;
+	
+	
+	while(Od.isBefore(Do)) {
+		
+		brojac=0;
+		for(Pregled p : this.findAll()) {
+			
+			if(p.getDatumPregledaOd().isAfter(Od) && p.getDatumPregledaDo().isBefore(Do)) {
+				brojac++;
+			}
+		}
+		
+		brojPregleda.add(brojac);
+		datumi.add(Od);
+		if(tip == 0) {
+			Od=Od.plusMonths(1);
+		}else if(tip == 1) {
+			Od=Od.plusWeeks(1);
+		}else {
+			Od=Od.plusDays(1);
+		}
+		
+	}
+	return brojPregleda;
+	
+}
+
+public ArrayList<LocalDateTime> vratiDatumeZaGrafik(LocalDateTime Od,LocalDateTime Do,Long tip){
+	
+	ArrayList<LocalDateTime> datumi=new ArrayList<>();
+	while(Od.isBefore(Do)) {
+		datumi.add(Od);
+		if(tip == 0) {
+			Od=Od.plusMonths(1);
+		}else if(tip == 1) {
+			Od=Od.plusWeeks(1);
+		}else {
+			Od=Od.plusDays(1);
+		}
+	}
+	return datumi;
+	
+}
+
 
 
 	

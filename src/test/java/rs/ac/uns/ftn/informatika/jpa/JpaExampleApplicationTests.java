@@ -133,7 +133,7 @@ public class JpaExampleApplicationTests {
 	
 	//***pozitivni*** 
 	
-	@Test(expected = LazyInitializationException.class)
+	
 	public void testPretraziKlinike5() {
 		LocalDateTime datum = LocalDateTime.of(2020,3,25,0,0);
 		Long idTipaPregleda = 1L;
