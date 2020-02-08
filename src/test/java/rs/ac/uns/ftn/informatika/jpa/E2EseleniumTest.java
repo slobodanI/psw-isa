@@ -1,5 +1,7 @@
 //package rs.ac.uns.ftn.informatika.jpa;
 //
+//import static org.testng.AssertJUnit.assertEquals;
+//
 //import org.junit.runner.RunWith;
 //import org.openqa.selenium.WebDriver;
 //import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,6 +10,7 @@
 //import org.springframework.test.annotation.DirtiesContext;
 //import org.springframework.test.context.junit4.SpringRunner;
 //import org.testng.annotations.BeforeMethod;
+//import org.testng.annotations.Test;
 //
 //
 //@RunWith(SpringRunner.class)
@@ -40,6 +43,17 @@
 //        browser.navigate().to("https://ruter.no/en/?fbclid=IwAR0trS_FoLyeE0D5yVE_e5LyEN-r2mRn5pSMZV1fBkBMsOK31sIql1uC978");
 //
 //        searchPage = PageFactory.initElements(browser, SearchPage.class);
+//
+//    }
+//	
+//	@Test
+//    public void testZakaziPredefPregled() {
+//
+////        searchPage.ensureIsDisplayed();
+//
+////        searchPage.getBtnZakazi().click();
+//
+//  
 //
 //    }
 //	

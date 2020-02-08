@@ -131,6 +131,17 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- za E2E testove  Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile ... (default-compile) -->
+<!-- 			<plugin>   -->
+<!--                 <groupId>org.apache.maven.plugins</groupId> -->
+<!--                 <artifactId>maven-compiler-plugin</artifactId> -->
+<!--                 <version>3.8.1</version> -->
+<!--                 <configuration> -->
+<!--                     <release>8</release> -->
+<!--                 </configuration> -->
+<!--             </plugin> -->
+			
 		</plugins>
 	</build>
 

@@ -79,7 +79,7 @@ public class ServiceUnitTest {
 	public static final EmailDTO emailDTOobj = null;
 	public static final Lekar lekar = new Lekar(1l, "ime", "prezime", 50, new Double(5), null, null, "", null, 8, 16, "", "");
 	public static final HashSet<Lekar> lekari = new HashSet<Lekar>(Arrays.asList(lekar));
-	public static final Klinika klinika = new Klinika(null, null, null, null, null, 10000, 10000, lekari , null, null);
+	public static final Klinika klinika = new Klinika(null, "klinika1", "adr", "", "", 10000, 10000, lekari , null, null);
 	public static final Lekar LekarZakazi = new Lekar(); 
 	 
 	@Before
@@ -87,7 +87,7 @@ public class ServiceUnitTest {
 		Long pregledIDbefore = 15L; 
 		Long pacijentIDbefore = 3L;
 		Long lekarID = 1L;
-		TipPregleda tp = new TipPregleda(10L, "naziv");
+		TipPregleda tp = new TipPregleda(1L, "naziv");
 		lekar.setTipPregleda(tp);
 		
 		ZdravstveniKarton zk = new ZdravstveniKarton(10L, "", "", new Double(5), new Double(5), "", null, "");
@@ -99,8 +99,7 @@ public class ServiceUnitTest {
 //		insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan)
 //			values (2, null, null, '', '2019-05-22 10:00','2019-05-22 10:30', 10, 1000,3,null, 2, false, false, false);
 					
-		when(pregledRepository.findById(pregledIDbefore)).thenReturn(Optional.of(noviPregled));
-		when(pacijentRepository.findById(pacijentIDbefore)).thenReturn(Optional.of(pacijent3));
+		
 		
 		//when(new EmailDTO(15, "Uspesno zakazan pregled: ", "Uspesno ste zakazali pregled preko profila klinike <br> Termin: "+ pregled15.getDatumPregledaOd()+"", "")).thenReturn(Optional.of(emailDTOobj));
 //		when(klinikaRepository.findAll()).thenReturn(new List<Klinika>(Arrays.asList(klinika)));
@@ -110,11 +109,24 @@ public class ServiceUnitTest {
 		nova.setKraj(noviPregled.getDatumPregledaDo());
 		nova.setLekar(lekar);
 		
+		List<ZauzetostLekara> zauzetostiALL = new ArrayList<>();
+		ZauzetostLekara zl = new ZauzetostLekara(1L, LocalDateTime.now(), LocalDateTime.now().plusHours(1), lekar);
+		zauzetostiALL.add(zl);
+		
+		when(pregledRepository.findById(pregledIDbefore)).thenReturn(Optional.of(noviPregled));
+		when(pacijentRepository.findById(pacijentIDbefore)).thenReturn(Optional.of(pacijent3));
 		when(pregledRepository.findAll()).thenReturn(pregledAll);
 		when(pregledRepository.save(noviPregled)).thenReturn(null);
 		when(zauzetostLekaraService.save(nova)).thenReturn(null);
 		when(lekarRepositoty.findById(lekarID)).thenReturn(Optional.of(lekar));
 		when(pacijentRepository.findById(1L)).thenReturn(Optional.of(pacijent3));
+		when(zauzetostLekaraService.findAll()).thenReturn(zauzetostiALL);
+		
+		List<Klinika> listKlinika = new ArrayList<Klinika>();
+		listKlinika.add(klinika);
+		
+		when(klinikaRepository.findAll()).thenReturn(listKlinika);
+		
 	}
 	
 	@Test
@@ -129,19 +141,18 @@ public class ServiceUnitTest {
 		verify(pacijentRepository, times(1)).findById(pacijentID);
 	}
 	
-//	@Test
-//	public void testPretraziKlinikeUNIT() {
-//		LocalDateTime datum = LocalDateTime.of(2020,3,25,0,0);
-//		Long idTipaPregleda = 1L;
-//		
-//		List<Klinika> klinike = klinikaService.pretraziKlinike(datum, idTipaPregleda); 
-//		
-//		assertThat(klinike).hasSize(1);
-//		assertEquals(klinike.get(0).getNaziv(),"klinika1");		
-//		
-//		verify(klinikaService, times(1)).findById(pregledID);
-//		verify(pacijentRepository, times(1)).findById(pacijentID);
-//	}
+	@Test
+	public void testPretraziKlinikeUNIT() {
+		LocalDateTime datum = LocalDateTime.of(2020,3,25,0,0);
+		Long idTipaPregleda = 1L;
+		
+		List<Klinika> klinike = klinikaService.pretraziKlinike(datum, idTipaPregleda); 
+		
+		assertThat(klinike).hasSize(1);
+		assertEquals(klinike.get(0).getNaziv(),"klinika1");		
+		
+		verify(klinikaRepository, times(1)).findAll();
+	}
 	
 	@Test
 	@Transactional
@@ -158,17 +169,16 @@ public class ServiceUnitTest {
 		//verify(pregledRepository, times(1)).save(noviPregled);
 	}
 	
-//	@Test
-//	@Transactional
-//	@Rollback(true)
-//	public void testPotvrdiIliOdbiPregledUNIT() {
-//		Long pregledID = 18L; 
-//		String odluka = "potvrdi";
-//		assertEquals(true, pregledService.potvrdiIliOdbiPregled(pregledID, odluka));
-//		
-//		verify(pregledRepository, times(1)).findAll();
-//		verify(lekarRepositoty, times(1)).findById(lekarID);
-//		verify(pacijentRepository, times(1)).findById(pacijentID);
-//	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testPotvrdiIliOdbiPregledUNIT() {
+		Long pregledID = 15L; 
+		String odluka = "potvrdi";
+		assertEquals(true, pregledService.potvrdiIliOdbiPregled(pregledID, odluka));
+		
+		verify(pregledRepository, times(1)).findById(pregledID);
+		//verify(zauzetostLekaraService, times(1)).findAll(); ako odustane, ovo se aktivira, treba dodati jos za remove...
+	}
 	
 }
