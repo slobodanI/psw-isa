@@ -658,21 +658,29 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 			pregled.setObrisan(true);
 			flag = true;
 			termin = pregled.getDatumPregledaOd();
+			lekarID = pregled.getLekar().getId();
 		}
 		
 		this.save(pregled);
 		
 		//ako je obrisan, treba ukloniti i zauzetost kod lekara
 		if(flag == true) {
-			Lekar lekar = lekarService.findOne(lekarID);
-			
-			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
-				if(zl.getPocetak().isEqual(termin)) {
-					lekar.getListaZauzetostiLekara().remove(zl);
+//			Lekar lekar = lekarService.findOne(lekarID);
+//			
+//			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
+//				if(zl.getPocetak().isEqual(termin)) {
+//					lekar.getListaZauzetostiLekara().remove(zl);
+//				}
+//			}
+//			
+//			lekarService.save(lekar);
+			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
+				if(zl.getPocetak().equals(termin) && zl.getLekar().getId().equals(lekarID)) {
+					System.out.println("******Brise se: " +  zl.getPocetak() + ", KOD LEKAR ID: " + zl.getLekar().getId());
+					zauzetostLekaraService.remove(zl.getId());
 				}
 			}
 			
-			lekarService.save(lekar);
 		}
 		
 		return true;
@@ -711,6 +719,7 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		}		
 		
 		Pregled pregled = findOne(pregledID);
+
 		
 		//ako postoje u bazi
 		if(pregled == null) {
@@ -718,6 +727,8 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		}
 		
 		LocalDateTime sutra = LocalDateTime.now().plusDays(1);
+		Long lekarID = pregled.getLekar().getId();
+		LocalDateTime termin = pregled.getDatumPregledaOd();
 		
 		//ako je vec obrisan...
 		if(pregled.isObrisan() == true) {
@@ -728,13 +739,31 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		if(sutra.isBefore(pregled.getDatumPregledaOd())) {
 			pregled.setObrisan(true);
 			pregled.setPrihvacen(false);
+					
 			//obrisi termin iz zauzetostiLekara
 			for(ZauzetostLekara zl : zauzetostLekaraService.findAll()) {
-				if(zl.getPocetak().equals(pregled.getDatumPregledaOd())) {
+				if(zl.getPocetak().equals(termin) && zl.getLekar().getId().equals(lekarID)) {
+					System.out.println("****Brise se ZAKAZANI PREGLED, TERMIN : " + zl.getPocetak() );
 					zauzetostLekaraService.remove(zl.getId());
+					break;
 				}
 			}
-									
+//			Long lekarID = pregled.getLekar().getId();
+//			Lekar lekar = lekarService.findOne(lekarID);			
+			
+//			for(ZauzetostLekara zl : lekar.getListaZauzetostiLekara()) {
+//				if(zl.getPocetak().isEqual(pregled.getDatumPregledaOd()) && zl.getLekar().getId().equals(lekarID)) {
+//					System.out.println("*******Brise se iz zauzetosti lekara: " + zl.getPocetak());
+//					Set<ZauzetostLekara> zauzetost = lekar.getListaZauzetostiLekara();
+//					zauzetost.remove(zl);
+//					lekar.setListaZauzetostiLekara(zauzetost);
+//					
+//					lekarService.save(lekar);
+//					break;
+//				}
+//			}
+				
+			
 		} else {
 			return false;
 		}
