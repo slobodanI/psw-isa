@@ -868,7 +868,12 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 			
 			
 			 
+		}else {
+			return "Sala ne postoji";
 		}
+		
+	}else {
+		return "Pregled ne postoji";
 	}
 	this.save(pregled);
 	return "Sve ok";
@@ -878,7 +883,19 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 
 public String prviSlobodanTermin(Long pregledId) {
 	
+	if(pregledId != null) {
+		if(pregledId <= 0) {
+			return null;
+		}
+	} else {
+		return null;
+	}	
+	
 	Pregled pregled = this.findOne(pregledId);
+	if(pregled == null) {
+		return null;
+	}
+	
 	LocalDateTime vreme = pregled.getDatumPregledaOd();
 	LocalDateTime pocetnoVreme = pregled.getDatumPregledaOd();
 	Long idPregleda = pregled.getId();
@@ -947,6 +964,7 @@ public String prviSlobodanTermin(Long pregledId) {
 		
 	}
 	System.out.println(konacnoVreme);
+	
 	
 	//pretrazujem lekare sve
 	
@@ -1073,7 +1091,21 @@ public String prviSlobodanTermin(Long pregledId) {
 
 
 public String nemaSale(Long pregledId) {
+	
+	if(pregledId != null) {
+		if(pregledId <= 0) {
+			return null;
+		}
+	} else {
+		return null;
+	}	
+	
 	Pregled pregled = this.findOne(pregledId);
+	
+	if(pregled == null) {
+		return null;
+	}
+	
 	LocalDateTime vreme = pregled.getDatumPregledaOd();
 	LocalDateTime pocetnoVreme = pregled.getDatumPregledaOd();
 	Long idPregleda = pregled.getId();

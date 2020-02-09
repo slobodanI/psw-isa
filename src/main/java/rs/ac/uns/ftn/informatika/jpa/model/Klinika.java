@@ -57,13 +57,13 @@ public class Klinika {
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AdministratorKlinike> administratoriKlinike = new HashSet<AdministratorKlinike>();
 	
-	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Lekar> lekari = new HashSet<Lekar>();
 	
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<MedicinskaSestra> med_sestre = new HashSet<MedicinskaSestra>();
 	
-	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Sala> sale = new HashSet<Sala>();
 	
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)

@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="styles.css">
 <title>Moj Profil</title>
 </head>
 <body>
@@ -15,23 +16,29 @@
 	<h4 id="radnoVreme">Radno vreme:</h4>
 	<br>
 	<hr>
-	<a href="updateLekara.html">Izmeni podatke</a>
-	<br>
-	<a href="LekarObaviPregled.html">Obavi pregled</a>
-	<br>
-	<a href="prikaziPacijente.html">Prikazi pacijente</a>
-	<br>
-	<a href="LekarStariPregledi.html">Stari pregledi</a>
-	<br>
-	<a href="LekarKalendar.html">Kalendar</a>
+	<button onclick="window.location.href = 'updateLekara.html';">Izmeni podatke</button>
 	<br>
 	<br>
-	<a href="lekarOdsustvo.html">Kreiraj zahtev za odsustvo</a>
+	<button onclick="window.location.href = 'LekarObaviPregled.html';">Obavi pregled</button>
 	<br>
-	<a href="LekarZakazaniPregledi.html">Zakazani pregledi</a>
 	<br>
-	<a href="#" id="logout">Odjavi se</a>
-	
+	<button onclick="window.location.href = 'prikaziPacijente.html';">Prikazi pacijente</button>
+	<br>
+	<br>
+	<button onclick="window.location.href = 'LekarStariPregledi.html';">Stari pregledi</button>
+	<br>
+	<br>
+	<button onclick="window.location.href = 'LekarKalendar.html';">Kalendar</button>
+	<br>
+	<br>
+	<button onclick="window.location.href = 'lekarOdsustvo.html';">Zahtev za odsustvo</button>
+	<br>
+	<br>
+	<button onclick="window.location.href = 'LekarZakazaniPregledi.html';">Zakazani pregledi</button>
+	<br>
+	<br>
+	<button onclick="logOut()">Odjavi se</button>
+
 
 	
 	<script src="js/jquery-3.4.1.min.js"></script>

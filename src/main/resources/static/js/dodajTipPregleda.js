@@ -12,7 +12,9 @@ $(document).ready(function(){
 			data: JSON.stringify({naziv}),
 			contentType: 'application/json',
 			success: function(){
+			
 			alert("Uspešno ste dodali tip pregleda.");
+			window.location = "./AdministratorKlinikeHome.html";
 			},
 			error: function(){
 				alert("Greska pri dodavanju tipa pregleda");
@@ -36,6 +38,7 @@ $(document).ready(function(){
 				data: JSON.stringify({id}),
 				contentType: 'application/json',
 				success: function(){
+					
 				alert("Uspešno ste obrisali tip pregleda.");
 				},
 				error: function(){

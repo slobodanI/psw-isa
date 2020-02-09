@@ -13,6 +13,7 @@ $(document).ready(function(){
 			data: JSON.stringify({naziv,zauzetost,idKlinike}),
 			contentType: 'application/json',
 			success: function(){
+			window.location = "./AdministratorKlinikeHome.html";
 			alert("Uspešno ste dodali salu.");
 			},
 			error: function(){
@@ -38,6 +39,7 @@ $(document).ready(function(){
 				contentType: 'application/json',
 				success: function(){
 				alert("Uspešno ste dodali salu.");
+				window.location = "./AdministratorKlinikeHome.html";
 				},
 				error: function(){
 					alert("Greska pri dodavanju sale");

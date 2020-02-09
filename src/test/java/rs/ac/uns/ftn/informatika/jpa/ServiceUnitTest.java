@@ -30,14 +30,17 @@ import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
 import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
+import rs.ac.uns.ftn.informatika.jpa.model.Sala;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostLekara;
+import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostSala;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
 import rs.ac.uns.ftn.informatika.jpa.repository.CenovnikRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.KlinikaRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.LekarRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.PregledRepository;
+import rs.ac.uns.ftn.informatika.jpa.repository.SalaRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.ZauzetostLekaraRepository;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
@@ -76,6 +79,9 @@ public class ServiceUnitTest {
 	@MockBean CenovnikRepository cenovnikRepository;
 	
 	@MockBean
+	private SalaRepository salaRepository;
+	
+	@MockBean
 	private EmailDTO emailDTO;
 		
 	public static final Pregled noviPregled = new Pregled(15L, "", null, null, LocalDateTime.of(2019, 5, 22, 10, 0), LocalDateTime.of(2019, 5, 22, 10, 30), "", null, null, 10, null, 1000, false, false, false);
@@ -91,8 +97,9 @@ public class ServiceUnitTest {
 	public static final TipPregleda tipPregledaZakaziP = new TipPregleda(1L, "Ocni pregled");
 	public static final ZdravstveniKarton zkZakaziP = new ZdravstveniKarton(1L, "A", "+2", new Double(180), new Double(80), "polen, kucna prasina", null, "dijabetes");
 	public static final Pregled noviPregled2 = new Pregled();
+	public static final Sala sala = new Sala(1L, "sala1");
 	
-	
+	public static final Pregled noviPregled23 = new Pregled(23L, "", null, null, LocalDateTime.of(2021, 5, 25, 11, 0), LocalDateTime.of(2021, 5, 25, 12, 0), "", null, lekar, 10, tipPregledaZakaziP, 1000, false, false, false);
 	
 	@Before
 	public void setUp() {
@@ -170,6 +177,20 @@ public class ServiceUnitTest {
 		
 		List<Cenovnik> cenovnikAll = new ArrayList<>();		
 		when(cenovnikRepository.findAll()).thenReturn(cenovnikAll);
+		
+		Set<ZauzetostLekara> zauzetostLekara = new HashSet<ZauzetostLekara>();
+		lekar.setListaZauzetostiLekara(zauzetostLekara);
+		
+		Set<ZauzetostSala> zauzetostSale = new HashSet<ZauzetostSala>();
+		sala.setListaZauzetostiSala(zauzetostSale);
+		Set<Sala> sale = new HashSet<Sala>();
+		sale.add(sala);
+		klinika.setSale(sale);
+		klinika.setId(1L);
+		lekar.setKlinika(klinika);
+		noviPregled23.setPacijent(pacijent3);
+		when(salaRepository.findById(1L)).thenReturn(Optional.of(sala));
+		when(pregledRepository.findById(23L)).thenReturn(Optional.of(noviPregled23));
 	}
 	
 	@Test
@@ -226,4 +247,28 @@ public class ServiceUnitTest {
 		//verify(zauzetostLekaraService, times(1)).findAll(); ako odustane, ovo se aktivira, treba dodati jos za remove...
 	}
 	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testUpisiSaluUNIT() {
+		Long idPregleda = 23L; 
+		Long idSale = 1L;
+		
+		assertEquals("Sve ok", pregledService.upisiSalu(idPregleda, idSale));
+		
+		verify(pregledRepository, times(1)).findById(idPregleda);
+		verify(salaRepository, times(1)).findById(idSale);
+	}
+	
+//	@Test
+//	@Transactional
+//	@Rollback(true)
+//	public void prviSlobodanTerminUNIT() {
+//		Long idPregleda = 23L;
+//		
+//		assertEquals("2021-05-25 11:00", pregledService.prviSlobodanTermin(idPregleda));
+//		
+//		verify(pregledRepository, times(1)).findById(idPregleda);
+//		//verify(salaRepository, times(1)).findById(idSale);
+//	}
 }

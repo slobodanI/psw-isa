@@ -16,6 +16,7 @@ $(document).ready(function(){
 				contentType: 'application/json',
 				type: 'DELETE',
 				success: function(){
+				window.location="./prikaziTipovePregleda.html";
 				alert("Uspešno ste obrisali tip pregleda");
 				},
 				error: function(){

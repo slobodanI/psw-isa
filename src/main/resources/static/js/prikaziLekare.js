@@ -17,6 +17,7 @@
 				type: 'DELETE',
 				success: function(){
 				alert("Uspešno ste obrisali lekara");
+				window.location="./PrikaziLekare.html";
 				},
 				error: function(){
 					alert("Greska pri brisanju lekara");
