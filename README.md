@@ -1,17 +1,21 @@
 # psw-isa
 Projekat iz psw/isa
 
+
 Spring boot projekat
 
 PostgreSQL baza
 
 Na frontu korišćen jquery
 
+
 Run as:
 	Spring Boot App
 
+
 Početna stranica:
 	http://localhost:8080
+
 
 Korisnici:
 
