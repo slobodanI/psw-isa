@@ -20,10 +20,12 @@ import rs.ac.uns.ftn.informatika.jpa.dto.TipPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
 import rs.ac.uns.ftn.informatika.jpa.service.CenovnikService;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
+import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 import rs.ac.uns.ftn.informatika.jpa.service.TipPregledaService;
 
 @RestController
@@ -41,6 +43,9 @@ public class TipPregledaController {
 	
 	@Autowired 
 	private CenovnikService cenovnikService;
+	
+	@Autowired
+	private PregledService pregledService;
 	
 	@GetMapping(value = "/tipoviPregleda")
 	public ResponseEntity<List<TipPregledaDTO>> getTipovePregleda() {
@@ -94,11 +99,22 @@ public class TipPregledaController {
 	
 	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<Void> deleteTipPregleda(@PathVariable Long id) {
-
+		List<Pregled> pregledi = pregledService.findAll();
+		boolean flag = false;
 		TipPregleda tp = tipPregledaService.findOne(id);
 		if (tp != null) {
+			
+			for(Pregled p : pregledi) {
+				if(p.getTipPregleda().equals(tp)) 
+				{
+					flag=true;
+				}
+			}
+			if(flag == false) {
 			tipPregledaService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

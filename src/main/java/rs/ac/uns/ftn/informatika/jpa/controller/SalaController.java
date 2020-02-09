@@ -19,9 +19,13 @@ import rs.ac.uns.ftn.informatika.jpa.dto.DodajSaluDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZauzetostSalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.model.Operacija;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaSale;
 import rs.ac.uns.ftn.informatika.jpa.model.Sala;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
+import rs.ac.uns.ftn.informatika.jpa.service.OperacijaService;
+import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 import rs.ac.uns.ftn.informatika.jpa.service.SalaService;
 
 @RestController
@@ -33,6 +37,12 @@ public class SalaController {
 	
 	@Autowired
 	private KlinikaService klinikaService;
+	
+	@Autowired
+	private PregledService pregledService;
+	
+	@Autowired
+	private OperacijaService operacijaService;
 
 	@GetMapping(value = "/sale")
 	public ResponseEntity<List<SalaDTO>> getSale() {
@@ -60,9 +70,25 @@ public class SalaController {
 
 	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<Void> deleteSalu(@PathVariable Long id) {
-
+		List<Pregled> pregledi = pregledService.findAll();
+		List<Operacija> operacije = operacijaService.findAll();
+		boolean flag = false;
+		
+		
 		Sala sala = salaService.findOne(id);
 		if (sala != null) {
+			for(Pregled p : pregledi) {
+				if(p.getSala().equals(sala)) 
+				{
+					flag=true;
+				}
+		}	
+
+			if(flag==false) {
+			salaService.remove(sala.getId());
+			return new ResponseEntity<>(HttpStatus.OK);
+			}
+			
 			salaService.remove(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {

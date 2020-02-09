@@ -136,5 +136,40 @@ public class JpaExampleControllerTest {
 	    	
     }
 	
-	
+	@Test
+	@Transactional
+    @Rollback(true)
+    public void prviSlobodanTermin() throws Exception {	
+		
+		this.mockMvc.perform(get(URL_PREFIX_PREGLED + "/prviSlobodanTermin/23")
+			.contentType(MediaType.TEXT_PLAIN)
+			.content("2021-05-25 11:00"))
+	    	.andExpect(status().isOk());
+	    	
+    }
+		
+	@Test
+	@Transactional
+    @Rollback(true)
+    public void dodajSaluZaPregled() throws Exception {	
+		
+		this.mockMvc.perform(put(URL_PREFIX_PREGLED + "/dodajSaluZaPregled/23/sala/1")
+			.contentType(MediaType.TEXT_PLAIN)
+			.content("Sve ok"))
+	    	.andExpect(status().isOk());
+	    	
+    }
+    
+    @Test
+	@Transactional
+    @Rollback(true)
+    public void nemaSale() throws Exception {	
+		
+		this.mockMvc.perform(put(URL_PREFIX_PREGLED + "/nemaSlobodneSale/22")
+			.contentType(MediaType.TEXT_PLAIN)
+			.content("Sve ok"))
+	    	.andExpect(status().isOk());
+	    	
+    }
+    
 }

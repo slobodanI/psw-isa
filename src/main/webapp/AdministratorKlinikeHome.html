@@ -3,59 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <title>Administrator klinike</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<h1>Administrator klinike - Početna strana</h1>
 	<hr>
 	<h3>Dodaj lekara</h3>
-
-	<a href="dodajLekara.html">Dodaj lekara</a>
+	<button onclick="window.location.href = 'dodajLekara.html';">Dodaj lekara</button>
 	<hr>
+	
 	<h3>Prikazi lekare</h3>
-
-	<a href="PrikaziLekare.html">Prikazi lekare</a>
-	<hr>
-	<h3>Pretrazi lekare</h3>
-
-	<a href="pretragaLekara.html">Pretrazi lekare</a>
-	<hr>
-	<h3>Prikazi sale</h3>
-
-	<a href="PrikaziSale.html">Prikazi sale</a>
-	<hr>
-	<h3>Dodaj salu</h3>
-
-	<a href="dodajSalu.html">Dodaj salu</a>
-	<hr>
-	<h3>Pretrazi sale</h3>
-
-	<a href="pretragaSala.html">Pretrazi sale</a>
-	<hr>
-	<br>
-	<a href="prviGrafik.html">Izvestaj</a>
-	<hr>
-	<a href="prikaziTipovePregleda.html">Prikazi tipove pregleda</a>
-	<br>
-	<a href="pretragaTipovaPregleda.html">Pretrazi tipove pregleda</a>
-	<br>
-	<a href="dodajTipPregleda.html">Dodaj tip pregleda</a>
-	<hr>
-	<br>
-	<a href="PredefinisaniPregled.html">Dodaj predefinisani pregled</a>
-	<br>
-	<hr>
-	<a href="podaciOKlinici.html">Profil klinike</a>
-	<hr>
-	<br>
-	<a href="prikaziZahteve.html">Zahtevi za pregled</a>
-	<br>
-	<a href="prikaziZahteveOdsustva.html">Zahtevi za odsustva</a>
-	<hr>
+	<button onclick="window.location.href = 'PrikaziLekare.html';">Prikazi lekare</button>
 	<br>
 	
-	<a href="AdminKlinikeProfil.html">Moj profil</a>
+	<hr>
+	<h3>Prikazi sale</h3>
+	<button onclick="window.location.href = 'PrikaziSale.html';">Prikazi sale</button>
 	<br>
-	<a href="#" id="logout">Odjavi se</a>
+		
+	<hr>
+	<h3>Dodaj salu</h3>
+	<button onclick="window.location.href = 'dodajSalu.html';">Dodaj salu</button>
+	<br>
+
+	<hr>
+	
+	<h3>Pretrazi sale</h3>
+	<button onclick="window.location.href = 'pretragaSala.html';">Pretrazi sale</button>
+
+	<hr>
+	<h3>Izvestaj o poslovanju:</h3>
+	<button onclick="window.location.href = 'prviGrafik.html';">Prikazi izvestaj</button>
+
+	<hr>
+	<h3>Tipovi pregleda</h3>
+	
+	<button onclick="window.location.href = 'prikaziTipovePregleda.html';">Prikazi tipove pregleda</button>
+	
+	<br>
+	<br>
+	<button onclick="window.location.href = 'pretragaTipovaPregleda.html';">Pretrazi tipove pregleda</button>
+	
+	<br>
+	<br>
+	<button onclick="window.location.href = 'dodajTipPregleda.html';">Dodaj tip pregleda</button>
+	
+	<hr>
+	<h3>Predefinisani pregledi</h3>
+	<button onclick="window.location.href = 'PredefinisaniPregled.html';">Dodaj predefinisani pregled</button>
+	
+	<br>
+	<hr>
+	<h3>Profil klinike</h3>
+	<button onclick="window.location.href = 'podaciOKlinici.html';">Profil klinike</button>
+	
+	<hr>
+	<h3>Pristigli zahtevi</h3>
+	<button onclick="window.location.href = 'prikaziZahteve.html';">Zahtevi za pregled</button>
+	
+	<br>
+	<br>
+	<button onclick="window.location.href = 'prikaziZahteveOdsustva.html';">Zahtevi za odsustvo</button>
+	
+	<hr>
+	<h3>Moj Profil</h3>
+	<button onclick="window.location.href = 'AdminKlinikeProfil.html';">Profil administratora</button>
+	
+	<hr>
+	<br>
+	<button onclick="logOut()">Odjavi se</button>
+	
 	
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="js/AdministratorKlinikeHome.js"></script>

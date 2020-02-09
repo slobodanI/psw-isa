@@ -24,11 +24,15 @@ import rs.ac.uns.ftn.informatika.jpa.dto.OperacijaKalendarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
+import rs.ac.uns.ftn.informatika.jpa.model.Operacija;
+import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
+import rs.ac.uns.ftn.informatika.jpa.service.OperacijaService;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
+import rs.ac.uns.ftn.informatika.jpa.service.PregledService;
 import rs.ac.uns.ftn.informatika.jpa.service.TipPregledaService;
 
 @RestController
@@ -46,6 +50,12 @@ public class LekarController {
 	
 	@Autowired
 	private TipPregledaService tipPregledaService;
+	
+	@Autowired
+	private OperacijaService operacijaService;
+	
+	@Autowired
+	private PregledService pregledService;
 
 	@GetMapping(value = "/lekari")
 	public ResponseEntity<List<LekarDTO>> getLekari() {
@@ -77,9 +87,31 @@ public class LekarController {
 	public ResponseEntity<Void> deleteLekar(@PathVariable Long id){
 		
 		Lekar lekar = lekarService.findOne(id);
+		List<Pregled> pregledi = pregledService.findAll();
+		List<Operacija> operacije = operacijaService.findAll();
+		
+		boolean flag = false;
 		if(lekar != null) {
-			lekarService.remove(id);
+			for(Pregled p : pregledi) {
+				if(p.getLekar().equals(lekar)) 
+				{
+					flag=true;
+				}
+		}	
+			for(Operacija o : operacije) {
+				for(Lekar l : o.getLekari()) {
+				if(l.equals(lekar)) 
+				{
+					flag=true;
+				}
+				}
+		}	
+			if(flag==false) {
+				System.out.println("aaaa"+lekar.getId());
+			lekarService.remove(lekar.getId());
 			return new ResponseEntity<>(HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

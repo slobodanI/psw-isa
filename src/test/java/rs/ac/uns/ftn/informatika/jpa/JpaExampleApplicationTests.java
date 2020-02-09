@@ -300,14 +300,117 @@ public class JpaExampleApplicationTests {
 	}
 	
 	
-//	//***negativni***
-//	@Test
-//	public void testDodajSalu1() {
-//		Long idPregleda = null; //////
-//		Long idSale = null;
-//		assertEquals(false, pregledService.upisiSalu(idPregleda, idSale));
-//	}
-//	
+	//***negativni***
+	@Test
+	public void upisiSalu1() {
+		Long idPregleda = 11L; //////
+		Long idSale = null;
+		assertEquals(null, pregledService.upisiSalu(idPregleda, idSale));
+	}
+	@Test
+	public void upisiSalu2() {
+		Long idPregleda = null; //////
+		Long idSale = 1L;
+		assertEquals(null, pregledService.upisiSalu(idPregleda, idSale));
+	}
+	@Test
+	public void upisiSalu3() {
+		Long idPregleda = -1L; //////
+		Long idSale = 1L;
+		assertEquals(null, pregledService.upisiSalu(idPregleda, idSale));
+	}
+	@Test
+	public void upisiSalu4() {
+		Long idPregleda = 11L; //////
+		Long idSale = -1L;
+		assertEquals(null, pregledService.upisiSalu(idPregleda, idSale));
+	}
+	@Test(expected = NullPointerException.class)
+	public void upisiSalu5() {
+		Long idPregleda = 11L; //////
+		Long idSale = 1500L;
+		assertEquals("Sala ne postoji", pregledService.upisiSalu(idPregleda, idSale));
+	}
+	@Test(expected = NullPointerException.class)
+	public void upisiSalu6() {
+		Long idPregleda = 1500L; //////
+		Long idSale = 1L;
+		assertEquals("Pregled ne postoji", pregledService.upisiSalu(idPregleda, idSale));
+	}
 	
+	//***pozitivni***
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void upisiSaluPOZ() {
+		Long idPregleda = 23L; //////
+		Long idSale = 1L;
+		assertEquals("Sve ok", pregledService.upisiSalu(idPregleda, idSale));
+	
+	}
+	
+	//***negativni***
+	
+	@Test
+	public void prviSlobodanTermin1() {
+		Long idPregleda = null; //////
+		assertEquals(null, pregledService.prviSlobodanTermin(idPregleda));
+	}
+	
+	@Test
+	public void prviSlobodanTermin2() {
+		Long idPregleda = 0L; //////
+		assertEquals(null, pregledService.prviSlobodanTermin(idPregleda));
+	}
+	
+	
+	
+	@Test(expected = NullPointerException.class)
+	public void prviSlobodanTermin3() {
+		Long idPregleda = 1500L; //////
+		assertEquals(null, pregledService.prviSlobodanTermin(idPregleda));
+	}
+	
+	//***pozitivni***
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void prviSlobodanTerminPOZ() {
+		Long idPregleda = 23L; //////
+		assertEquals("2021-05-25 11:00", pregledService.prviSlobodanTermin(idPregleda));
+	
+	}
+	
+	//***negativni***
+	
+	@Test
+	public void nemaSale1() {
+		Long idPregleda = null; //////
+		assertEquals(null, pregledService.nemaSale(idPregleda));
+	}
+	
+	@Test
+	public void nemaSale2() {
+		Long idPregleda = 0L; //////
+		assertEquals(null, pregledService.nemaSale(idPregleda));
+	}
+	
+	
+	
+	@Test(expected = NullPointerException.class)
+	public void nemaSale3() {
+		Long idPregleda = 1500L; //////
+		assertEquals(null, pregledService.nemaSale(idPregleda));
+	}
+	
+	//***pozitivni***
+		@Test
+		@Transactional
+		@Rollback(true)
+		public void nemaSalePOZ() {
+			Long idPregleda = 22L; //////
+			assertEquals("Sve ok", pregledService.nemaSale(idPregleda));
+		
+		}
 	
 }

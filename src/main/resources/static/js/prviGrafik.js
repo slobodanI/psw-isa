@@ -45,12 +45,13 @@ $(document).ready(function() {
 	});
 	
 function prikaziPrihode(datumOd,datumDo){
+	
 	$.get({
 		url:'/pregledi/prihodi/od/'+datumOd+'/do/'+datumDo,
 
 		contentType:'application/json',
 		success: function(prihodi){
-	
+			$("#prihodi").empty();
 
 			if(prihodi != undefined){
 				$("#prihodi").append(prihodi);
