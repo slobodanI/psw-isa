@@ -50,7 +50,6 @@ function popuniTabelu(userId){
 				if(odsustva.length != 0){
 					iscrtajTabelu(odsustva);
 			}else{
-				alert("Nema zahteva za odsustvo");
 				$(".nemaZahteva").append("Trenutno nema zahteva za odsustvo");
 			}
 			
@@ -74,7 +73,6 @@ function popuniTabelu2(userId){
 				if(odsustva.length != 0){
 					iscrtajTabelu2(odsustva);
 			}else{
-				alert("Nema zahteva za odsustvo");
 				nemaMS = true;
 				$(".nemaZahteva").append("Trenutno nema zahteva za odsustvo");
 			}

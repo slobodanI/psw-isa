@@ -16,6 +16,7 @@
 				contentType: 'application/json',
 				type: 'DELETE',
 				success: function(){
+				window.location="./PrikaziSale.html";
 				alert("Uspešno ste obrisali salu");
 				},
 				error: function(){
@@ -57,9 +58,9 @@ function addSalu(s){
 	let tr=$('<tr></tr>');
 	let tdNaziv=$('<td>'+s.naziv+'</td>');
 	let tdBroj=$('<td>'+s.id+'</td>');
-	let tdZauzetost = $('<td>'+s.zauzetost+'</td>');
 
-	tr.append(tdNaziv).append(tdBroj).append(tdZauzetost);
+
+	tr.append(tdNaziv).append(tdBroj);
 	$('#tabela tbody').append(tr);
 
 	

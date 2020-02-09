@@ -78,11 +78,13 @@ public class SalaController {
 		Sala sala = salaService.findOne(id);
 		if (sala != null) {
 			for(Pregled p : pregledi) {
+				if(p.getSala() != null) {
 				if(p.getSala().equals(sala)) 
 				{
 					flag=true;
 				}
-		}	
+		}
+			}
 
 			if(flag==false) {
 			salaService.remove(sala.getId());
