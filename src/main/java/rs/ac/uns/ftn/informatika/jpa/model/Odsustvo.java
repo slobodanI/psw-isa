@@ -26,7 +26,7 @@ public class Odsustvo
 	@Column(nullable = false)
 	private TipOdsustva tip;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	Boolean odobreno;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -25,7 +25,7 @@ public class LekarOdsustvo {
 	@Column(nullable = false)
 	private TipOdsustva tip;
 	
-	@Column(nullable = false)
+	@Column()
 	Boolean odobreno;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.ZauzetostSalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
@@ -75,7 +76,21 @@ public class SalaService {
 		
 	}
 	
-	public List<SalaDTO> vratiSlobodneSaleZaPregled(Long id){
+public List<ZauzetostSalaDTO> getZauzetostSala(Long id){
+	
+	Sala sala = this.findOne(id);
+	List<ZauzetostSalaDTO> zauzetost = new ArrayList<ZauzetostSalaDTO>();
+	
+	for(ZauzetostSala z : sala.getListaZauzetostiSala()) {
+		zauzetost.add(new ZauzetostSalaDTO(z));
+	}
+	
+	return zauzetost;
+}
+	
+	
+	
+public List<SalaDTO> vratiSlobodneSaleZaPregled(Long id){
 		Pregled pregled = pregledService.findOne(id);
 		LocalDateTime vremePocetka = pregled.getDatumPregledaOd();
 		LocalDateTime vremeKraja = pregled.getDatumPregledaDo();
@@ -126,7 +141,13 @@ public class SalaService {
 		
 		return rezultat;		
 	}
-	
-	
+
+
 
 }
+
+
+
+
+
+

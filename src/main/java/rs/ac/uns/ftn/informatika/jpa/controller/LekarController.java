@@ -20,18 +20,16 @@ import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarPregledKalendar;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaLekaraDTO;
-
 import rs.ac.uns.ftn.informatika.jpa.dto.OperacijaKalendarDTO;
-
-import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
-
 import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaLekara;
+import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.LekarService;
 import rs.ac.uns.ftn.informatika.jpa.service.PacijentService;
+import rs.ac.uns.ftn.informatika.jpa.service.TipPregledaService;
 
 @RestController
 @RequestMapping(value = "/api/lekar")
@@ -45,6 +43,9 @@ public class LekarController {
 	
 	@Autowired
 	private PacijentService pacijentService;
+	
+	@Autowired
+	private TipPregledaService tipPregledaService;
 
 	@GetMapping(value = "/lekari")
 	public ResponseEntity<List<LekarDTO>> getLekari() {
@@ -123,6 +124,10 @@ public class LekarController {
 		lekar.setRadniKalendar(lekarDTO.getRadniKalendar());
 		lekar.setUloga(lekarDTO.getUloga());
 		lekar.setKlinika(klinika);
+		TipPregleda tp = tipPregledaService.findOne(lekarDTO.getTipPregleda());
+		lekar.setTipPregleda(tp);
+		lekar.setEmail(lekarDTO.getEmail());
+		lekar.setPromenjenaLozinka(false);
 		
 		List<Lekar> sviLekari = lekarService.findAll();
 		for(Lekar l : sviLekari) {
@@ -255,6 +260,14 @@ public class LekarController {
 //		}
 //	}
 //	
+	
+	
+	@GetMapping(value = "/promenjenaLozinka/{id}")
+	public ResponseEntity<Boolean> promenjenaLozinka(@PathVariable Long id){
+			Boolean pom=lekarService.promenjenaLozinka(id);
+			return new ResponseEntity<>(pom,HttpStatus.OK);
+	}
+	
 	
 	
 }

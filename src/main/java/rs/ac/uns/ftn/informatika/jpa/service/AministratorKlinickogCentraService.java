@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.AdministratorKlinickogCentraDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinickogCentra;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.repository.AdministratorKlinickogCentraRepository;
 
 @Service
@@ -89,5 +90,14 @@ public class AministratorKlinickogCentraService {
 		
 		return administrator;
 	}
+	
+	public Boolean promenjenaLozinka(Long id) {
+		
+		AdministratorKlinickogCentra admin = this.findOne(id);
+		
+		return admin.getPromenjenaLozinka();
+		
+	}
+	
 	
 }

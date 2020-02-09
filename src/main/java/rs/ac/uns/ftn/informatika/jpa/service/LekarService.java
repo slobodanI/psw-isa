@@ -135,7 +135,7 @@ public class LekarService {
 		
 		return kal;
 	}
-	
+
 	//vraca sve lekare klinike pomocu id-a prijavljenog admina klinike
 	public List<LekarDTO> vratiSveLekareKlinike(Long id){
 		AdministratorKlinike admin = adminKlinikeService.findOne(id);
@@ -154,6 +154,14 @@ public class LekarService {
 		
 	}
 
+	public Boolean promenjenaLozinka(Long id) {
+		
+		Lekar lekar = this.findOne(id);
+		
+		return lekar.getPromenjenaLozinka();
+		
+	}
 	
+
 	
 }

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.DodajSaluDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.SalaDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.ZauzetostSalaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.PretragaSale;
 import rs.ac.uns.ftn.informatika.jpa.model.Sala;
@@ -158,6 +158,13 @@ public class SalaController {
 		return new ResponseEntity<>(saleKlinike, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/getZauzetostSala/{id}",produces = "application/json")
+	public ResponseEntity<List<ZauzetostSalaDTO>> getZauzetostSala(@PathVariable Long id){
+		
+		List<ZauzetostSalaDTO> z = salaService.getZauzetostSala(id);
+		return new ResponseEntity<>(z, HttpStatus.OK);	
+		
+	}
 	
 	
 
