@@ -1,12 +1,33 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 //videti kako za enumeraciju
+@Entity
 public class Cenovnik {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	private TipPregleda tipPregleda;
-	private Double cena;
-	public Cenovnik(Long id, TipPregleda tipPregleda, Double cena) {
+	
+	@Column(nullable = false)
+	private Long cena;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Klinika klinika;
+	
+	
+	
+	public Cenovnik(Long id, TipPregleda tipPregleda, Long cena) {
 		super();
 		this.id = id;
 		this.tipPregleda = tipPregleda;
@@ -33,12 +54,20 @@ public class Cenovnik {
 		this.tipPregleda = tipPregleda;
 	}
 
-	public Double getCena() {
+	public Long getCena() {
 		return cena;
 	}
 
-	public void setCena(Double cena) {
+	public void setCena(Long cena) {
 		this.cena = cena;
+	}
+
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
 	}
 	
 	

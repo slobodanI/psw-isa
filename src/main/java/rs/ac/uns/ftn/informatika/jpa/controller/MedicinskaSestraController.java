@@ -7,11 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.MedicinskaSestraDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.OdsustvoDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.UpdateLekarDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
 import rs.ac.uns.ftn.informatika.jpa.model.Odsustvo;
 import rs.ac.uns.ftn.informatika.jpa.service.MedicinskaSestraService;
@@ -47,5 +51,30 @@ public class MedicinskaSestraController
 		
 		return new ResponseEntity<>(ods, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/promenjenaLozinka/{id}")
+	public ResponseEntity<Boolean> promenjenaLozinka(@PathVariable Long id){
+			Boolean pom=medicinskaSestraService.promenjenaLozinka(id);
+			return new ResponseEntity<>(pom,HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updateMS", consumes = "application/json")
+	public ResponseEntity<MedicinskaSestraDTO> updateLekar( @RequestBody MedicinskaSestraDTO msDTO) {
+
+		MedicinskaSestra sestra = medicinskaSestraService.findOne(msDTO.getId());
+
+		if (sestra == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		sestra.setIme(msDTO.getIme());
+		sestra.setPrezime(msDTO.getPrezime());
+		sestra.setPassword(msDTO.getPassword());
+
+		sestra = medicinskaSestraService.save(sestra);
+		return new ResponseEntity<>(new MedicinskaSestraDTO(sestra), HttpStatus.OK);
+
+	}
+	
 	
 }

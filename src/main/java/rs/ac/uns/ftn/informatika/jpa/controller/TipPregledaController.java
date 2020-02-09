@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import rs.ac.uns.ftn.informatika.jpa.dto.CenovnikDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.TipPregledaDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
+import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
+import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
+import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
+import rs.ac.uns.ftn.informatika.jpa.service.CenovnikService;
+import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.service.TipPregledaService;
 
 @RestController
@@ -26,6 +32,15 @@ public class TipPregledaController {
 	
 	@Autowired
 	private TipPregledaService tipPregledaService;
+	
+	@Autowired
+	private KlinikaService klinikaService;
+	
+	@Autowired
+	private AdministratorKlinikeService adminKService;
+	
+	@Autowired 
+	private CenovnikService cenovnikService;
 	
 	@GetMapping(value = "/tipoviPregleda")
 	public ResponseEntity<List<TipPregledaDTO>> getTipovePregleda() {
@@ -49,6 +64,32 @@ public class TipPregledaController {
 
 		return new ResponseEntity<>(new TipPregledaDTO(tipPregleda), HttpStatus.OK);
 
+	}
+	
+	@PutMapping(value = "/getCenu",consumes = "application/json")
+	public ResponseEntity<Long> getCenu(@RequestBody CenovnikDTO cenovnikDTO) {
+		AdministratorKlinike admin = adminKService.findOne(cenovnikDTO.getAdmin());
+		Klinika kl = admin.getKlinika();
+		Long rez = null;
+		TipPregleda tipPregleda = tipPregledaService.findOne(cenovnikDTO.getTipPregleda());
+		
+		
+
+		boolean flag = false;
+		List<Cenovnik> sveCene = cenovnikService.findAll();
+		for (Cenovnik c : sveCene) {
+			if (c.getKlinika().equals(kl) && c.getTipPregleda().equals(tipPregleda)) {
+				rez=c.getCena();
+				System.out.println(rez);
+				flag= true;
+			}
+		}
+		if(flag==false) { rez =0L;}
+
+		return new ResponseEntity<>(rez,HttpStatus.OK);
+		
+		
+		
 	}
 	
 	@DeleteMapping(value = "/delete/{id}")
@@ -94,6 +135,40 @@ public class TipPregledaController {
 		}
 		tipPregleda = tipPregledaService.save(tipPregleda);
 		return new ResponseEntity<>(new TipPregledaDTO(tipPregleda), HttpStatus.OK);
+
+	}
+	
+	@PostMapping(value = "/addCenu", consumes = "application/json")
+	public ResponseEntity<String> addCenu(@RequestBody CenovnikDTO cenovnikDTO) {
+		 
+		AdministratorKlinike admin = adminKService.findOne(cenovnikDTO.getAdmin());
+		Klinika kl = admin.getKlinika();
+		
+		TipPregleda tipPregleda = tipPregledaService.findOne(cenovnikDTO.getTipPregleda());
+		
+		
+
+		boolean flag = false;
+		List<Cenovnik> sveCene = cenovnikService.findAll();
+		for (Cenovnik c : sveCene) {
+			if (c.getKlinika().equals(kl) && c.getTipPregleda().equals(tipPregleda)) {
+				c.setCena(cenovnikDTO.getCena());
+				cenovnikService.save(c);
+				flag = true;
+			}
+		}
+		
+		if(flag == false) {
+			Cenovnik cen = new Cenovnik();
+			cen.setCena(cenovnikDTO.getCena());
+			cen.setKlinika(kl);
+			cen.setTipPregleda(tipPregleda);
+			cenovnikService.save(cen);
+		}
+		
+		
+		
+		return new ResponseEntity<>("Sve ok", HttpStatus.OK);
 
 	}
 	

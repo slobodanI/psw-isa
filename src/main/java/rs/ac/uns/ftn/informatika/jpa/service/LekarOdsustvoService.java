@@ -4,13 +4,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarOdsustvoDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.LekarOdsustvo;
 import rs.ac.uns.ftn.informatika.jpa.model.MedicinskaSestra;
@@ -24,6 +27,12 @@ public class LekarOdsustvoService {
 	@Autowired LekarOdsustvoRepository lorepository;
 	
 	@Autowired LekarService lekarService;
+	
+	@Autowired EmailService emailService;
+	
+	@Autowired AdministratorKlinikeService adminKlinikeService;
+	
+	@Autowired OdsustvoService odsustvoService;
 	
 	public LekarOdsustvo findOne(Long id) {
 		return lorepository.findById(id).orElseGet(null);
@@ -119,5 +128,97 @@ public String kreirajOdsustvo(LekarOdsustvoDTO ods) {
 		
 		return "Uspesno poslat zahtev za odsustvo";
 	}
+
+
+public String odobriOdsustvo(Long id) {
+		
+		LekarOdsustvo od = this.findOne(id);
+		od.setOdobreno(true);
+		this.save(od);
+		
+		String datumivremeP[]=od.getPocetak().toString().split("T");
+		String datumivremeK[]=od.getKraj().toString().split("T");
+		EmailDTO emailDTO2 = new EmailDTO(1, "Obavestenje o odsustvu.",
+				"Odsustvo: <br>"
+				+"Od: "+ datumivremeP[0] + " "+datumivremeP[1]+"<br>"
+				+"Do: "+ datumivremeK[0] + " "+datumivremeK[1]+"<br>"
+				+"je odobreno", "");
+
+		
+		try 
+		{		
+		emailService.sendNotificaitionAsync(emailDTO2);
+		}
+		catch( Exception e )
+		{
+		//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+		System.out.println("### Greska prilikom slanja mail-a! ###");
+		}
+		
+		
+		
+		return "Odobreno";
+	}
+
+public String odbijOdsustvo(Long id,String str) {
+	LekarOdsustvo od = this.findOne(id);
+	od.setOdobreno(false);
+	this.save(od);
+	String []text=str.split(":");
+	String tekst=text[1].trim();
+	tekst=tekst.substring(1,tekst.length()-2);
+	
+	
+	String datumivremeP[]=od.getPocetak().toString().split("T");
+	String datumivremeK[]=od.getKraj().toString().split("T");
+	EmailDTO emailDTO2 = new EmailDTO(1, "Obavestenje o odsustvu.",
+			"Odsustvo: <br>"
+			+"Od: "+ datumivremeP[0] + " "+datumivremeP[1]+"<br>"
+			+"Do: "+ datumivremeK[0] + " "+datumivremeK[1]+"<br>"
+			+"je odbijeno"+"<br>"
+			+"Razlog :"+"<br>"
+			+tekst, "");
+
+	
+	try 
+	{		
+	emailService.sendNotificaitionAsync(emailDTO2);
+	}
+	catch( Exception e )
+	{
+	//logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+	System.out.println("### Greska prilikom slanja mail-a! ###");
+	}
+	
+	
+	
+	return "Odbijeno";
+}
+
+public List<LekarOdsustvoDTO> vratiZahteveZaOdsustva(Long id){
+	AdministratorKlinike admin = adminKlinikeService.findOne(id);
+	List<LekarOdsustvo> odsLekara = this.findAll();
+	List<LekarOdsustvo> pomocnaLista = new ArrayList<LekarOdsustvo>();
+	List<LekarOdsustvoDTO> rez = new ArrayList<LekarOdsustvoDTO>();
+	
+	for(LekarOdsustvo ods : odsLekara) {
+		if(ods.getLekar().getKlinika().getId() == admin.getKlinika().getId()) {
+			if(ods.getOdobreno()==null) {
+				pomocnaLista.add(ods);
+			}
+		}
+		
+		
+	}
+	
+	for(LekarOdsustvo o : pomocnaLista) {
+		rez.add(new LekarOdsustvoDTO(o));
+	}
+	
+	return rez;
+	
+	
+}
+	
 
 }

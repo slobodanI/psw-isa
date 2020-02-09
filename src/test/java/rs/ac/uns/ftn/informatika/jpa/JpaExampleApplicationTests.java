@@ -298,4 +298,16 @@ public class JpaExampleApplicationTests {
 		
 		assertEquals(true, pregledService.findOne(pregledID).isPrihvacen());
 	}
+	
+	
+//	//***negativni***
+//	@Test
+//	public void testDodajSalu1() {
+//		Long idPregleda = null; //////
+//		Long idSale = null;
+//		assertEquals(false, pregledService.upisiSalu(idPregleda, idSale));
+//	}
+//	
+	
+	
 }

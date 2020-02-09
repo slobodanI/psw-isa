@@ -54,7 +54,7 @@ public class Pregled {
 	@Column(nullable =  false)
 	private int cena;
 	
-	@ManyToOne( fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Pacijent pacijent;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

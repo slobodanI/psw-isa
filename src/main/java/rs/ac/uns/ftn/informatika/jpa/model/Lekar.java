@@ -56,7 +56,7 @@ public class Lekar {
 	@Column(nullable = false)
 	private int radnoVremeDo;	
 	
-	@OneToMany(mappedBy = "lekar",fetch = FetchType.EAGER/*,cascade= CascadeType.ALL*/)
+	@OneToMany(mappedBy = "lekar",fetch = FetchType.EAGER)
 	private Set<LekarOdsustvo> listaOdsustava = new HashSet<LekarOdsustvo>();
 	
 	@OneToMany(mappedBy = "lekar",fetch = FetchType.EAGER)
@@ -76,6 +76,9 @@ public class Lekar {
 	
 	@Column(nullable = false)
 	private String uloga = "Lekar";
+	
+	@Column(nullable = false)
+	private Boolean promenjenaLozinka;
 	
 	@ManyToMany(mappedBy = "lekari")
 	private Set<Operacija> operacije =  new HashSet<Operacija>();
@@ -274,6 +277,14 @@ public class Lekar {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Boolean getPromenjenaLozinka() {
+		return promenjenaLozinka;
+	}
+
+	public void setPromenjenaLozinka(Boolean promenjenaLozinka) {
+		this.promenjenaLozinka = promenjenaLozinka;
 	}
 	
 	
