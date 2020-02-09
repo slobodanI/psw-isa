@@ -337,7 +337,7 @@ public class PregledService {
 		if(lekarVreme == false) {
 			return "Odabrani lekar je zauzet u odabranom terminu.";
 		}
-		
+		 
 		boolean salaVreme = true;
 		Sala sala = salaService.findOne(pregled.getSala());
 		Set<ZauzetostSala> zauzetostSala = sala.getListaZauzetostiSala();
@@ -795,6 +795,22 @@ public Boolean otkaziZakazanPregled(Long pregledID) {
 	}
 	
 public String upisiSalu(Long idPregleda,Long idSale) {
+	
+	if(idPregleda != null) {
+		if(idPregleda <= 0) {
+			return null;
+		}
+	} else {
+		return null;
+	}	
+	if(idSale != null) {
+		if(idSale <= 0) {
+			return null;
+		}
+	} else {
+		return null;
+	}	
+	
 	Pregled pregled = this.findOne(idPregleda);
 	Sala sala = salaService.findOne(idSale);
 	if(pregled!=null) {
@@ -841,11 +857,11 @@ public String upisiSalu(Long idPregleda,Long idSale) {
 			
 			
 			
-			
+			 
 		}
 	}
 	this.save(pregled);
-	return null;
+	return "Sve ok";
 	
 	
 }
@@ -1222,12 +1238,7 @@ public String nemaSale(Long pregledId) {
 		}
 	
 	}	
-	
-	
-	
 	/////////
-	
-	
 	//System.out.println("Lekar=   " + nadjenLekar+ "       sala:  "+nadjenaSala);
 	
 	///ako je pronadjen i lekar i sala,dodeli ih
@@ -1313,7 +1324,7 @@ public String nemaSale(Long pregledId) {
 	vreme=vreme.plusHours(1);
 	
 	}
-	return "Nije promenjeno";
+	return "Sve ok";
 	
 }
 
@@ -1338,22 +1349,31 @@ public void automatskoDodavanjeSala() {
 
 public ArrayList<Integer> vratiZaGrafik(LocalDateTime Od,LocalDateTime Do,Long tip) {
 	ArrayList<Integer> brojPregleda= new ArrayList<>();
-	ArrayList<LocalDateTime> datumi=new ArrayList<>();
+//	ArrayList<LocalDateTime> datumi=new ArrayList<>();
 	Integer brojac = 0;
+	LocalDateTime pom = Od;
 	
 	
-	while(Od.isBefore(Do)) {
+	while(pom.isBefore(Do)) {
+	
+		if(tip == 0) {
+			pom=Od.plusMonths(1);
+		}else if(tip == 1) {
+			pom=Od.plusWeeks(1);
+		}else {
+			pom=Od.plusDays(1);
+		}
 		
 		brojac=0;
 		for(Pregled p : this.findAll()) {
 			
-			if(p.getDatumPregledaOd().isAfter(Od) && p.getDatumPregledaDo().isBefore(Do)) {
+			if(p.getDatumPregledaOd().isAfter(Od) && p.getDatumPregledaDo().isBefore(pom)) {
 				brojac++;
 			}
 		}
 		
 		brojPregleda.add(brojac);
-		datumi.add(Od);
+//		datumi.add(Od);
 		if(tip == 0) {
 			Od=Od.plusMonths(1);
 		}else if(tip == 1) {
@@ -1384,6 +1404,16 @@ public ArrayList<LocalDateTime> vratiDatumeZaGrafik(LocalDateTime Od,LocalDateTi
 	
 }
 
+public int vratiPrihodeKlinike(LocalDateTime Od,LocalDateTime Do) {
+	int prihodi = 0;
+	for(Pregled p : this.findAll()) {
+		
+		if(p.getDatumPregledaOd().isAfter(Od) && p.getDatumPregledaDo().isBefore(Do)) {
+			prihodi+=p.getCena();
+		}
+	}
+	return prihodi;
+}
 
 
 	

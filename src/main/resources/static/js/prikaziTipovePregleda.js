@@ -1,5 +1,6 @@
-	$(document).ready(function(){
-
+var id;
+$(document).ready(function(){
+		koJeUlogovan();
 		popuniTabelu();
 		
 		$("#obrisiTipPregleda").submit(function(event){
@@ -22,6 +23,27 @@
 				}	
 			});
 					
+			});
+		$("#form-EditCena").submit(function(event){
+			event.preventDefault();
+			
+			var cena = $('input[name="cena"]').val();
+
+
+					$.ajax({
+						url: '/api/tipPregleda/addCenu',
+						type: 'POST',
+						data: JSON.stringify({cena,admin,tipPregleda}),
+						contentType: 'application/json',
+						success: function(){
+							window.location = "./prikaziTipovePregleda.html"
+						},
+						error: function(){
+							alert("Neuspesno ste izmenii podatke");
+						}
+					});
+
+				
 			});
 			
 	});
@@ -56,9 +78,65 @@ function addSalu(t){
 	let tr=$('<tr></tr>');
 	let tdNaziv=$('<td>'+t.naziv+'</td>');
 	let tdBroj=$('<td>'+t.id+'</td>');
+	let tdCena=$('<button onclick = "cena('+t.id+')">Izmeni cenu</button>');
 
-
-	tr.append(tdNaziv).append(tdBroj);
+	tr.append(tdNaziv).append(tdBroj).append(tdCena);
 	$('#tabela tbody').append(tr);
 	
 }
+
+function cena(idTP){
+	
+	 admin = id;
+	 tipPregleda = idTP;
+	$.ajax({
+		
+		url: '/api/tipPregleda/getCenu',
+		data: JSON.stringify({cena,admin,tipPregleda}),
+		type: 'PUT',
+		contentType: 'application/json',
+		success: function(c){
+			if(c != undefined){
+				$('input[name="cena"]').val(c);
+			}
+	},
+		
+		});	
+	
+	
+	
+
+}
+
+function koJeUlogovan() {
+	$.get({
+		url : 'api/whoIsLoggedIn',
+		success : function(user) {
+			if (user != undefined) {	
+				if (user.uloga == "Pacijent") {
+S
+				} else if (user.uloga == "AdministratorKlinickogCentra") {
+//					window.location = "./AdminKlinickogCentraHome.html";
+				} else if (user.uloga == "AdministratorKlinike") {
+//					window.location = "./AdministratorKlinikeHome.html";
+					id=user.id;
+				} else if (user.uloga == "Lekar") {
+					window.location = "./index.html";
+
+//					window.location = "./LekarHome.html";
+				} else if (user.uloga == "MedicinskaSestra") {
+//					window.location = "./MedicinskaSestra.html";
+				} else {
+					console.log("NIKO NIJE ULOGOVAN");
+					window.location = "./index.html";
+				}
+			}
+			else {
+				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
+			}
+
+		}
+	});
+}
+

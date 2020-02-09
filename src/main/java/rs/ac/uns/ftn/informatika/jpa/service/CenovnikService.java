@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.CenovnikDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
@@ -21,6 +22,8 @@ public class CenovnikService {
 	@Autowired KlinikaService klinikaService;
 	
 	@Autowired TipPregledaService tipPregledaService;
+	
+	@Autowired AdministratorKlinikeService adminKService;
 	
 	public Cenovnik findOne(Long id) {
 		return cenovnikRepository.findById(id).orElseGet(null);
@@ -38,7 +41,8 @@ public class CenovnikService {
 	}
 	
 	public String dodajCenu(CenovnikDTO c) {
-		Klinika kl = klinikaService.findOne(c.getKlinika());
+		AdministratorKlinike admin = adminKService.findOne(c.getAdmin());
+		Klinika kl = admin.getKlinika();
 		TipPregleda tp = tipPregledaService.findOne(c.getTipPregleda());
 		
 		Cenovnik cen = new Cenovnik();

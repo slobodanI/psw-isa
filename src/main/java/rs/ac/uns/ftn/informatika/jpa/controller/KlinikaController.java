@@ -21,9 +21,12 @@ import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStrudent1;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTOzaStudent1PRETRAGA;
 import rs.ac.uns.ftn.informatika.jpa.dto.LekarDTOStudent1PretragaLekara;
 import rs.ac.uns.ftn.informatika.jpa.dto.OcenaKlinikeDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PretragaKlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PretragaLekaraPrekoKlinikeDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 
 @RestController
@@ -32,6 +35,9 @@ public class KlinikaController {
 
 	@Autowired
 	private KlinikaService klinikaService;
+	
+	@Autowired
+	private AdministratorKlinikeService adminKService;
 	
 	//metoda za kreiranje nove klinike
 	@PostMapping(value="/kreirajKliniku", consumes="application/json")
@@ -59,11 +65,36 @@ public class KlinikaController {
 		return new ResponseEntity<>(klinikeDTO, HttpStatus.OK);
 	}
 	
+	
+	
 	//vracanje klinike, za profil klinike
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<KlinikaDTOzaStrudent1> getKlinika(@PathVariable Long id) {
 
 		Klinika klinika = klinikaService.findOne(id);
+
+		if(klinika == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(new KlinikaDTOzaStrudent1(klinika), HttpStatus.OK);
+	}
+	@PutMapping(value = "updateKlinika/{id}", consumes = "application/json")
+	public ResponseEntity<KlinikaDTO> updatePacijent(@PathVariable Long id, @RequestBody KlinikaDTO klinikaDTO) {
+
+		//Ako nema pacijentra sa trazen id-em ILI ako je nova lozinka prekratka
+		if(klinikaService.updateKlinika(id, klinikaDTO) == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+					
+		return new ResponseEntity<>(new KlinikaDTO(klinikaService.updateKlinika(id, klinikaDTO)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "getKlinikaAdmin/{id}")
+	public ResponseEntity<KlinikaDTOzaStrudent1> getKlinikaAdmin(@PathVariable Long id) {
+		
+		AdministratorKlinike admin = adminKService.findOne(id);
+		Klinika klinika = admin.getKlinika();
 
 		if(klinika == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

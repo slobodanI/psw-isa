@@ -5,7 +5,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 public class CenovnikDTO {
 	
 	private Long id;
-	private Long klinika;
+	private Long admin;
 	private Long tipPregleda;
 	private Long cena;
 	
@@ -16,7 +16,7 @@ public class CenovnikDTO {
 	public CenovnikDTO(Long id,Long klinika,Long tipPregleda,Long cena) {
 		super();
 		this.id=id;
-		this.klinika=klinika;
+		this.admin=klinika;
 		this.tipPregleda=tipPregleda;
 		this.cena=cena;
 	}
@@ -33,12 +33,14 @@ public class CenovnikDTO {
 		this.id = id;
 	}
 
-	public Long getKlinika() {
-		return klinika;
+
+
+	public Long getAdmin() {
+		return admin;
 	}
 
-	public void setKlinika(Long klinika) {
-		this.klinika = klinika;
+	public void setAdmin(Long admin) {
+		this.admin = admin;
 	}
 
 	public Long getTipPregleda() {

@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.informatika.jpa.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,7 +151,6 @@ public class PregledController
 	public ResponseEntity<String> dodajSaluZaPregled(@PathVariable("idPregleda") Long idPregleda ,@PathVariable("idSale") Long idSale ){
 		
 		String str = pregledSevice.upisiSalu(idPregleda, idSale);
-		str="Sve ok";
 		return new ResponseEntity<>(str,HttpStatus.OK);
 		
 		
@@ -169,7 +169,6 @@ public class PregledController
 	@PutMapping(value ="/nemaSlobodneSale/{idPregleda}")
 	public ResponseEntity<String> nemaSale(@PathVariable("idPregleda") Long idPregleda){
 		String str = pregledSevice.nemaSale(idPregleda);
-		str="Sve ok";
 		return new ResponseEntity<>(str,HttpStatus.OK);
 		
 	}
@@ -289,16 +288,37 @@ public class PregledController
 	}
 	
 	@GetMapping(value="/vratiZaKalendar/od/{Od}/do/{Do}/tip/{tip}")
-	public ResponseEntity<ArrayList<Integer>> vratiZaGrafik(@PathVariable("Od") LocalDateTime Od, @PathVariable("Do") LocalDateTime Do, @PathVariable("Tip") Long Tip){
+	public ResponseEntity<ArrayList<Integer>> vratiZaGrafik(@PathVariable("Od") String Od, @PathVariable("Do") String Do, @PathVariable("tip") Long tip){
 		
-		ArrayList<Integer> rez = pregledSevice.vratiZaGrafik(Od, Do, Tip);
+		String[] split = Od.split("T");
+		String datumBezT = split[0] + " " + split[1];
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime datumLDT = LocalDateTime.parse(datumBezT, formatter);
+		
+		String[] split2 = Do.split("T");
+		String datumBezT2 = split2[0] + " " + split2[1];
+		LocalDateTime datumLDT2 = LocalDateTime.parse(datumBezT2, formatter);
+		
+		
+		
+		ArrayList<Integer> rez = pregledSevice.vratiZaGrafik(datumLDT, datumLDT2, tip);
 		return new ResponseEntity<>(rez, HttpStatus.OK);
 		
 	}
 	@GetMapping(value="/vratiZaKalendarDatum/od/{Od}/do/{Do}/tip/{tip}")
-	public ResponseEntity<ArrayList<LocalDateTime>> vratiZaGrafikDatume(@PathVariable("Od") LocalDateTime Od, @PathVariable("Do") LocalDateTime Do, @PathVariable("Tip") Long Tip){
+	public ResponseEntity<ArrayList<LocalDateTime>> vratiZaGrafikDatume(@PathVariable("Od") String Od, @PathVariable("Do") String Do, @PathVariable("tip") Long tip){
 		
-		ArrayList<LocalDateTime> rez = pregledSevice.vratiDatumeZaGrafik(Od, Do, Tip);
+		String[] split = Od.split("T");
+		String datumBezT = split[0] + " " + split[1];
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime datumLDT = LocalDateTime.parse(datumBezT, formatter);
+		
+		String[] split2 = Do.split("T");
+		String datumBezT2 = split2[0] + " " + split2[1];
+		LocalDateTime datumLDT2 = LocalDateTime.parse(datumBezT2, formatter);
+		
+		
+		ArrayList<LocalDateTime> rez = pregledSevice.vratiDatumeZaGrafik(datumLDT, datumLDT2, tip);
 		return new ResponseEntity<>(rez, HttpStatus.OK);
 		
 	}
@@ -306,6 +326,22 @@ public class PregledController
 	@GetMapping(value = "/prviSlobodanTermin/{pregledID}")
 	public ResponseEntity<String> vratiPrviSlobodanTermin(@PathVariable("pregledID") Long pregledID){
 		String rez = pregledSevice.prviSlobodanTermin(pregledID);
+		return new ResponseEntity<>(rez,HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/prihodi/od/{Od}/do/{Do}")
+	public ResponseEntity<Integer> prihodi(@PathVariable("Od") String Od, @PathVariable("Do") String Do){
+		String[] split = Od.split("T");
+		String datumBezT = split[0] + " " + split[1];
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime datumLDT = LocalDateTime.parse(datumBezT, formatter);
+		
+		String[] split2 = Do.split("T");
+		String datumBezT2 = split2[0] + " " + split2[1];
+		LocalDateTime datumLDT2 = LocalDateTime.parse(datumBezT2, formatter);
+		
+		Integer rez = pregledSevice.vratiPrihodeKlinike(datumLDT, datumLDT2);
+		
 		return new ResponseEntity<>(rez,HttpStatus.OK);
 	}
 	

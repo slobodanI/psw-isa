@@ -29,6 +29,8 @@ public class KlinikaService {
 	@Autowired
 	private KlinikaRepository klinikaRepo;
 	
+	@Autowired AdministratorKlinikeService adminKService;
+	
 	public List<Klinika> findAll(){
 		return klinikaRepo.findAll();
 	}
@@ -41,6 +43,21 @@ public class KlinikaService {
 	}
 	public void remove(Long id) {
 		klinikaRepo.deleteById(id);
+	}
+	
+	public Klinika updateKlinika(Long id,KlinikaDTO klinikaDTO) {
+			AdministratorKlinike admin = adminKService.findOne(id);
+			Klinika kl = admin.getKlinika();
+			
+			kl.setNaziv(klinikaDTO.getNaziv());
+			kl.setOpis(klinikaDTO.getOpis());
+			kl.setAdresa(klinikaDTO.getAdresa());
+			
+			klinikaRepo.save(kl);
+			return kl;
+			
+	
+	
 	}
 
 	//metoda za dodavanje klinike

@@ -94,10 +94,12 @@ function koJeUlogovan() {
 //					window.location = "./MedicinskaSestra.html";
 				} else {
 					console.log("NIKO NIJE ULOGOVAN");
+					window.location = "./index.html";
 				}
 			}
 			else {
 				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
 			}
 
 		}

@@ -12,7 +12,9 @@ $(document).ready(function(){
 		var prezime = $('input[name="prezime"]').val();
 		var radnoVremeOd = $('input[name="radnoVremeOd"]').val();
 		var radnoVremeDo = $('input[name="radnoVremeDo"]').val();
+		var tipPregleda =  $('#select-tipPregleda :selected').val();
 		var uloga = "Lekar";
+		var email = $('input[name="email"]').val();
 		var radniKalendar = "radniKalendar";
 		var brojOcena=0;
 		var ukupnaOcena=0;
@@ -20,7 +22,7 @@ $(document).ready(function(){
 		if(password == confirmPassword){
 		$.post({
 			url: '/api/lekar/saveLekar',
-			data: JSON.stringify({username,password,ime,prezime,radnoVremeOd,radnoVremeDo,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena}),
+			data: JSON.stringify({email,username,password,ime,prezime,radnoVremeOd,radnoVremeDo,idKlinike,uloga,radniKalendar,ukupnaOcena,brojOcena,tipPregleda}),
 			contentType: 'application/json',
 			success: function(){
 			alert("Uspešno ste dodali lekara.");
@@ -52,8 +54,10 @@ function koJeUlogovan(){
 //					window.location = "./AdminKlinickogCentraHome.html";
 				} else if (user.uloga == "AdministratorKlinike") {
 //					window.location = "./AdministratorKlinikeHome.html";
+					
 					idUsera=user.id;
 					dobaviPodatkeOAdminu(idUsera);
+					popuniTipovePregleda();
 
 				} else if (user.uloga == "Lekar") {
 //					window.location = "./LekarHome.html";
@@ -61,10 +65,12 @@ function koJeUlogovan(){
 //					window.location = "./MedicinskaSestra.html";
 				} else {
 					console.log("NIKO NIJE ULOGOVAN");
+					window.location = "./index.html";
 				}
 			}
 			else {
 				console.log("NIKO NIJE ULOGOVAN");
+				window.location = "./index.html";
 			}
 
 		}
@@ -82,4 +88,21 @@ function dobaviPodatkeOAdminu(id){
 		
 	});
 }
+function popuniTipovePregleda() {
+	$.get({
+		url: '/api/tipPregleda/tipoviPregleda',
+		success: function(tipoviPregleda) {
+			if(tipoviPregleda != undefined) {
+				for(var tp of tipoviPregleda){
+					$('#select-tipPregleda').append('<option value="'+tp.id+'">'+tp.naziv+'</option>');				
+				}
 
+			}
+		},
+		error: function(jqXhr, textStatus, errorThrown) {
+//            console.log(errorThrown);
+			alert("Neuspesno ucitani tipovi pregleda");
+			$("#bodyID").hide();
+        }
+	});
+}

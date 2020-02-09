@@ -1,33 +1,3 @@
-insert into student (index_number, first_name, last_name) values ('ra1-2014', 'Marko', 'Marković');
-insert into student (index_number, first_name, last_name) values ('ra2-2014', 'Milan', 'Milanović');
-insert into student (index_number, first_name, last_name) values ('ra3-2014', 'Ivana', 'Ivanović');
-insert into student (index_number, first_name, last_name) values ('ra4-2014', 'Bojan', 'Bojanović');
-insert into student (index_number, first_name, last_name) values ('ra5-2014', 'Pera', 'Perić');
-insert into student (index_number, first_name, last_name) values ('ra6-2014', 'Zoran', 'Zoranović');
-insert into student (index_number, first_name, last_name) values ('ra7-2014', 'Bojana', 'Bojanović');
-insert into student (index_number, first_name, last_name) values ('ra8-2014', 'Milana', 'Milanović');
-insert into student (index_number, first_name, last_name) values ('ra9-2014', 'Jovana', 'Jovanić');
-
-insert into course (name) values ('Matematika');
-insert into course (name) values ('Osnove programiranja');
-insert into course (name) values ('Objektno programiranje');
-
-insert into teacher (first_name, last_name) values ('Strahinja', 'Simić');
-insert into teacher (first_name, last_name) values ('Marina', 'Antić');
-insert into teacher (first_name, last_name) values ('Siniša', 'Branković');
-
-insert into teaching (course_id, teacher_id) values (1, 1);
-insert into teaching (course_id, teacher_id) values (1, 2);
-insert into teaching (course_id, teacher_id) values (2, 2);
-insert into teaching (course_id, teacher_id) values (3, 3);
-
-insert into exam (student_id, course_id, date, grade) values (1, 1, '2016-02-01', 9);
-insert into exam (student_id, course_id, date, grade) values (1, 2, '2016-04-19', 8);
-insert into exam (student_id, course_id, date, grade) values (2, 1, '2016-02-01', 10);
-insert into exam (student_id, course_id, date, grade) values (2, 2, '2016-04-19', 10);
-
-
-
 insert into tip_pregleda (naziv) values ('Ocni pregled');
 insert into tip_pregleda (naziv) values ('Dermatoloski pregled');
 insert into tip_pregleda (naziv) values ('Stomatoloski pregled');
@@ -114,6 +84,7 @@ insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, 
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-04-30 14:00', '2020-04-30 15:00', 10, 1000,1,null, 1, false, true, false);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-02-07 12:00', '2020-02-07 13:00', 10, 1000,1,null, 1, false, true, false);
 insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2020-05-25 11:00','2020-05-25 11:30', 10, 1000,1,null, null, false,false,false);
+insert into pregled (lekar_id, pacijent_id, zdravstveni_karton_id, informacije, datum_pregleda_od,datum_pregleda_do, popust, cena, tip_pregleda_id, dijagnoza_id, sala_id, obavljen, prihvacen, obrisan) values (1, 1, 1, '', '2021-05-25 11:00','2021-05-25 12:00', 10, 1000,1,null, null, false,false,false);
 
 insert into operacija (zdravstveni_karton_id, pacijent_id, informacije, datum_operacije_od,datum_operacije_do, cena, obavljen) values (1, 1, 'info', '2020-01-30 12:00','2020-01-30 14:00', 5000, true);
 
@@ -153,6 +124,7 @@ insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 13:00','
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 14:00','2020-02-28 15:00',1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-02-28 11:00','2020-02-28 12:20',1);
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-05-25 10:00','2020-05-25 12:00',1);
+insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2021-05-25 11:00','2021-05-25 12:00',1);
 
 --kada otkazem pregled ovo treba izbrisati
 insert into zauzetost_lekara(pocetak,kraj,lekar_id) values ('2020-04-30 13:00', '2020-04-30 14:00',1);

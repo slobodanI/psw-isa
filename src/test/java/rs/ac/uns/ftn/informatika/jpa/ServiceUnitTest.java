@@ -114,6 +114,7 @@ public class ServiceUnitTest {
 		zauzetostiALL.add(zl);
 		
 		when(pregledRepository.findById(pregledIDbefore)).thenReturn(Optional.of(noviPregled));
+		when(pregledRepository.save(noviPregled)).thenReturn(noviPregled);
 		when(pacijentRepository.findById(pacijentIDbefore)).thenReturn(Optional.of(pacijent3));
 		when(pregledRepository.findAll()).thenReturn(pregledAll);
 		when(pregledRepository.save(noviPregled)).thenReturn(null);
@@ -139,6 +140,7 @@ public class ServiceUnitTest {
 		
 		verify(pregledRepository, times(1)).findById(pregledID);
 		verify(pacijentRepository, times(1)).findById(pacijentID);
+		verify(pregledRepository, times(1)).save(noviPregled);
 	}
 	
 	@Test

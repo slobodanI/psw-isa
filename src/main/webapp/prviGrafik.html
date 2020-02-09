@@ -6,6 +6,11 @@
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/datatables.min.js"></script>
 <script type="text/javascript" src="js/prviGrafik.js"></script>
+	<link rel="stylesheet" href="js/datatables.min.css">
+	<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="js/select.dataTables.min.css">
+	<link rel="stylesheet" href="js/jquery.dataTables.min.css">
 <title>Prvi grafik</title>
 
 </head>
@@ -23,12 +28,19 @@
 </form>
 	
 
-
+<h4>Prihodi u odabranom vremenskom periodu:</h4>
+<h4 id="prihodi"></h4>
+<hr>
 <div class="container">
 	<canvas id="myChart"></canvas>
 </div>
-
-
+<hr>
+<h3>Prosecna ocena klinike:</h3>
+<h3 id="ocena"></h3>
+<hr>
+<div id="divTabela">
+</div>
+<hr>
 
 </body>
 </html>

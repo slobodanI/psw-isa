@@ -23,6 +23,8 @@ public class DodavanjeLekaraDTO {
 	private String radniKalendar;
 	private int radnoVremeOd;
 	private int radnoVremeDo;
+	private Long tipPregleda;
+	private String email;
 //	private PacijentDTO pacijent;
 //	private PregledDTO pregled;
 
@@ -44,6 +46,8 @@ public class DodavanjeLekaraDTO {
 		radniKalendar = lekar.getRadniKalendar();
 		radnoVremeOd=lekar.getRadnoVremeOd();
 		radnoVremeDo=lekar.getRadnoVremeDo();
+		tipPregleda=lekar.getTipPregleda().getId();
+		email = lekar.getEmail();
 //		radnoVreme = lekar.getRadnoVreme();
 //		kl=lekar.getKlinika();
 //		pacijent=new PacijentDTO(lekar.getPacijent());
@@ -52,7 +56,7 @@ public class DodavanjeLekaraDTO {
 	}
 
 	public DodavanjeLekaraDTO(String ime, String prezime, Double ukupnaOcena, int brojOcena,
-			int radnoVremeOd,int radnoVremeDo, String username, String password, Long idKlinike, String radniKalendar,String uloga) {
+			int radnoVremeOd,int radnoVremeDo,String email, String username, String password, Long idKlinike, String radniKalendar,String uloga,Long tipPregleda) {
 		super();
 	//	this.id = id;
 		this.ime = ime;
@@ -68,6 +72,8 @@ public class DodavanjeLekaraDTO {
 		this.uloga =uloga;
 		this.radniKalendar = radniKalendar;
 		this.idKlinike = idKlinike;
+		this.tipPregleda=tipPregleda;
+		this.email = email;
 		// this.kl=kl;
 	}
 	public DodavanjeLekaraDTO(String ime,String prezime,String password) {
@@ -200,6 +206,22 @@ public class DodavanjeLekaraDTO {
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
 	}
-	
+
+	public Long getTipPregleda() {
+		return tipPregleda;
+	}
+
+	public void setTipPregleda(Long tipPregleda) {
+		this.tipPregleda = tipPregleda;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+		
 
 }

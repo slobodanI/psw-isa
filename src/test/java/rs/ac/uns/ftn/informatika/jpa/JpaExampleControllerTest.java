@@ -122,4 +122,19 @@ public class JpaExampleControllerTest {
 	    	.andExpect(status().isOk());
 	    	
     }
+	
+	@Test
+	@Transactional
+    @Rollback(true)
+    public void nemaSlobodneSale() throws Exception {	
+
+		
+		this.mockMvc.perform(put(URL_PREFIX_PREGLED + "/nemaSlobodneSale/22")
+			.contentType(MediaType.TEXT_PLAIN)
+			.content("Sve ok"))
+	    	.andExpect(status().isOk());
+	    	
+    }
+	
+	
 }
