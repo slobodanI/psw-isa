@@ -2,7 +2,9 @@
 Projekat iz psw/isa
 
 Spring boot projekat
+
 PostgreSQL baza
+
 Na frontu korišćen jquery
 
 Run as:
