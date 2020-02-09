@@ -20,6 +20,7 @@ import rs.ac.uns.ftn.informatika.jpa.dto.PromenaPregledaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.StariPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.ZavrsiPregledDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
+import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Dijagnoza;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lek;
@@ -81,6 +82,9 @@ public class PregledService {
 	
 	@Autowired
 	private TipPregledaService tipService;
+	
+	@Autowired
+	private CenovnikService cenovnikService;
 	
 	public Pregled findOne(Long id) {
 		return pregledRepository.findById(id).orElseGet(null);
@@ -576,6 +580,12 @@ public List<PregledDTOStudent2> vratiZahteveZaPregled(Long idAdmina){
 		noviPregled.setPrihvacen(false);
 		noviPregled.setObrisan(false);
 		
+		List<Cenovnik> cene = cenovnikService.findAll();
+		for(Cenovnik cena : cene) {
+			if(cena.getKlinika().getId().equals(lekar.getKlinika().getId()) && cena.getTipPregleda().equals(lekar.getTipPregleda())) {
+				noviPregled.setCena(cena.getCena().intValue()); 
+			}
+		}
 		
 		this.save(noviPregled);
 		

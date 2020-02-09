@@ -25,8 +25,10 @@ import rs.ac.uns.ftn.informatika.jpa.dto.PacijentDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PretragaKlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.PretragaLekaraPrekoKlinikeDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.AdministratorKlinike;
+import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.service.AdministratorKlinikeService;
+import rs.ac.uns.ftn.informatika.jpa.service.CenovnikService;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 
 @RestController
@@ -38,6 +40,9 @@ public class KlinikaController {
 	
 	@Autowired
 	private AdministratorKlinikeService adminKService;
+	
+	@Autowired
+	private CenovnikService cenovnikService;
 	
 	//metoda za kreiranje nove klinike
 	@PostMapping(value="/kreirajKliniku", consumes="application/json")
@@ -137,6 +142,19 @@ public class KlinikaController {
 			klinikeDTO.add(new KlinikaDTOzaStudent1PRETRAGA(k));
 		}
 		
+
+		List<Cenovnik> sveCene = cenovnikService.findAll();
+		
+		for(KlinikaDTOzaStudent1PRETRAGA kli : klinikeDTO) {			
+			for(Cenovnik cena : sveCene) {
+				if(kli.getId().equals(cena.getKlinika().getId()) && pretragaKlinikaDTO.getTipPregleda().equals(cena.getTipPregleda().getId())) {
+					kli.setCena(cena.getCena());					
+				}
+			}
+			
+		}
+		
+				
 		return new ResponseEntity<>(klinikeDTO, HttpStatus.OK);
 	}
 	
@@ -179,4 +197,5 @@ public class KlinikaController {
 		return new ResponseEntity<>(lekariDTO, HttpStatus.OK);
 	}
 	
+		
 }

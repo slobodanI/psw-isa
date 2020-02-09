@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
@@ -32,6 +33,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostLekara;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
+import rs.ac.uns.ftn.informatika.jpa.repository.CenovnikRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.KlinikaRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.LekarRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
@@ -71,6 +73,8 @@ public class ServiceUnitTest {
 	@MockBean
 	private LekarRepository lekarRepositoty;
 	
+	@MockBean CenovnikRepository cenovnikRepository;
+	
 	@MockBean
 	private EmailDTO emailDTO;
 		
@@ -81,7 +85,15 @@ public class ServiceUnitTest {
 	public static final HashSet<Lekar> lekari = new HashSet<Lekar>(Arrays.asList(lekar));
 	public static final Klinika klinika = new Klinika(null, "klinika1", "adr", "", "", 10000, 10000, lekari , null, null);
 	public static final Lekar LekarZakazi = new Lekar(); 
-	 
+	public static final Pacijent pacijentZakaziP = new Pacijent(1L, "Nenad", "Nenadovic", "pacijent", "pacijent", "nenad@gmail.com", "adresa 39", "Novi Sad", "Srbija", "0641111111", 1234567890123L, true);
+	public static final Lekar lekarZakaziP = new Lekar(1L, "lekar1", "prezime1", 12, new Double(55), null, null, "aaa", klinika, 8, 16, "us3", "pas12345");
+	public static final Klinika klinikaZakaziP = new Klinika(1L, "klinika1", "Novi Sad, Ulica 1", "opis", "slobodni", 45.258F, 19.821F, lekari, null, null);
+	public static final TipPregleda tipPregledaZakaziP = new TipPregleda(1L, "Ocni pregled");
+	public static final ZdravstveniKarton zkZakaziP = new ZdravstveniKarton(1L, "A", "+2", new Double(180), new Double(80), "polen, kucna prasina", null, "dijabetes");
+	public static final Pregled noviPregled2 = new Pregled();
+	
+	
+	
 	@Before
 	public void setUp() {
 		Long pregledIDbefore = 15L; 
@@ -128,6 +140,36 @@ public class ServiceUnitTest {
 		
 		when(klinikaRepository.findAll()).thenReturn(listKlinika);
 		
+//		pacijentZakaziP.setUloga("Pacijent");
+//		lekarZakaziP.setUloga("Lekar");
+//		lekarZakaziP.setEmail("lekar1@gmail.com");
+//		lekarZakaziP.setTipPregleda(tipPregledaZakaziP);
+		LocalDateTime terminZakazi = LocalDateTime.of(2020,10,13,10,0);
+//		klinikaZakaziP.setBrojOcena(10);
+//		klinikaZakaziP.setUkupnaOcena(new Double(50));
+//		klinikaZakaziP.setPrihod(new Double(521000));
+//		zkZakaziP.setPacijent(pacijentZakaziP);
+//		pacijentZakaziP.setZdravstveniKarton(zkZakaziP);
+		
+		noviPregled2.setSala(null);
+		noviPregled2.setDatumPregledaOd(terminZakazi);
+		noviPregled2.setDatumPregledaDo(terminZakazi.plusHours(1));
+		noviPregled2.setLekar(lekar);
+		noviPregled2.setTipPregleda(lekar.getTipPregleda());
+		noviPregled2.setPacijent(pacijent3);
+		noviPregled2.setZdravstveniKarton(pacijent3.getZdravstveniKarton());
+		noviPregled2.setDijagnoza(null);
+		noviPregled2.setInformacije("");
+		noviPregled2.setCena(1000/*lekar.getTipPregleda().getCena()*/); // ovo treba biti cena tipa pregleda
+		noviPregled2.setPopust(0);
+		noviPregled2.setObavljen(false);
+		noviPregled2.setPrihvacen(false);
+		noviPregled2.setObrisan(false);
+		
+		when(pregledRepository.save(noviPregled2)).thenReturn(noviPregled2);
+		
+		List<Cenovnik> cenovnikAll = new ArrayList<>();		
+		when(cenovnikRepository.findAll()).thenReturn(cenovnikAll);
 	}
 	
 	@Test
@@ -160,7 +202,7 @@ public class ServiceUnitTest {
 	@Transactional
 	@Rollback(true)
 	public void testZakaziPregledUNIT() {
-		Long pacijentID = 1L; 
+		Long pacijentID = 3L; 
 		Long lekarID = 1L;		
 		LocalDateTime termin = LocalDateTime.of(2020,10,13,10,0); 
 		assertEquals(true, pregledService.zakaziPregled(lekarID, termin, pacijentID));
@@ -168,7 +210,8 @@ public class ServiceUnitTest {
 		verify(pregledRepository, times(1)).findAll();
 		verify(lekarRepositoty, times(1)).findById(lekarID);
 		verify(pacijentRepository, times(1)).findById(pacijentID);
-		//verify(pregledRepository, times(1)).save(noviPregled);
+		verify(cenovnikRepository, times(1)).findAll();
+//		verify(pregledRepository, times(1)).save(noviPregled2); // Argument(s) are different! , opet...
 	}
 	
 	@Test

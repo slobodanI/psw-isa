@@ -12,13 +12,13 @@ function koJeUlogovan() {
 				if (user.uloga == "Pacijent") {
 					window.location = "./index.html";
 				} else if (user.uloga == "AdministratorKlinickogCentra") {
-					window.location = "./index.html";
+					//ovaj treba da bude na ovoj stranici
 				} else if (user.uloga == "AdministratorKlinike") {
 					window.location = "./index.html";
 				} else if (user.uloga == "Lekar") {
 					window.location = "./index.html";
 				} else if (user.uloga == "MedicinskaSestra") {
-//					window.location = "./index.html";
+					window.location = "./index.html";
 				} else {
 					console.log("NIKO NIJE ULOGOVAN");
 					window.location = "./index.html";

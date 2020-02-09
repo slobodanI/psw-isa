@@ -139,3 +139,10 @@ insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (1,1000,1);
 insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (2,2000,1);
 insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (3,3000,1);
 
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (1,1000,2);
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (2,2000,2);
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (3,3000,2);
+
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (1,1000,3);
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (2,2000,3);
+insert into cenovnik(tip_pregleda_id,cena,klinika_id) values (3,3000,3);
