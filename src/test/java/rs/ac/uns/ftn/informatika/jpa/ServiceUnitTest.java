@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.EmailDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.Cenovnik;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
 import rs.ac.uns.ftn.informatika.jpa.model.Lekar;
 import rs.ac.uns.ftn.informatika.jpa.model.Pacijent;
@@ -32,6 +33,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.Pregled;
 import rs.ac.uns.ftn.informatika.jpa.model.TipPregleda;
 import rs.ac.uns.ftn.informatika.jpa.model.ZauzetostLekara;
 import rs.ac.uns.ftn.informatika.jpa.model.ZdravstveniKarton;
+import rs.ac.uns.ftn.informatika.jpa.repository.CenovnikRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.KlinikaRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.LekarRepository;
 import rs.ac.uns.ftn.informatika.jpa.repository.PacijentRepository;
@@ -70,6 +72,8 @@ public class ServiceUnitTest {
 	
 	@MockBean
 	private LekarRepository lekarRepositoty;
+	
+	@MockBean CenovnikRepository cenovnikRepository;
 	
 	@MockBean
 	private EmailDTO emailDTO;
@@ -163,6 +167,9 @@ public class ServiceUnitTest {
 		noviPregled2.setObrisan(false);
 		
 		when(pregledRepository.save(noviPregled2)).thenReturn(noviPregled2);
+		
+		List<Cenovnik> cenovnikAll = new ArrayList<>();		
+		when(cenovnikRepository.findAll()).thenReturn(cenovnikAll);
 	}
 	
 	@Test
@@ -203,6 +210,7 @@ public class ServiceUnitTest {
 		verify(pregledRepository, times(1)).findAll();
 		verify(lekarRepositoty, times(1)).findById(lekarID);
 		verify(pacijentRepository, times(1)).findById(pacijentID);
+		verify(cenovnikRepository, times(1)).findAll();
 //		verify(pregledRepository, times(1)).save(noviPregled2); // Argument(s) are different! , opet...
 	}
 	
