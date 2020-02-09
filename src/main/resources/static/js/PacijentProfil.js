@@ -125,6 +125,7 @@ function izmenaPodataka() {
 					contentType: 'application/json',
 					success: function(pacijent){
 						dobaviPodatkeOPacijentu(pacijent.id);
+						alert("Uspešno ste izmenii podatke");
 					},
 					error: function(){
 						alert("Neuspesno ste izmenii podatke");

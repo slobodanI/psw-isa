@@ -2,25 +2,26 @@
 <head>
 	<meta charset="UTF-8">
 <!-- 	<link rel="stylesheet" type="text/css" href="styles.css"> -->
-	
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<br>
-	<p>LOG IN</p>
+	<h2>LOG IN</h2>
 	<hr>
 		Nemate nalog?<br>
 		<button id="btn-register">Registrujte se</button>
 	<hr>
-	<form id="logInForma">
-		<table>
-			<tr><td>Email</td><td><input type="text" name=email required></td></tr>
-			<tr><td>Password</td><td><input type="password" name="password" required></td></tr>
-			<tr><td><input type="submit" value="Login"></td></tr>
-		</table>
-<!-- 		<p id="error" hidden="true"></p> -->
-<!-- 		<p id="success" hidden="true"></p> -->
-	</form>
-	
+	<div class="center">
+		<form id="logInForma">
+			<table>
+				<tr><td>Email</td><td><input type="text" name=email required></td></tr>
+				<tr><td>Password</td><td><input type="password" name="password" required></td></tr>
+				<tr><td></td><td class="left"><input class="btn " type="submit" value="Log in"></td></tr>
+			</table>
+	<!-- 		<p id="error" hidden="true"></p> -->
+	<!-- 		<p id="success" hidden="true"></p> -->
+		</form>
+	</div>
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="js/login.js"></script>
 </body>

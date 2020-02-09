@@ -42,13 +42,13 @@ function koJeUlogovan() {
 				if (user.uloga == "Pacijent") {
 					//window.location = "./PacijentHome.html";
 				} else if (user.uloga == "AdministratorKlinickogCentra") {
-					//window.location = "./AdminKlinickogCentraHome.html";
+					window.location = "./index.html";
 				} else if (user.uloga == "AdministratorKlinike") {
-					//window.location = "./AdministratorKlinikeHome.html";
+					window.location = "./index.html";
 				} else if (user.uloga == "Lekar") {
-					//window.location = "./profilLekara.html";
+					window.location = "./index.html";
 				} else if (user.uloga == "MedicinskaSestra") {
-					//window.location = "./MedicinskaSestraHome.html";
+					window.location = "./index.html";
 				} else {
 					console.log("NIKO NIJE ULOGOVAN");
 					window.location = "./index.html";
