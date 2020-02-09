@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Profil klinike</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+	<button id="btn-prikazForme" class="pac">Prikaz forme za izmenu profila klinike</button>
+	<div class="div-form-edit">				
+		<form id="form-EditKlinika">
+		<hr>
+		<p>Menjanje podataka:</p>
+		<table>
+			<tr><td>Naziv </td><td><input type="text" name="naziv" required></td></tr>
+			<tr><td>Adresa</td><td><input type="text" name="adresa" required></td></tr>
+			<tr><td>Opis</td><td><input type="text" name="opis" required></td></tr>
+			<tr><td><input class="btn" type="submit" value="Izmeni"></td></tr>
+		</table>
+		</form>			
+	</div>
+
+	
+	<div id="div-podaci">
+		<hr>
+		<h3 id="pacUsername"></h3>
+		<ul>
+			<li id="pacNaziv" class="podaciUListi"></li>
+			<li id="pacAdresa" class="podaciUListi"></li>
+			<li id="pacOpis" class="podaciUListi"></li>
+		</ul>
+	</div>
+	
+	
+		<script src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/podaciOKlinici.js"></script>
+</body>
+</html>

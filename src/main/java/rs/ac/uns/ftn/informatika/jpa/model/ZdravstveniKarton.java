@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +38,9 @@ public class ZdravstveniKarton {
 	
 	@OneToMany(mappedBy = "zdravstveniKarton", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Pregled> listaPregleda = new HashSet<Pregled>();
+	
+	@OneToMany(mappedBy = "zdravstveniKarton", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Operacija> listaOperacija = new HashSet<Operacija>();
 	
 	@Column(nullable =  false)
 	private String listaBolesti;
@@ -126,6 +128,26 @@ public class ZdravstveniKarton {
 
 	public void setListaBolesti(String listaBolesti) {
 		this.listaBolesti = listaBolesti;
+	}
+
+
+	public Set<Operacija> getListaOperacija() {
+		return listaOperacija;
+	}
+
+
+	public void setListaOperacija(Set<Operacija> listaOperacija) {
+		this.listaOperacija = listaOperacija;
+	}
+
+
+	public Pacijent getPacijent() {
+		return pacijent;
+	}
+
+
+	public void setPacijent(Pacijent pacijent) {
+		this.pacijent = pacijent;
 	}
 	
 	

@@ -1,0 +1,87 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "AdministratorKlinickogCentra",
+  "required": [
+		"id",
+	    "ime",
+	    "prezime",
+	    "username",
+	    "password",
+	    "email",
+	    "promenjenaLozinka",
+	    "uloga"
+	  ],
+  "additionalProperties": false,
+  "properties": {
+	  	"id": {
+	  		"$id": "#/properties/id",
+	        "type": "null",
+	        "title": "id",
+	        "description": "id"
+	        },
+	        
+	    "ime": {
+	        "$id": "#/properties/ime",
+	        "type": "string",
+	        "title": "ime",
+	        "description": "ime"
+	        },
+  
+		"prezime": {
+		    "$id": "#/properties/prezime",
+		    "type": "string",
+		    "title": "prezime",
+		    "description": "prezime"
+		    },
+		    
+		"username": {
+			"$id": "#/properties/username",
+			"type": "string",
+			"title": "username",
+			"description": "username"
+			},
+			    
+		"password": {
+			"$id": "#/properties/password",
+			"type": "string",
+			"title": "password",
+			"description": "password",
+			"minLength":6
+			},
+			
+		"email": {
+			"$id": "#/properties/email",
+			"type": "string",
+			"title": "email",
+			"description": "email"
+			},
+			
+		"promenjenaLozinka": {
+			"$id": "#/properties/promenjenaLozinka",
+			"type": "boolean",
+			"title": "promenjenaLozinka",
+			"description": "promenjenaLozinka",
+			"enum": [ false ]},
+			
+		"uloga": {
+			"$id": "#/properties/uloga",
+			"type": "string",
+			"title": "uloga",
+			"description": "uloga",
+			"enum": [ "AdministratorKlinickogCentra" ] }
+			
+			}
+}
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    

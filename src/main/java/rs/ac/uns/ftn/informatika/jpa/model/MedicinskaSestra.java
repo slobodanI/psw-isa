@@ -1,11 +1,19 @@
 package rs.ac.uns.ftn.informatika.jpa.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+//klasa medicinska sestra
 @Entity
 public class MedicinskaSestra {
 	
@@ -32,12 +40,24 @@ public class MedicinskaSestra {
 	@Column(nullable = false)
 	private Boolean promenjenaLozinka;
 	
+	@Column(nullable = false)
+	private String uloga = "MedicinskaSestra";
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Klinika klinika;
+	
+	@OneToMany(mappedBy = "medicinskaSestra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Recept> recepti = new HashSet<Recept>();
+	
+	@OneToMany(mappedBy = "medSestra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Odsustvo> listaOdsutstava = new HashSet<Odsustvo>();
+	
 	public MedicinskaSestra() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public MedicinskaSestra(Long id, String ime, String prezime, String username, String password, String email,
-			Boolean promenjenaLozinka) {
+			Boolean promenjenaLozinka, Klinika klinika) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -46,6 +66,7 @@ public class MedicinskaSestra {
 		this.password = password;
 		this.email = email;
 		this.promenjenaLozinka = promenjenaLozinka;
+		this.klinika = klinika;
 	}
 
 	public Long getId() {
@@ -102,6 +123,47 @@ public class MedicinskaSestra {
 
 	public void setPromenjenaLozinka(Boolean promenjenaLozinka) {
 		this.promenjenaLozinka = promenjenaLozinka;
+	}
+
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
+	}
+
+	public Set<Odsustvo> getListaOdsutstava() {
+		return listaOdsutstava;
+	}
+
+	public void setListaOdsutstava(Set<Odsustvo> listaOdsutstava) {
+		this.listaOdsutstava = listaOdsutstava;
+	}
+
+	
+	
+	public Set<Recept> getRecepti() {
+		return recepti;
+	}
+
+	public void setRecepti(Set<Recept> recepti) {
+		this.recepti = recepti;
+	}
+
+	@Override
+	public String toString() {
+		return "MedicinskaSestra [id=" + id + ", ime=" + ime + ", prezime=" + prezime + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", promenjenaLozinka=" + promenjenaLozinka
+				+ ", uloga=" + uloga + ", klinika=" + klinika + "]";
 	}
 	
 	

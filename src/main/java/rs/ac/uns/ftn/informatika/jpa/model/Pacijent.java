@@ -56,15 +56,26 @@ public class Pacijent {
 	@Column(nullable =  false, unique = true)
 	private Long lbo;
 	
+	//U KOJOJ SVE KLINICI JE BIO PACIJENT, TREBA STUDENTU 2
 	@ManyToMany
 	@JoinTable(name = "obavljenPregled", joinColumns = @JoinColumn(name = "klinika_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"))
 	private Set<Klinika> klinike =  new HashSet<Klinika>();
 	
 	@OneToMany(mappedBy = "pacijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Pregled> zakazaniPregledi = new HashSet<Pregled>();
+	private Set<Pregled> zakazaniPregledi = new HashSet<Pregled>(); // ovo su zapravo svi pregledi, i obavljeni i zakazani
+	
+//	@ManyToMany
+//	@JoinTable(name = "obavljeneOperacije", joinColumns = @JoinColumn(name = "klinika_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pacijent_id", referencedColumnName = "id"))
+//	private Set<Operacija> obavljeneOperacije =  new HashSet<Operacija>();
+	
+	@OneToMany(mappedBy = "pacijent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Operacija> zakazaneOperacije = new HashSet<Operacija>();
 	
 	@Column(nullable =  false)
 	private Boolean aktiviranNalog;
+	
+	@Column(nullable = false)
+	private String uloga = "Pacijent";
 	
 	public Pacijent() {
 		// TODO Auto-generated constructor stub
@@ -90,14 +101,14 @@ public class Pacijent {
 		this.aktiviranNalog = aktiviranNalog;
 	}
 
-	public Long getid() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setid(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getIme() {
 		return ime;
 	}
@@ -114,13 +125,13 @@ public class Pacijent {
 		this.prezime = prezime;
 	}
 
-//	public ZdravstveniKarton getZdravstveniKarton() {
-//		return zdravstveniKarton;
-//	}
-//
-//	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
-//		this.zdravstveniKarton = zdravstveniKarton;
-//	}
+	public ZdravstveniKarton getZdravstveniKarton() {
+		return zdravstveniKarton;
+	}
+
+	public void setZdravstveniKarton(ZdravstveniKarton zdravstveniKarton) {
+		this.zdravstveniKarton = zdravstveniKarton;
+	}
 
 	public String getUsername() {
 		return username;
@@ -200,6 +211,30 @@ public class Pacijent {
 
 	public void setAktiviranNalog(Boolean aktiviranNalog) {
 		this.aktiviranNalog = aktiviranNalog;
+	}
+
+	public Set<Klinika> getKlinike() {
+		return klinike;
+	}
+
+	public void setKlinike(Set<Klinika> klinike) {
+		this.klinike = klinike;
+	}
+
+	public Set<Pregled> getZakazaniPregledi() {
+		return zakazaniPregledi;
+	}
+
+	public void setZakazaniPregledi(Set<Pregled> zakazaniPregledi) {
+		this.zakazaniPregledi = zakazaniPregledi;
+	}
+
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
 	}
 	
 	

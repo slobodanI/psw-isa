@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/datatables.min.js"></script>
+	<script type="text/javascript" src="js/prikaziPacijente.js"></script>
+	<link rel="stylesheet" href="js/datatables.min.css">
+	<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="js/select.dataTables.min.css">
+	<link rel="stylesheet" href="js/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+
+<meta charset="UTF-8">
+<title>Prikaz pacijenata</title>
+</head>
+<body>
+
+	<div class="pretragaPacijenata">
+		<form id="formPacijent">
+			<table>
+				<tr><td>Ime:  </td><td><input type="text" name="ime"></td></tr>
+				<tr><td>Prezime:  </td><td><input type="text" name="prezime"></td></tr>
+				<tr><td>LBO: </td><td><input type = "number" min = "0" name = "lbo"></td></tr>
+				
+				
+				
+				
+				
+				<tr><td><input class="btn" type="submit" value="Pretraga pacijenata"></td></tr>	
+			</table>
+		</form>
+	</div>
+	
+	<hr><hr>
+	<div id="divTabela">
+	
+	</div>
+
+</body>
+</html>

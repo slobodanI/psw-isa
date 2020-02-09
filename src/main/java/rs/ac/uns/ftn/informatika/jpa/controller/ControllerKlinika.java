@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import rs.ac.uns.ftn.informatika.jpa.service.KlinikaService;
 import rs.ac.uns.ftn.informatika.jpa.dto.KlinikaDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.Klinika;
+import rs.ac.uns.ftn.informatika.jpa.model.Poruka;
 
 @Controller
 @RequestMapping(value = "/api/klinika")
@@ -40,6 +42,19 @@ public class ControllerKlinika {
 		return new ResponseEntity<>(klinikeDTO, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/klinika/{id}", produces = "application/json", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<KlinikaDTO> getKlinika(@PathVariable Long id) 
+	{
+		Klinika klinika = klinikaService.findOne(id);
+
+		if (klinika == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(new KlinikaDTO(klinika),HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/view",
 			produces = {MediaType.TEXT_HTML_VALUE},
 			method = RequestMethod.GET)
@@ -48,5 +63,11 @@ public class ControllerKlinika {
 		return "/proba.html";
 	}
 	
+	@RequestMapping(value = "/viewLekar",
+			produces = {MediaType.TEXT_HTML_VALUE},
+			method = RequestMethod.GET)
+	public String viewLekar() {
+		return "/profilLekara.html";
+	}
 	
 }

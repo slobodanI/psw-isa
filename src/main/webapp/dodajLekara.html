@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dodavanje lekara</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+	<form id="formaZaNovogLekara">
+		<table>
+			<tr><td>Ime</td><td><input type="text" name="ime" required></td></tr>
+			<tr><td>Prezime</td><td><input type="text" name="prezime" required></td></tr>
+			<tr><td>Korisničko ime </td><td><input type="text" name="username" required></td></tr>
+			<tr><td>Lozinka</td><td><input type="password" name="password" required></td></tr>
+			<tr><td>Potvrdi lozinku</td><td><input type="password" name="confirmPassword" required></td></tr>
+			<tr><td>Radno vreme od:</td><td><input type="number" name="radnoVremeOd" min="8" max="16" required></td></tr>
+			<tr><td>Radno vreme do:</td><td><input type="number" name="radnoVremeDo" min="8" max="16" required></td></tr>
+			<tr>
+					<td>Tip Pregleda:</td>
+					<td><select id="select-tipPregleda" required"></select></td></tr>
+				
+			<tr>
+			<tr><td>Email:</td><td><input type="email" name="email" required></td></tr>
+			
+			<tr><td><input class="btn" type="submit" value="Register"></td></tr>
+		</table>
+
+	</form>
+	
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/dodajLekara.js"></script>
+
+</body>
+</html>

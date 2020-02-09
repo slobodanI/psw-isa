@@ -6,23 +6,29 @@ public class KlinikaDTO {
 	
 	private Long id;
 	private String naziv;
+	private String adresa;
 	private String opis;
 	private String slobodniTerminiPregleda;
+	private float latitude;
+	private float longitude;
 	
 	public KlinikaDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public KlinikaDTO(Klinika klinika) {
-		this(klinika.getId(),klinika.getNaziv(),klinika.getOpis(),klinika.getSlobodniTerminiPregleda());
+		this(klinika.getId(),klinika.getNaziv(),klinika.getAdresa(),klinika.getOpis(),klinika.getSlobodniTerminiPregleda(),klinika.getLatitude(),klinika.getLongitude());
 	}
 	
-	public KlinikaDTO(Long id, String naziv, String opis, String slobodniTerminiPregleda) {
+	public KlinikaDTO(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda, float latitude, float longitude) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
+		this.adresa = adresa;
 		this.opis = opis;
 		this.slobodniTerminiPregleda = slobodniTerminiPregleda;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	public Long getId() {
@@ -56,6 +62,32 @@ public class KlinikaDTO {
 	public void setSlobodniTerminiPregleda(String slobodniTerminiPregleda) {
 		this.slobodniTerminiPregleda = slobodniTerminiPregleda;
 	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
+	}
+	
+	
 	
 	
 }

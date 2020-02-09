@@ -37,6 +37,9 @@ public class AdministratorKlinike {
 	@Column(nullable =  false)
 	private Boolean promenjenaLozinka;
 
+	@Column(nullable = false)
+	private String uloga = "AdministratorKlinike";
+	
 	public AdministratorKlinike() {
 		// TODO Auto-generated constructor stub
 	}
@@ -118,4 +121,19 @@ public class AdministratorKlinike {
 		this.promenjenaLozinka = promenjenaLozinka;
 	}
 
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
+	}
+
+	@Override
+	public String toString() {
+		return "AdministratorKlinike [id=" + id + ", ime=" + ime + ", prezime=" + prezime + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", klinika=" + klinika + ", promenjenaLozinka="
+				+ promenjenaLozinka + ", uloga=" + uloga + "]";
+	}
+	
 }

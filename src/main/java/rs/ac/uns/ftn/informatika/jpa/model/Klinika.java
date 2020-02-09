@@ -45,19 +45,29 @@ public class Klinika {
 	@Column(nullable = false)
 	private String slobodniTerminiPregleda;
 	
+	@Column(nullable = false)
+	private float latitude;
+	
+	@Column(nullable = false)
+	private float longitude;
+	
 	@ManyToMany(mappedBy = "klinike")
 	private Set<Pacijent> pacijenti =  new HashSet<Pacijent>();
-	
-	
+		
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AdministratorKlinike> administratoriKlinike = new HashSet<AdministratorKlinike>();
 	
-	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Lekar> lekari = new HashSet<Lekar>();
 	
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<MedicinskaSestra> med_sestre = new HashSet<MedicinskaSestra>();
+	
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Sala> sale = new HashSet<Sala>();
 	
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
+	private Set<Cenovnik> cenovnik = new HashSet<Cenovnik>();
 //	private HashMap<TipPregleda,Double> cenovnik;
 
 	
@@ -65,8 +75,8 @@ public class Klinika {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Klinika(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda,
-			Set<Lekar> lekari/*, HashMap<TipPregleda, Double> cenovnik,
+	public Klinika(Long id, String naziv, String adresa, String opis, String slobodniTerminiPregleda, float latitude, float longitude,
+			Set<Lekar> lekari, Set<MedicinskaSestra> med_sestre/*, HashMap<TipPregleda, Double> cenovnik,
 			IzvestajOPoslovanju izvestaj*/
 			, Set<Sala> sale) {
 		super();
@@ -75,7 +85,10 @@ public class Klinika {
 		this.adresa = adresa;
 		this.opis = opis;
 		this.slobodniTerminiPregleda = slobodniTerminiPregleda;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.lekari = lekari;
+		this.med_sestre = med_sestre;
 		this.sale = sale;
 //		this.cenovnik = cenovnik;
 //		this.izvestaj = izvestaj;
@@ -169,6 +182,68 @@ public class Klinika {
 		this.lekari = lekari;
 	}
 
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
+	@Override
+	public String toString() {
+		return "Klinika [id=" + id + ", naziv=" + naziv + ", brojOcena=" + brojOcena + ", ukupnaOcena=" + ukupnaOcena
+				+ ", prihod=" + prihod + ", adresa=" + adresa + ", opis=" + opis + ", slobodniTerminiPregleda="
+				+ slobodniTerminiPregleda + ", latitude=" + latitude + ", longitude=" + longitude + ", pacijenti="
+				+ pacijenti + ", administratoriKlinike=" + administratoriKlinike + ", lekari=" + lekari
+				+ ", med_sestre=" + med_sestre + ", sale=" + sale + "]";
+	}
+
+	public Set<Pacijent> getPacijenti() {
+		return pacijenti;
+	}
+
+	public void setPacijenti(Set<Pacijent> pacijenti) {
+		this.pacijenti = pacijenti;
+	}
+
+	public Set<MedicinskaSestra> getMed_sestre() {
+		return med_sestre;
+	}
+
+	public void setMed_sestre(Set<MedicinskaSestra> med_sestre) {
+		this.med_sestre = med_sestre;
+	}
+
+	public Set<Sala> getSale() {
+		return sale;
+	}
+
+	public void setSale(Set<Sala> sale) {
+		this.sale = sale;
+	}
+
+	public Set<Cenovnik> getCenovnik() {
+		return cenovnik;
+	}
+
+	public void setCenovnik(Set<Cenovnik> cenovnik) {
+		this.cenovnik = cenovnik;
+	}
+
+	
+	
+
+	
+
 //	public Collection<Lekar> getLekari() {
 //		return lekari;
 //	}
@@ -200,6 +275,9 @@ public class Klinika {
 //	public void setIzvestaj(IzvestajOPoslovanju izvestaj) {
 //		this.izvestaj = izvestaj;
 //	}
+	
+	
+	
 	
 
 }
